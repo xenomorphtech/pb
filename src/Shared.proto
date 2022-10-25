@@ -1,0 +1,4772 @@
+syntax = "proto3";
+
+package Shared;
+
+import "Extension.proto";
+
+option csharp_namespace = "NetworkMessage.Shared";
+
+message UserAuthKeyInfo {
+    int64 id = 1;
+    string one_time_password = 2;
+}
+
+message LoginInfo {
+    EOsType os_type = 1;
+    EOsArchitectureType os_architecture_type = 2;
+    string os_version = 3;
+    string language = 5;
+    EStoreType store_type = 6;
+    ETargetAgeType target_age_type = 7;
+    string app_player = 8;
+    int64 last_login_time = 9;
+    int64 prev_login_time = 10;
+    int64 last_logout_time = 11;
+}
+
+message RealmImmigrationSeasonInfo {
+    int32 season = 1;
+    int32 limit_per_user = 2;
+    int64 max_pc_creation_time = 4;
+}
+
+message MyRealmImmigrationTotalInfo {
+    RealmImmigrationSeasonInfo season_info = 1;
+    bool can_leave = 2;
+    repeated int32 arrival_realm_id_list = 3;
+    bool can_guild_leave = 4;
+    repeated int32 guild_arrival_realm_id_list = 5;
+    repeated int32 prices = 6;
+    int32 guild_price = 7;
+}
+
+message RealmImmigrationCheckResult {
+    ERealmImmigrationPcConditionType check_type = 1;
+    bool result = 2;
+}
+
+message RealmInfo {
+    int32 id = 1;
+    string name = 2;
+}
+
+message RealmGroupInfo {
+    int32 id = 1;
+    string name = 2;
+    repeated RealmInfo realm_list = 3;
+    int32 template_id = 4;
+}
+
+message AllRealmGroupInfo {
+    repeated RealmGroupInfo group_list = 1;
+}
+
+message NetVector {
+    float x = 1;
+    float y = 2;
+    float z = 3;
+}
+
+message CustomQuickSlotInfo {
+    int32 template_id = 1;
+    int64 db_id = 2;
+    int32 instance_implement_type = 3;
+}
+
+message CustomQuickSlotPageConfig {
+    repeated CustomQuickSlotInfo quick_slot_item_list = 1;
+}
+
+message CustomQuickSlotConfig {
+    repeated CustomQuickSlotPageConfig left_page_list = 1;
+    repeated CustomQuickSlotPageConfig right_page_list = 2;
+    repeated CustomQuickSlotPageConfig fixed_page_list = 3;
+    repeated CustomQuickSlotInfo auto_using_item_list = 4;
+}
+
+message HpAutoUseOption {
+    bool enable = 1;
+    float min_hp_rate = 2;
+    bool ignore_in_pvp = 3;
+}
+
+message SkillAutoUseRestrictionOption {
+    bool enable = 1;
+    float min_mana_rate = 2;
+    bool can_ignore_restriction_on_buff_skill = 3;
+    bool ignore_mprestriction_in_pvp = 4;
+}
+
+message TargetPriorityInAutoCombat {
+    bool use_scanlist_in_auto_combat = 1;
+    bool use_myattacker_npclist_in_auto_combat = 2;
+    bool use_questtargetlist_in_auto_combat = 3;
+    bool use_aggressivelist_in_auto_combat = 4;
+}
+
+message TargetPriorityInManualCombat {
+    bool use_scanlist_in_manual_combat = 1;
+    bool use_myattacker_pclist_in_manual_combat = 2;
+    bool use_hostile_pclist_in_manual_combat = 3;
+    bool use_myattacker_npclist_in_manual_combat = 4;
+    bool use_questtargetlist_in_manual_combat = 5;
+    bool use_aggressivelist_in_manual_combat = 6;
+}
+
+message DropItemAcquireInfo {
+    int32 auto_play_dropitem_grade_limit_index = 1;
+    bool use_weight_limit = 2;
+    bool potion_item_acquire = 3;
+    bool effect_item_acquire = 4;
+    bool enhance_material_acquire = 5;
+    bool normal_material_acquire = 6;
+    bool recharge_item_acquire = 7;
+    bool etc_item_acquire = 8;
+}
+
+message BattleConfigEtcInfo {
+    int32 manner_mode_in_auto_combat_index = 1;
+    int32 auto_combat_distance_limit_index = 2;
+    int32 auto_combat_mob_grade_limit_index = 3;
+    bool use_retain_target_in_touch_ground = 4;
+    bool use_retain_target_in_control_move = 5;
+    bool use_auto_vacuity_in_pvp = 6;
+    bool use_auto_enemy_area_check_in_pvp = 7;
+    MessageInPk message_in_pk = 8;
+    bool use_auto_always_quick_slot = 9;
+}
+
+message GameConfigMainInfo {
+    bool allow_party_invitation = 1;
+    bool is_my_nameplate_visible = 2;
+    bool is_my_display_name_visible = 3;
+    bool anonymous_item_broadcast = 4;
+    bool use_friend_connect_alarm = 5;
+    bool use_guild_memeber_connect_alarm = 6;
+}
+
+message MessageInPk {
+    bool use_message_in_pk = 1;
+    string msg_when_kill_in_pk = 2;
+    string msg_when_dead_in_pk = 23;
+}
+
+message CharacterConfig {
+    int64 character_dbid = 1;
+    repeated int32 save_auto_registration_equipment_grade = 2;
+    repeated int32 save_auto_registration_equipment_group = 3;
+    int32 auto_combat_distance_limit_index = 4;
+    int32 auto_combat_mob_grade_limit_index = 5;
+    int32 manner_mode_in_auto_combat_index = 6;
+    int32 auto_scan_list_refresh_interval_index = 7;
+    ScanFilterOption scan_filter_option = 8;
+    bool use_friend_connect_alarm = 9;
+    bool use_distance_align = 10;
+    bool use_guild_member_connect_alarm = 11;
+    ExtendedCharacterConfig extended = 12;
+    HpAutoUseOption hp_auto_use = 13;
+    SkillAutoUseRestrictionOption skill_auto_use_restriction = 14;
+    bool use_auto_vacuity_in_pvp = 15;
+    bool use_auto_scan = 16;
+    bool use_auto_share_scan_send = 17;
+    bool use_auto_share_scan_receive = 18;
+    TargetPriorityInAutoCombat target_priority_in_auto_combat = 19;
+    TargetPriorityInManualCombat target_priority_in_manual_combat = 20;
+    int32 auto_play_dropitem_grade_limit_index = 21;
+    bool use_weight_limit = 22;
+    bool use_retain_target_in_touch_ground = 23;
+    bool use_retain_target_in_control_move = 24;
+    MessageInPk message_in_pk = 25;
+}
+
+message ScanDetailOptionMonsterType {
+    bool boss_monster = 1;
+    bool elite_monster = 2;
+}
+
+message ScanDetailOptionNormalMonster {
+    bool engage = 1;
+    bool quest_target = 2;
+    bool agressive = 3;
+    bool hostile = 4;
+}
+
+message ScanDetailOptionPlayer {
+    bool engage = 1;
+    bool vigilance = 2;
+    bool amity = 3;
+    bool hostile_guild = 4;
+    bool my_guild = 5;
+    bool union_guild = 6;
+    bool etc = 7;
+}
+
+message ScanFilterOption {
+    bool use_monster_type_filter = 1;
+    ScanDetailOptionMonsterType use_monster_type_detail_filter = 2;
+    bool use_normal_monster_filter = 3;
+    ScanDetailOptionNormalMonster use_normal_monster_detail_filter = 4;
+    bool use_player_filter = 5;
+    ScanDetailOptionPlayer use_player_detail_filter = 6;
+}
+
+message ScanResult {
+    int32 number = 1;
+    int64 object_id = 2;
+}
+
+message ExtendedCharacterConfig {
+    bool is_set_block_auto_use_on_subzone = 1;
+    bool block_auto_use_on_subzone = 2;
+    bool is_set_my_party_member_name_plate_display_type = 3;
+    EPcNamePlateDisplayType my_party_member_name_plate_display_type = 4;
+    bool is_set_my_guild_member_name_plate_display_type = 5;
+    EPcNamePlateDisplayType my_guild_member_name_plate_display_type = 6;
+    bool is_set_my_server_member_name_plate_display_type = 7;
+    EPcNamePlateDisplayType my_server_member_name_plate_display_type = 8;
+    bool is_set_enemy_pc_name_plate_display_type = 9;
+    EPcNamePlateDisplayType enemy_pc_name_plate_display_type = 10;
+    bool is_set_my_name_plate_display_type = 11;
+    EPcNamePlateDisplayType my_name_plate_display_type = 12;
+    bool is_set_realm1name_plate_display_type = 13;
+    EPcNamePlateDisplayType realm1name_plate_display_type = 14;
+    bool is_set_realm2name_plate_display_type = 15;
+    EPcNamePlateDisplayType realm2name_plate_display_type = 16;
+    bool is_set_realm3name_plate_display_type = 17;
+    EPcNamePlateDisplayType realm3name_plate_display_type = 18;
+    bool is_set_realm4name_plate_display_type = 19;
+    EPcNamePlateDisplayType realm4name_plate_display_type = 20;
+    bool is_set_realm5name_plate_display_type = 21;
+    EPcNamePlateDisplayType realm5name_plate_display_type = 22;
+    bool is_set_consider_realm1player_to_tab_target = 23;
+    bool consider_realm1player_to_tab_target = 24;
+    bool is_set_consider_realm2player_to_tab_target = 25;
+    bool consider_realm2player_to_tab_target = 26;
+    bool is_set_consider_realm3player_to_tab_target = 27;
+    bool consider_realm3player_to_tab_target = 28;
+    bool is_set_consider_realm4player_to_tab_target = 29;
+    bool consider_realm4player_to_tab_target = 30;
+    bool is_set_consider_realm5player_to_tab_target = 31;
+    bool consider_realm5player_to_tab_target = 32;
+    bool is_set_guild_union_name_plate_display_type = 33;
+    EPcNamePlateDisplayType guild_union_name_plate_display_type = 34;
+    EPcNamePlateDisplayType etc_name_plate_display_type = 35;
+}
+
+message AccountConfig {
+    repeated CharacterConfig configs = 1;
+    bool invisible_pc_name_plate = 2;
+    bool invisible_target_pc_name_plate = 3;
+    bool invisible_npc_name_plate = 4;
+    int32 always_quest_hud_unfold_index = 5;
+    bool allow_party_invitation = 8;
+    bool has_first_learn_skill = 9;
+    bool had_seen_intro = 10;
+    ExtendedAccountConfig extend = 11;
+}
+
+message ChatTabConfig {
+    string name = 1;
+    int32 chat_filter_bit_flag = 2;
+}
+
+message ChatSettingConfig {
+    repeated ChatTabConfig chat_tab_configs = 1;
+}
+
+message ExtendedAccountConfig {
+    ChatSettingConfig chat_setting = 1;
+}
+
+message ItemManiInfo {
+    int64 dbid = 1;
+    int64 amount = 2;
+}
+
+message GuildMemberBriefInfo {
+    int64 id = 1;
+    string name = 2;
+    int32 emblem = 3;
+    int64 union_id = 4;
+    EPositionInGuild position = 5;
+}
+
+message GuildDisplayInfo {
+    int64 id = 1;
+    string name = 2;
+    int32 emblem = 3;
+    int32 level = 4;
+    string master_name = 5;
+    int32 realm_id = 6;
+}
+
+message GuildEnemyInfo {
+    int64 id = 1;
+    string name = 2;
+    int32 emblem = 3;
+    int32 level = 4;
+    string master_name = 5;
+    int32 realm_id = 6;
+}
+
+message GuildSummaryInfo {
+    int64 id = 1;
+    string name = 2;
+    int32 emblem = 3;
+    EGuildJoinType join_type = 4;
+    int32 member_count = 5;
+    int32 level = 6;
+    string introduction = 7;
+    string master_name = 8;
+    int32 rank = 9;
+}
+
+message GuildBasisInfo {
+    int64 id = 1;
+    string name = 2;
+    int32 emblem = 3;
+    EGuildJoinType join_type = 4;
+    int32 level = 5;
+    int64 exp = 6;
+    string introduction = 7;
+    string notice = 8;
+    int64 create_date = 9;
+    GuildAttendanceInfo attendance_info = 10;
+    int64 cooperation_coin = 11;
+    string master_name = 12;
+}
+
+message GuildInvitationBasisInfo {
+    int64 id = 1;
+    EGuildInvitationType type_ = 2;
+    int64 request_date = 3;
+}
+
+message GuildMemberInvitationInfo {
+    GuildInvitationBasisInfo basis_data = 1;
+    GuildSummaryInfo info = 2;
+}
+
+message GuildInvitationInfo {
+    GuildInvitationBasisInfo basis_data = 1;
+    string name = 2;
+    int32 character_class_template_id = 3;
+    int32 level = 4;
+    bool online = 5;
+    int64 logout_date = 6;
+}
+
+message GuildAttendanceInfo {
+    int64 last_attendance_date = 1;
+    int32 attendance_count = 2;
+    int32 prev_attendance_count = 3;
+}
+
+message GuildDungeonStateInfo {
+    int32 creation_count = 1;
+    int32 charging_count = 2;
+    int64 last_update_time = 3;
+}
+
+message GuildUnionInfo {
+    int64 id = 1;
+    int64 leader_guild_id = 2;
+    repeated GuildUnionMemberInfo member_list = 3;
+    repeated GuildUnionSendInvitationInfo send_invitation_list = 4;
+    string notice = 5;
+}
+
+message GuildUnionMemberInfo {
+    int64 id = 1;
+    string name = 2;
+    int32 emblem = 3;
+    int32 level = 4;
+    string master_name = 5;
+    int32 realm_id = 6;
+    int64 join_time = 7;
+    int32 member_count = 8;
+}
+
+message GuildUnionSendInvitationInfo {
+    GuildDisplayInfo guild_info = 1;
+    int64 invitation_time = 2;
+}
+
+message GuildUnionRecvInvitationInfo {
+    int64 union_id = 1;
+    GuildDisplayInfo leader_guild_info = 2;
+    int64 invitation_time = 3;
+}
+
+message GuildDungeonInfo {
+    int32 template_id = 1;
+    int32 max_cleared_level = 2;
+    GuildDungeonMvpInfo mvp_info = 3;
+    int64 last_updated_time = 4;
+}
+
+message GuildDungeonMvpInfo {
+    int32 character_class_template_id = 1;
+    string name = 2;
+    int64 damage = 3;
+}
+
+message GuildAzitInfo {
+    int64 expire_time = 1;
+}
+
+message ActiveRandomBossInfo {
+    int32 random_boss_template_id = 1;
+    int64 start_time = 2;
+    int32 event_spawn_group_template_id = 3;
+    NetVector boss_location = 4;
+    EZoneChannelType channel_type = 5;
+}
+
+message ActiveFieldBossInfo {
+    int32 field_boss_template_id = 1;
+    int64 start_time = 2;
+    int32 event_spawn_template_id = 3;
+    NetVector boss_location = 4;
+    EZoneChannelType channel_type = 5;
+}
+
+message DailyBossOccupierInfo {
+    int32 realm_id = 1;
+    int32 character_class_template_id = 2;
+    string pc_name = 3;
+    GuildMemberBriefInfo guild_info = 4;
+}
+
+message MapDailyBossOccupationInfo {
+    int32 realm_id = 1;
+    int64 end_time = 2;
+    DailyBossOccupierInfo occupier_info = 3;
+}
+
+message ChatMessage {
+    string message = 1;
+    bytes item_info = 2;
+    bytes location_info = 3;
+}
+
+message ChatDetailMessage {
+    int32 id = 1;
+    ChatMessage message = 2;
+    string sender_name = 3;
+    int32 sender_realm_id = 4;
+    int64 sender_object_id = 5;
+    repeated ChatSenderRankingInfo sender_ranking_infos = 6;
+    string receiver_name = 7;
+    bool privileged_user = 8;
+    string sender_guild_name = 9;
+    int32 sender_guild_emblem = 10;
+    int32 pve_rank = 11;
+}
+
+message ChatReceiverHint {
+    string name = 1;
+}
+
+message ChatReadInfo {
+    EChatType type_ = 1;
+    int32 last_id = 2;
+}
+
+message ZoneChannelInfo {
+    int32 map_id = 1;
+    int32 channel_id = 2;
+    EChannelCongestion congestion = 4;
+}
+
+message DungeonStatus {
+    int32 map_template_id = 1;
+    EChannelCongestion congestion = 2;
+}
+
+message MergingMaterial {
+    int32 template_id = 1;
+    int32 count = 2;
+}
+
+message CurrencyBaseInfo {
+    int32 template_id = 1;
+    int64 count = 2;
+}
+
+message CurrencyInfo {
+    int64 db_id = 1;
+    CurrencyBaseInfo base_info = 2;
+}
+
+message EquipmentBaseInfo {
+    int32 template_id = 1;
+    int32 enhancement_level = 2;
+    int32 enchantment_stat_type1 = 3;
+    int32 enchantment_stat_value1 = 4;
+    int32 enchantment_stat_type2 = 5;
+    int32 enchantment_stat_value2 = 6;
+    int32 enchantment_stat_type3 = 7;
+    int32 enchantment_stat_value3 = 8;
+}
+
+message EquipmentInfo {
+    int64 db_id = 1;
+    EquipmentBaseInfo base_info = 2;
+    bool is_bookmarked = 3;
+}
+
+message UsableBaseInfo {
+    int32 template_id = 1;
+    int64 count = 2;
+}
+
+message UsableInfo {
+    int64 db_id = 1;
+    UsableBaseInfo base_info = 2;
+    bool is_bookmarked = 3;
+}
+
+message ItemBoxBaseInfo {
+    int32 template_id = 1;
+    int64 count = 2;
+}
+
+message ItemBoxInfo {
+    int64 db_id = 1;
+    ItemBoxBaseInfo base_info = 2;
+    bool is_bookmarked = 3;
+}
+
+message MaterialBaseInfo {
+    int32 template_id = 1;
+    int64 count = 2;
+}
+
+message MaterialInfo {
+    int64 db_id = 1;
+    MaterialBaseInfo base_info = 2;
+    bool is_bookmarked = 3;
+}
+
+message PetBaseInfo {
+    int32 template_id = 1;
+    int64 count = 2;
+}
+
+message PetInfo {
+    PetBaseInfo base_info = 1;
+}
+
+message CharacterClassBaseInfo {
+    int32 template_id = 1;
+    int64 count = 2;
+}
+
+message CharacterClassInfo {
+    CharacterClassBaseInfo base_info = 1;
+}
+
+message CharacterGiftCheckResult {
+    ECharacterGiftPcConditionType check_type = 1;
+    bool result = 2;
+}
+
+message ItemBaseInfo {
+    oneof SubTypeA {
+        CurrencyBaseInfo currencyInfo = 2;
+        EquipmentBaseInfo equipmentInfo = 3;
+        UsableBaseInfo usableInfo = 4;
+        ItemBoxBaseInfo itemBoxInfo = 5;
+        MaterialBaseInfo materialInfo = 6;
+        PetBaseInfo petInfo = 7;
+        CharacterClassBaseInfo characterClassInfo = 8;
+    }
+}
+
+message ItemInfo {
+    oneof SubTypeB {
+        CurrencyInfo currencyInfo = 2;
+        EquipmentInfo equipmentInfo = 3;
+        UsableInfo usableInfo = 4;
+        ItemBoxInfo itemBoxInfo = 5;
+        MaterialInfo materialInfo = 6;
+        PetInfo petInfo = 7;
+        CharacterClassInfo characterClassInfo = 8;
+    }
+}
+
+message ItemLink {
+    repeated ItemInfo item_infos = 1;
+}
+
+message LostItemLinks {
+    ItemLink link = 1;
+    bool is_equipped = 2;
+    int64 expiration_time = 3;
+    int64 db_id = 4;
+}
+
+message ItemLinks {
+    repeated ItemLink item_links = 1;
+}
+
+message ItemDbIdAndCountPair {
+    int64 item_db_id = 1;
+    int64 count = 2;
+}
+
+message OneOfItemSource {
+    oneof SubTypeC {
+        ItemSourcePcCreation pcCreation = 2;
+        ItemSourceEnhanced enhanced = 3;
+        ItemSourceFieldDrop fieldDrop = 4;
+        ItemSourceDailyBoss dailyBoss = 5;
+        ItemSourceBoxOpen boxOpen = 6;
+        ItemSourceCraft craft = 7;
+        ItemSourceMergePet mergePet = 8;
+        ItemSourceMergeCharacterClass mergeCharacterClass = 9;
+        ItemSourceTest test = 10;
+        ItemSourceCashShop cashShop = 11;
+        ItemSourceAttendance attendance = 12;
+        ItemSourceRoulette roulette = 13;
+        ItemSourceGuildDungeon guildDungeon = 14;
+        ItemSourceMergingGuaranteedReward mergingGuaranteedReward = 15;
+        ItemSourceSiegeShop siegeShop = 16;
+        ItemSourceChangeableReward changeableReward = 17;
+    }
+}
+
+message ItemSourcePcCreation {
+    
+}
+
+message ItemSourceEnhanced {
+    
+}
+
+message ItemSourceFieldDrop {
+    int32 map_template_id = 1;
+    int32 subzone_template_id = 2;
+    int32 npc_template_id = 3;
+}
+
+message ItemSourceDailyBoss {
+    int32 realm_id = 1;
+    int32 map_template_id = 2;
+    int32 boss_template_id = 3;
+    int32 rank = 4;
+}
+
+message ItemSourceBoxOpen {
+    int32 box_template_id = 1;
+}
+
+message ItemSourceCraft {
+    
+}
+
+message ItemSourceMergePet {
+    EItemGradeType material_grade = 1;
+}
+
+message ItemSourceMergeCharacterClass {
+    EItemGradeType material_grade = 1;
+}
+
+message ItemSourceTest {
+    string msg = 1;
+}
+
+message ItemSourceCashShop {
+    string title = 1;
+}
+
+message ItemSourceAttendance {
+    
+}
+
+message ItemSourceRoulette {
+    
+}
+
+message ItemSourceGuildDungeon {
+    int32 guild_dungeon_template_id = 1;
+    int32 level = 2;
+}
+
+message ItemSourceMergingGuaranteedReward {
+    
+}
+
+message ItemSourceSiegeShop {
+    int32 goods_template_id = 1;
+}
+
+message ItemSourceChangeableReward {
+    
+}
+
+message ChatSenderRankingInfo {
+    ERankingType type_ = 1;
+    int32 rank = 2;
+}
+
+message RankingGuildRecord {
+    int32 rank = 1;
+    int64 guild_id = 2;
+    string name = 3;
+    int32 emblem = 4;
+    int32 level = 5;
+    int64 exp = 6;
+    int32 member_count = 7;
+    string introduction = 8;
+    string master_name = 9;
+}
+
+message RankingRecord {
+    int32 rank = 1;
+    int32 prev_rank = 2;
+    string pc_name = 3;
+    int32 character_class_template_id = 4;
+    string guild_name = 5;
+    int32 guild_emblem = 6;
+    RankingOneOfScore score = 7;
+}
+
+message RankingLevelScore {
+    int32 level = 1;
+    int64 exp = 2;
+}
+
+message RankingCombatPowerScore {
+    int32 combat_power = 1;
+}
+
+message RankingPvpScore {
+    int32 score = 1;
+    int32 kill_count = 2;
+    int32 assist_count = 3;
+    int32 death_count = 4;
+}
+
+message RankingOneOfScore {
+    oneof SubType {
+        RankingLevelScore level = 2;
+        RankingCombatPowerScore combatPower = 3;
+        RankingPvpScore pvp = 4;
+    }
+}
+
+message ContentScheduleInfo {
+    bool is_running = 1;
+    int64 start_time = 2;
+    int64 end_time = 3;
+}
+
+message HotTimeInfo {
+    ContentScheduleInfo info = 1;
+    int32 map_id = 2;
+    int32 gold_buff_rate = 3;
+    int32 exp_buff_rate = 4;
+    int32 item_drop_rate = 5;
+}
+
+message FieldDungeonStatus {
+    int32 dungeon_id = 1;
+    EChannelCongestion congestion = 2;
+}
+
+message PushConfigInfo {
+    EPushType type_ = 1;
+    bool activation = 2;
+}
+
+message FriendData {
+    int64 id = 1;
+    string name = 2;
+    int32 template_id = 3;
+    int32 level = 4;
+    string guild_name = 5;
+    int64 last_logout_time = 6;
+    bool online = 7;
+    EFriendType type_ = 8;
+    int64 creation_time = 9;
+    int32 guild_emblem = 10;
+}
+
+message VigilanceData {
+    string vigilance_pc_name = 1;
+    int32 realm_id = 2;
+    int64 create_time = 3;
+    bool online = 4;
+}
+
+message AmityData {
+    string amity_pc_name = 1;
+    int32 realm_id = 2;
+    int64 create_time = 3;
+    bool online = 4;
+}
+
+message PreoccupationCharacterData {
+    int64 npsn = 1;
+    int32 realm_id = 2;
+    string name = 3;
+    int32 state = 4;
+    string realm_name = 5;
+}
+
+message ShopModeInfo {
+    bool enable_login = 1;
+    int32 realm_id = 2;
+    string realm_name = 3;
+    string character_name = 4;
+    bool block_cash_shop = 5;
+}
+
+message LoginRestrictionInfo {
+    ELoginRestrictionState state = 1;
+    int64 expiration_time = 2;
+}
+
+message TradingRestrictionInfo {
+    ETradingRestrictionState state = 1;
+    int64 expiration_time = 2;
+}
+
+message KeyValueData {
+    string key = 1;
+    string value = 2;
+}
+
+message AppInfo {
+    int32 protocol_version = 1;
+    int32 app_version = 2;
+    int32 app_resource_version = 3;
+}
+
+message LocationLink {
+    int32 map_id = 1;
+    NetVector pos = 2;
+    string name = 3;
+}
+
+message LocationLinks {
+    repeated LocationLink location_links = 1;
+}
+
+message UserPrivilege {
+    bool can_ignore_feature_activation = 1;
+    bool can_ignore_channel_move_cool_time = 2;
+    bool can_use_reserved_word = 3;
+    bool can_ignore_channel_congestion = 4;
+}
+
+message LostExpInfo {
+    int64 db_id = 1;
+    int64 lost_exp = 2;
+    int32 base_pc_level = 3;
+    int64 expiration_time = 4;
+}
+
+message RestrictionInfo {
+    ERestrictionReason reason = 1;
+    int64 expiration_time = 2;
+}
+
+message ItemCollectionConfig {
+    repeated int32 book_marked_collection_ids = 1;
+}
+
+message UniversalContentBattleTime {
+    EUniversalLeague league = 1;
+    int64 start_time = 2;
+    int64 end_time = 3;
+}
+
+message UniversalContentScheduleInfo {
+    int64 start_time = 1;
+    int64 draft_start_time = 2;
+    int64 draft_end_time = 3;
+    repeated UniversalContentBattleTime battle_times = 4;
+    int64 end_time = 5;
+}
+
+message WarpReqParam {
+    oneof SubType {
+        UseUsableItemReqParam useUsableItem = 2;
+        TeleportToSubzoneReqParam teleportToSubzone = 3;
+        TeleportToQuestSpotReqParam teleportToQuestSpot = 4;
+        TeleportToBookmarkReqParam teleportToBookmark = 5;
+        SelectChannelReqParam selectChannel = 6;
+        EnterDailyBossDungeonReqParam enterDailyBossDungeon = 7;
+        EnterFieldDungeonReqParam enterFieldDungeon = 8;
+        EnterGuildDungeonReqParam enterGuildDungeon = 9;
+        TrackMurdererReqParam trackMurderer = 10;
+        MoveToPortalReqParam moveToPortal = 11;
+        TeleportToSiegeReqParam teleportToSiege = 12;
+        TeleportToSiegeThroneReqParam teleportToSiegeThrone = 13;
+        EnterGuildAzitReqParam enterGuildAzit = 14;
+        CheatReqParam cheat = 15;
+    }
+}
+
+message UseUsableItemReqParam {
+    int32 template_id = 1;
+}
+
+message TeleportToSubzoneReqParam {
+    int32 subzone_id = 1;
+}
+
+message TeleportToQuestSpotReqParam {
+    int32 subzone_id = 1;
+    int32 quest_step_id = 2;
+}
+
+message TeleportToBookmarkReqParam {
+    int32 page = 1;
+    int32 slot = 2;
+}
+
+message SelectChannelReqParam {
+    int32 channel_id = 1;
+}
+
+message EnterDailyBossDungeonReqParam {
+    int32 daily_boss_template_id = 1;
+}
+
+message EnterFieldDungeonReqParam {
+    int32 dungeon_template_id = 1;
+    EFieldDungeonEnterMethod method = 2;
+    int64 npc_object_id = 3;
+}
+
+message EnterGuildDungeonReqParam {
+    int32 dungeon_id = 1;
+    int32 level = 2;
+}
+
+message EnterGuildAzitReqParam {
+    int32 azit_id = 1;
+}
+
+message TrackMurdererReqParam {
+    int32 history_id = 1;
+    int32 realm_id = 2;
+    int64 zone_id = 3;
+    NetVector position = 4;
+}
+
+message MoveToPortalReqParam {
+    int32 portal_id = 1;
+}
+
+message TeleportToSiegeReqParam {
+    ESiegeTeamType siege_team = 1;
+    int32 map_id = 2;
+    string teleport_point = 3;
+}
+
+message TeleportToSiegeThroneReqParam {
+    int32 portal_id = 1;
+}
+
+message CheatReqParam {
+    ECheatWarpReason reason = 1;
+    CheatReqDetailParam detail_param = 2;
+}
+
+message CheatReqDetailParam {
+    oneof SubType {
+        CheatTpMapReqDetailParam cheatTpMap = 2;
+        CheatTpSubzoneReqDetailParam cheatTpSubzone = 3;
+        CheatTpForceToTargetDebugReqDetailParam cheatTpForceToTargetDebug = 4;
+        CheatTpReqDetailParam cheatTp = 5;
+    }
+}
+
+message CheatTpMapReqDetailParam {
+    int32 map_id = 1;
+}
+
+message CheatTpReqDetailParam {
+    NetVector position = 1;
+}
+
+message CheatTpSubzoneReqDetailParam {
+    int32 subzone_template_id = 1;
+}
+
+message CheatTpForceToTargetDebugReqDetailParam {
+    int64 target_user_id = 1;
+}
+
+message WarpResParam {
+    oneof SubType {
+        TeleportToBookmarkResParam teleportToBookmarkRes = 2;
+        SelectChannelResParam selectChannelRes = 3;
+        EnterDailyBossDungeonResParam enterDailyBossDungeonRes = 4;
+        ExitDailyBossDungeonResParam exitDailyBossDungeonRes = 5;
+        ExitFieldDungeonResPararm exitFieldDungeonRes = 6;
+        ExitGuildDungeonResParam exitGuildDungeonRes = 7;
+        PortalMoveResParam portalMoveRes = 8;
+        ExitGuildAzitResParam exitGuildAzitRes = 9;
+    }
+}
+
+message TeleportToBookmarkResParam {
+    int32 page = 1;
+    int32 slot = 2;
+}
+
+message SelectChannelResParam {
+    int32 remain_seconds = 1;
+}
+
+message EnterDailyBossDungeonResParam {
+    int32 daily_boss_template_id = 1;
+}
+
+message ExitDailyBossDungeonResParam {
+    EDailyBossDungeonExitReason reason = 1;
+}
+
+message ExitFieldDungeonResPararm {
+    EFieldDungeonExitReason reason = 1;
+}
+
+message ExitGuildDungeonResParam {
+    EGuildDungeonExitReason reason = 1;
+}
+
+message PortalMoveResParam {
+    NetVector position = 1;
+}
+
+message ExitGuildAzitResParam {
+    EGuildAzitExitReason reason = 1;
+}
+
+message ChangeableRewardInfo {
+    int64 slot_id = 1;
+    EItemType item_type = 2;
+    int32 item_template_id = 3;
+    int32 remain_changeable_count = 4;
+    int64 confirmation_time = 5;
+}
+
+message SkillActionEffectDecision {
+    int64 target_id = 1;
+    EActionEffectType type_ = 2;
+    int32 action_effect_id = 3;
+    int32 hit_type_bit_flag = 4;
+    int64 time = 5;
+}
+
+message BlinkResult {
+    NetVector blink_dest_position = 1;
+    int64 blink_time = 2;
+}
+
+message ClientConfigInfo {
+    EClientConfigType type_ = 1;
+    bytes data = 2;
+}
+
+message AutoRegisterData_AccountWareHouse {
+    EItemType item_type = 1;
+    int32 template_id = 2;
+    bool is_active = 3;
+}
+
+message AccountWareHouseConfig {
+    repeated AutoRegisterData_AccountWareHouse auto_register_datas = 1;
+}
+
+message AutoRegisterData_Decompose {
+    bool item_grade_1 = 1;
+    bool item_grade_2 = 2;
+    bool item_grade_3 = 3;
+    bool item_grade_4 = 4;
+    bool item_grade_5 = 5;
+    bool item_grade_6 = 6;
+    bool item_grade_7 = 7;
+    bool item_enhanced = 8;
+    bool item_preset_registed = 9;
+}
+
+message DecomposeConfig {
+    AutoRegisterData_Decompose auto_register_data = 1;
+}
+
+message AutoPurchaseData_NPCShop {
+    int32 goods_id = 1;
+    int64 purchase_count = 2;
+}
+
+message NPCShopConfig {
+    repeated AutoPurchaseData_NPCShop auto_purchase_datas = 1;
+}
+
+message UserConfig_AccountGameConfig {
+    int32 config_ver = 1;
+    AccountGameConfigInfo account_game_config = 2;
+    ChatSettingConfig chat_setting = 3;
+}
+
+message AccountGameConfigInfo {
+    bool has_first_learn_skill = 1;
+    bool had_seen_intro = 2;
+    bool already_open_achievement_store_review = 3;
+    bool already_open_attendance_store_review = 4;
+    bool already_cash_purchase = 5;
+}
+
+message UserConfig_BattleConfig {
+    int32 config_ver = 1;
+    HpAutoUseOption hp_auto_use_option = 2;
+    SkillAutoUseRestrictionOption skill_auto_use_restriction_option = 3;
+    TargetPriorityInAutoCombat target_priority_in_auto_combat = 4;
+    TargetPriorityInManualCombat target_priority_in_manual_combat = 5;
+    DropItemAcquireInfo drop_item_acquire_info = 6;
+    BattleConfigEtcInfo battle_config_etc_info = 7;
+}
+
+message UserConfig_GameConfig {
+    int32 config_ver = 1;
+    GameConfigMainInfo game_config_main_info = 2;
+}
+
+message UserConfig_ScanConfig {
+    int32 config_ver = 1;
+    ScanConfigMainInfo scan_config_main_info = 2;
+}
+
+message ScanConfigMainInfo {
+    bool use_auto_scan = 1;
+    int32 auto_scan_list_refresh_interval_index = 2;
+    bool use_distance_align = 3;
+    ScanFilterOption scan_filter_option = 4;
+    bool use_auto_share_scan_send = 5;
+    bool use_auto_share_scan_receive = 6;
+}
+
+message FavoriteCatalogData_Craft {
+    int32 catalog_id = 1;
+}
+
+message CraftConfig {
+    repeated FavoriteCatalogData_Craft favorite_catalog_datas = 1;
+}
+
+message FavoriteData_Trading {
+    int32 item_id = 1;
+    EItemType item_type = 2;
+}
+
+message TradingSaveConfig {
+    repeated FavoriteData_Trading favorite_datas = 1;
+}
+
+message CraftRestrictionInfo {
+    int32 template_id = 1;
+    int32 count = 2;
+    int64 last_craft_time = 3;
+}
+
+message GuildQuestInfo {
+    int32 template_id = 1;
+    int32 value = 2;
+    int64 next_reset_time = 3;
+}
+
+message GuildQuestSlot {
+    int64 accepter_id = 1;
+    int32 accepter_character_class_template_id = 2;
+    string accepter_name = 3;
+    int64 accept_time = 4;
+    int64 reward_time = 5;
+}
+
+message GuildQuestGroupInfo {
+    int32 template_id = 1;
+    repeated GuildQuestSlot slot_list = 2;
+}
+
+message GuildQuestTotalInfo {
+    int64 next_reset_time = 1;
+    int64 prev_reset_time = 2;
+    repeated GuildQuestGroupInfo info_list = 3;
+}
+
+message PcGuildQuestInfo {
+    int32 template_id = 1;
+    int32 value = 2;
+    int32 max_value = 3;
+    int64 next_reset_time = 4;
+}
+
+message SelectedMaterial {
+    int32 material_group_id = 1;
+    repeated MaterialCandidateInfo material_candidate_infos = 2;
+}
+
+message MaterialCandidateInfo {
+    int64 item_db_id = 1;
+    int32 item_template_id = 2;
+    int32 count = 3;
+}
+
+message RuleSelectorActiveRuleInfo {
+    ERuleSelectorRuleType rule_type = 1;
+    ERuleSelectorVoteType vote_type = 2;
+}
+
+message RuleSelectorVoteInfo {
+    ERuleSelectorRuleType rule_type = 1;
+    repeated RuleSelectorVoteCountInfo vote_count_list = 2;
+}
+
+message RuleSelectorVoteCountInfo {
+    ERuleSelectorVoteType vote_type = 1;
+    int32 count = 2;
+}
+
+message BrutalData {
+    int64 pc_db_id = 1;
+    string character_name = 2;
+    int32 class_template_id = 3;
+    int64 end_time = 4;
+}
+
+message SiegeInfo {
+    int32 siege_id = 1;
+    bool is_active = 2;
+    ESiegeStep siege_step = 3;
+    OccupierGuildInfo occupier_guild_info = 4;
+    repeated BidInfo bid_result = 5;
+    RoundThroneOwnerInfo round_throne_owner_info = 6;
+}
+
+message RoundThroneOwnerInfo {
+    int64 round_throne_owner_guild = 1;
+    int64 round_start_time = 2;
+}
+
+message SiegeStateInfo {
+    int32 siege_id = 1;
+    bool is_active = 2;
+}
+
+message OccupierGuildInfo {
+    int64 guild_id = 1;
+    string guild_name = 2;
+    int32 guild_emblem = 3;
+    string guild_master_name = 4;
+}
+
+message BidInfo {
+    int32 siege_id = 1;
+    int64 guild_id = 2;
+    int32 amount = 3;
+    string guild_name = 4;
+    int32 guild_emblem = 5;
+}
+
+message SiegeRewardDistribution {
+    int64 pc_id = 1;
+    int64 gold = 2;
+    int64 gem = 3;
+}
+
+message SiegeSceneInfo {
+    int32 siege_id = 1;
+    int64 owner_guild_id = 2;
+    string owner_guild_name = 3;
+    int32 owner_guild_emblem = 4;
+    string owner_guild_master_name = 5;
+    int64 next_battle_time = 6;
+    int32 tax_rate = 7;
+    int32 reserved_tax_rate = 8;
+    int64 base_reward_gold = 9;
+    int64 base_reward_gem = 10;
+    int64 defense_reward_gold = 11;
+    int64 defense_reward_gem = 12;
+    int32 win_streak = 13;
+}
+
+message SiegeObjectKnockBackInfo {
+    int64 pc_object_id = 1;
+    NetVector position = 2;
+}
+
+message ChatReportInfo {
+    string reported_name = 1;
+    EChatReportReason reason = 2;
+    string text = 3;
+}
+
+enum EProtocolVersion {
+    EProtocolVersion_NONE = 0;
+    EProtocolVersion_VERSION = 2019101001;
+    EProtocolVersion_INVALID = -1;
+}
+
+enum ELevelRangeEquipment {
+    ELevelRangeEquipment_MIN = 0;
+    ELevelRangeEquipment_DUMMY_FOR_MAX = 2147483646;
+    ELevelRangeEquipment_INVALID = -1;
+}
+
+enum EDefinedFieldObjectType {
+    EDefinedFieldObjectType_Player = 0;
+    EDefinedFieldObjectType_Npc = 1;
+    EDefinedFieldObjectType_Projectile = 2;
+    EDefinedFieldObjectType_InteractiveObject = 3;
+    EDefinedFieldObjectType_TimedObject = 4;
+    EDefinedFieldObjectType_DestroyableObject = 5;
+    EDefinedFieldObjectType_ObstacleObject = 6;
+    EDefinedFieldObjectType_DropItemObject = 7;
+    EDefinedFieldObjectType_Pet = 8;
+    EDefinedFieldObjectType_INVALID = -1;
+}
+
+enum EDefinedFieldObjectQuestTargetInProgress {
+    EDefinedFieldObjectQuestTargetInProgress_IsTarget = 0;
+    EDefinedFieldObjectQuestTargetInProgress_NotTarget = 1;
+    EDefinedFieldObjectQuestTargetInProgress_INVALID = -1;
+}
+
+enum EDefinedFieldObjectEngageFromMy {
+    EDefinedFieldObjectEngageFromMy_EngageLv1 = 0;
+    EDefinedFieldObjectEngageFromMy_EngageLv2 = 1;
+    EDefinedFieldObjectEngageFromMy_NotEngage = 2;
+    EDefinedFieldObjectEngageFromMy_INVALID = -1;
+}
+
+enum EDefinedFieldObjectOverWatchFromMy {
+    EDefinedFieldObjectOverWatchFromMy_Overwatch = 0;
+    EDefinedFieldObjectOverWatchFromMy_NotOverwatch = 1;
+    EDefinedFieldObjectOverWatchFromMy_INVALID = -1;
+}
+
+enum EDefinedFieldObjectHasGuildState {
+    EDefinedFieldObjectHasGuildState_HasGuild = 0;
+    EDefinedFieldObjectHasGuildState_NotGuild = 1;
+    EDefinedFieldObjectHasGuildState_INVALID = -1;
+}
+
+enum EDefinedFieldObjectMyGuildState {
+    EDefinedFieldObjectMyGuildState_MyGuild = 0;
+    EDefinedFieldObjectMyGuildState_NotMyGuild = 1;
+    EDefinedFieldObjectMyGuildState_INVALID = -1;
+}
+
+enum EDefinedFieldObjectHasSiegeTeamState {
+    EDefinedFieldObjectHasSiegeTeamState_HasSiegeTeam = 0;
+    EDefinedFieldObjectHasSiegeTeamState_NotSiegeTeam = 1;
+    EDefinedFieldObjectHasSiegeTeamState_INVALID = -1;
+}
+
+enum EDefinedFieldObjectHostileGuild {
+    EDefinedFieldObjectHostileGuild_IsHostile = 0;
+    EDefinedFieldObjectHostileGuild_NotHostile = 1;
+    EDefinedFieldObjectHostileGuild_INVALID = -1;
+}
+
+enum ETargetAgeType {
+    ETargetAgeType_NONE = 0;
+    ETargetAgeType_ADULT = 1;
+    ETargetAgeType_TEEN = 2;
+    ETargetAgeType_INVALID = -1;
+}
+
+enum EPcDeletionReason {
+    EPcDeletionReason_NONE = 0;
+    EPcDeletionReason_BY_USER = 1;
+    EPcDeletionReason_BY_OPERATION = 2;
+    EPcDeletionReason_BY_REALM_IMMIGRATION = 3;
+    EPcDeletionReason_INVALID = -1;
+}
+
+enum EStoreType {
+    EStoreType_NONE = 0;
+    EStoreType_GOOGLE_PLAY_STORE = 1;
+    EStoreType_APPLE_APP_STORE = 2;
+    EStoreType_INVALID = -1;
+}
+
+enum ENexonMarketCode {
+    ENexonMarketCode_NONE = 0;
+    ENexonMarketCode_GOOGLE_PLAY_STORE = 1;
+    ENexonMarketCode_APPLE_APP_STORE = 2;
+    ENexonMarketCode_INVALID = -1;
+}
+
+enum ENexonAuthPlatformCode {
+    ENexonAuthPlatformCode_NONE = 0;
+    ENexonAuthPlatformCode_NEXON_PLAY = 1;
+    ENexonAuthPlatformCode_KAKAO = 2;
+    ENexonAuthPlatformCode_NPA = 3;
+    ENexonAuthPlatformCode_NEXON_DOT_COM = 4;
+    ENexonAuthPlatformCode_DEV = 5;
+    ENexonAuthPlatformCode_INVALID = -1;
+}
+
+enum ENexonStoreTypeForAuth {
+    ENexonStoreTypeForAuth_NONE = 0;
+    ENexonStoreTypeForAuth_GOOGLE_PLAY_STORE = 1;
+    ENexonStoreTypeForAuth_APPLE_APP_STORE = 2;
+    ENexonStoreTypeForAuth_NEXON_PC = 200;
+    ENexonStoreTypeForAuth_INVALID = -1;
+}
+
+enum ENexonStoreTypeForBilling {
+    ENexonStoreTypeForBilling_NONE = 0;
+    ENexonStoreTypeForBilling_GOOGLE_PLAY_STORE_MOBILE = 1;
+    ENexonStoreTypeForBilling_APPLE_APP_STORE_MOBILE = 2;
+    ENexonStoreTypeForBilling_GOOGLE_PLAY_STORE_PC = 11;
+    ENexonStoreTypeForBilling_APPLE_APP_STORE_PC = 12;
+    ENexonStoreTypeForBilling_INVALID = -1;
+}
+
+enum EOsType {
+    EOsType_NONE = 0;
+    EOsType_AOS = 1;
+    EOsType_IOS = 2;
+    EOsType_WIN = 3;
+    EOsType_UNKNOWN = 255;
+    EOsType_INVALID = -1;
+}
+
+enum ENxOsType {
+    ENxOsType_NONE = 0;
+    ENxOsType_IOS = 1;
+    ENxOsType_AOS = 2;
+    ENxOsType_WIN = 3;
+    ENxOsType_UNKNOWN = 255;
+    ENxOsType_INVALID = -1;
+}
+
+enum EOsArchitectureType {
+    EOsArchitectureType_NONE = 0;
+    EOsArchitectureType_BIT_32 = 1;
+    EOsArchitectureType_BIT_64 = 2;
+    EOsArchitectureType_INVALID = -1;
+}
+
+enum EAccountType {
+    EAccountType_NONE = 0;
+    EAccountType_DEV = 1;
+    EAccountType_NEXON = 2;
+    EAccountType_INVALID = -1;
+}
+
+enum EUserSessionStates {
+    EUserSessionStates_NONE = 0;
+    EUserSessionStates_AUTHED = 1;
+    EUserSessionStates_LOBBY = 2;
+    EUserSessionStates_WORLD = 3;
+    EUserSessionStates_SHOPMODE = 4;
+    EUserSessionStates_INVALID = -1;
+}
+
+enum EMap {
+    EMap_FIELD = 0;
+    EMap_ELIMINATION = 1;
+    EMap_RAID = 2;
+    EMap_INVALID = -1;
+}
+
+enum EMapType {
+    EMapType_PERMANENT_FIELD = 0;
+    EMapType_FIELD_DUNGEON = 1;
+    EMapType_GUILD_DUNGEON = 2;
+    EMapType_SCHEDULED_DUNGEON = 3;
+    EMapType_PERMANENT_LOBBY_CWS = 4;
+    EMapType_FIELD_DUNGEON_CWS = 5;
+    EMapType_SIEGE_FIELD = 6;
+    EMapType_SIEGE_HUNT_FIELD = 7;
+    EMapType_GUILD_AZIT = 8;
+    EMapType_INVALID = -1;
+}
+
+enum EPcState {
+    EPcState_NORMAL = 0;
+    EPcState_INACTIVE = 1;
+    EPcState_GIFT_PACKED = 2;
+    EPcState_NAME_UPDATE_REQUIRED = 3;
+    EPcState_DELETED = 4;
+    EPcState_INVALID = -1;
+}
+
+enum ECharacterGiftState {
+    ECharacterGiftState_PACKED = 0;
+    ECharacterGiftState_RECEIVE_COMPLETE = 1;
+    ECharacterGiftState_REGISTER_NAME_COMPLETE = 2;
+    ECharacterGiftState_CANCELED = 3;
+    ECharacterGiftState_INVALID = -1;
+}
+
+enum ECharacterGiftPcConditionType {
+    ECharacterGiftPcConditionType_GUILD_JOIN = 0;
+    ECharacterGiftPcConditionType_GUILD_JOIN_REQUEST = 1;
+    ECharacterGiftPcConditionType_PARTY = 2;
+    ECharacterGiftPcConditionType_TRADING = 3;
+    ECharacterGiftPcConditionType_CASH_SHOP = 4;
+    ECharacterGiftPcConditionType_MAIL = 5;
+    ECharacterGiftPcConditionType_DEATH_PENALTY = 6;
+    ECharacterGiftPcConditionType_COMMUNITY = 7;
+    ECharacterGiftPcConditionType_CHARACTER_LEVEL = 8;
+    ECharacterGiftPcConditionType_CHARACTER_POSITION = 9;
+    ECharacterGiftPcConditionType_COOLTIME = 10;
+    ECharacterGiftPcConditionType_REWARD_CHANGE = 11;
+    ECharacterGiftPcConditionType_INVALID = -1;
+}
+
+enum ERealmImmigrationConditionType {
+    ERealmImmigrationConditionType_GUILD = 0;
+    ERealmImmigrationConditionType_MAIL = 1;
+    ERealmImmigrationConditionType_TRADE = 2;
+    ERealmImmigrationConditionType_DEATH_PENALTY_ITEM = 3;
+    ERealmImmigrationConditionType_CASH_SHOP_INBOX_GOODS = 4;
+    ERealmImmigrationConditionType_INVALID = -1;
+}
+
+enum ERealmImmigrationPcConditionType {
+    ERealmImmigrationPcConditionType_GUILD = 0;
+    ERealmImmigrationPcConditionType_MAIL = 1;
+    ERealmImmigrationPcConditionType_TRADE = 2;
+    ERealmImmigrationPcConditionType_DEATH_PENALTY_ITEM = 3;
+    ERealmImmigrationPcConditionType_CASH_SHOP_INBOX_GOODS = 4;
+    ERealmImmigrationPcConditionType_GUILD_SENT_JOIN_REQUEST = 5;
+    ERealmImmigrationPcConditionType_GUILD_RECEIVED_INVITATION = 6;
+    ERealmImmigrationPcConditionType_PARTY = 7;
+    ERealmImmigrationPcConditionType_CHANGABLE_REWARD = 8;
+    ERealmImmigrationPcConditionType_LEVEL = 9;
+    ERealmImmigrationPcConditionType_TOWN = 10;
+    ERealmImmigrationPcConditionType_CHARACTER_SLOT = 11;
+    ERealmImmigrationPcConditionType_COMMUNITY = 12;
+    ERealmImmigrationPcConditionType_INVALID = -1;
+}
+
+enum ERealmImmigrationGuildConditionType {
+    ERealmImmigrationGuildConditionType_GUILD_MASTER = 0;
+    ERealmImmigrationGuildConditionType_GUILD_JOIN_TYPE = 1;
+    ERealmImmigrationGuildConditionType_GUILD_MEMBER = 2;
+    ERealmImmigrationGuildConditionType_GUILD_DUNGEON = 3;
+    ERealmImmigrationGuildConditionType_GUILD_RECEIVED_JOIN_REQUEST = 4;
+    ERealmImmigrationGuildConditionType_GUILD_SENT_INVITATION = 5;
+    ERealmImmigrationGuildConditionType_INVALID = -1;
+}
+
+enum EMapUseType {
+    EMapUseType_NONE = 0;
+    EMapUseType_QUEST_MAIN = 1;
+    EMapUseType_INVALID = -1;
+}
+
+enum EFloatingBgBase {
+    EFloatingBgBase_NONE = 0;
+    EFloatingBgBase_INSTIGATOR = 1;
+    EFloatingBgBase_TARGET = 2;
+    EFloatingBgBase_INVALID = -1;
+}
+
+enum ECharacterType {
+    ECharacterType_NONE = 0;
+    ECharacterType_PC = 1;
+    ECharacterType_NPC = 2;
+    ECharacterType_INVALID = -1;
+}
+
+enum EGender {
+    EGender_MALE = 0;
+    EGender_FEMALE = 1;
+    EGender_INVALID = -1;
+}
+
+enum EProjectile {
+    EProjectile_INSTANTE = 0;
+    EProjectile_GUIDED = 1;
+    EProjectile_STRAIGHT = 2;
+    EProjectile_STRAIGHT_PASS = 3;
+    EProjectile_INVALID = -1;
+}
+
+enum EProjectileDirection {
+    EProjectileDirection_TARGET = 0;
+    EProjectileDirection_DIRECTION = 1;
+    EProjectileDirection_INVALID = -1;
+}
+
+enum EAiEventTarget {
+    EAiEventTarget_NONE = 0;
+    EAiEventTarget_OWNER = 1;
+    EAiEventTarget_TARGET = 2;
+    EAiEventTarget_INVALID = -1;
+}
+
+enum EMbType {
+    EMbType_OK = 0;
+    EMbType_OKCANCEL = 1;
+    EMbType_EMBTYPE_MAX = 2;
+    EMbType_INVALID = -1;
+}
+
+enum ETopMenuPresetType {
+    ETopMenuPresetType_DEFAULT = 0;
+    ETopMenuPresetType_EXIT = 1;
+    ETopMenuPresetType_FIELD = 2;
+    ETopMenuPresetType_INVALID = -1;
+}
+
+enum ESpotType {
+    ESpotType_NPC_SPAWN = 0;
+    ESpotType_INTERACTIVE_SPAWN = 1;
+    ESpotType_DESTROYABLE_SPAWN = 2;
+    ESpotType_PLAYER_RESTART = 3;
+    ESpotType_PLAYER_START = 4;
+    ESpotType_WORLD_POS = 5;
+    ESpotType_POTAL = 6;
+    ESpotType_INVALID = -1;
+}
+
+enum EQuestType {
+    EQuestType_MAIN = 0;
+    EQuestType_TUTORIAL = 1;
+    EQuestType_DAILY = 2;
+    EQuestType_SCROLL = 3;
+    EQuestType_INVALID = -1;
+}
+
+enum EQuestStepType {
+    EQuestStepType_NONE = 0;
+    EQuestStepType_TALK = 1;
+    EQuestStepType_HUNT = 2;
+    EQuestStepType_CONTROL = 3;
+    EQuestStepType_MOVE = 4;
+    EQuestStepType_USEITEM = 5;
+    EQuestStepType_MAPHUNT = 6;
+    EQuestStepType_SUBZONEHUNT = 7;
+    EQuestStepType_ENHANCED = 8;
+    EQuestStepType_UIINTERACTION = 9;
+    EQuestStepType_INVALID = -1;
+}
+
+enum EQuestState {
+    EQuestState_NOT_STARTED = 0;
+    EQuestState_STARTED = 1;
+    EQuestState_COMPLETED = 2;
+    EQuestState_GOT_REWARD = 3;
+    EQuestState_EXPIRED = 4;
+    EQuestState_INVALID = -1;
+}
+
+enum ERewardGrade {
+    ERewardGrade_GRADE1 = 0;
+    ERewardGrade_GRADE2 = 1;
+    ERewardGrade_GRADE3 = 2;
+    ERewardGrade_INVALID = -1;
+}
+
+enum EShopGroupType {
+    EShopGroupType_PUBLIC = 0;
+    EShopGroupType_PRIVATE = 1;
+    EShopGroupType_EVENT = 2;
+    EShopGroupType_ADV_PAMPHLET_SLOT1 = 3;
+    EShopGroupType_ADV_PAMPHLET_SLOT2 = 4;
+    EShopGroupType_ADV_PAMPHLET_SLOT3 = 5;
+    EShopGroupType_INVALID = -1;
+}
+
+enum EEnterType {
+    EEnterType_SHOP = 0;
+    EEnterType_EVENT = 1;
+    EEnterType_ENTER_SHOP = 2;
+    EEnterType_INIT_CLIENT = 3;
+    EEnterType_INVALID = -1;
+}
+
+enum EShopSlotSellType {
+    EShopSlotSellType_NORMAL = 0;
+    EShopSlotSellType_LIMIT = 1;
+    EShopSlotSellType_MONTH = 2;
+    EShopSlotSellType_WEEK = 3;
+    EShopSlotSellType_DAY = 4;
+    EShopSlotSellType_HOUR = 5;
+    EShopSlotSellType_INVALID = -1;
+}
+
+enum ERewardMailType {
+    ERewardMailType_NORMAL = 0;
+    ERewardMailType_ACCOUNT = 1;
+    ERewardMailType_GUILD = 2;
+    ERewardMailType_INVALID = -1;
+}
+
+enum EMiniDialogAnimation {
+    EMiniDialogAnimation_NONE = 0;
+    EMiniDialogAnimation_SLIDE = 1;
+    EMiniDialogAnimation_SHAKE = 2;
+    EMiniDialogAnimation_INVALID = -1;
+}
+
+enum EStatusEffect {
+    EStatusEffect_NONE = 0;
+    EStatusEffect_KNOCKDOWN = 1;
+    EStatusEffect_KNOCKBACK = 2;
+    EStatusEffect_STUN = 3;
+    EStatusEffect_STAGGER = 4;
+    EStatusEffect_PULLING = 5;
+    EStatusEffect_FREEZING = 6;
+    EStatusEffect_CANNOTSEE = 7;
+    EStatusEffect_STONE = 8;
+    EStatusEffect_SLEEP = 9;
+    EStatusEffect_INVALID = -1;
+}
+
+enum EEffectAnimationType {
+    EEffectAnimationType_NONE = 0;
+    EEffectAnimationType_STUN = 1;
+    EEffectAnimationType_PULL = 2;
+    EEffectAnimationType_PUSH = 3;
+    EEffectAnimationType_SLEEP = 4;
+    EEffectAnimationType_INVALID = -1;
+}
+
+enum EStatusEffectMoveDirection {
+    EStatusEffectMoveDirection_DAMAGE_TO_VICTIM = 0;
+    EStatusEffectMoveDirection_DAMAGE_DIRECTION = 1;
+    EStatusEffectMoveDirection_INSTIGATOR_TO_VICTIM = 2;
+    EStatusEffectMoveDirection_INVALID = -1;
+}
+
+enum ESkillMarkType {
+    ESkillMarkType_NONE = 0;
+    ESkillMarkType_KNOCKDOWN_MARK = 1;
+    ESkillMarkType_KNOCKBACK_MARK = 2;
+    ESkillMarkType_STUN_MARK = 3;
+    ESkillMarkType_WEAKNESS1_MARK = 4;
+    ESkillMarkType_WEAKNESS2_MARK = 5;
+    ESkillMarkType_GROGGY1_MARK = 6;
+    ESkillMarkType_GROGGY2_MARK = 7;
+    ESkillMarkType_GROGGY3_MARK = 8;
+    ESkillMarkType_INVALID = -1;
+}
+
+enum ESkillType {
+    ESkillType_NONE = 0;
+    ESkillType_NORMAL = 1;
+    ESkillType_ACTIVE = 2;
+    ESkillType_BUFF = 3;
+    ESkillType_PASSIVE = 4;
+    ESkillType_INVALID = -1;
+}
+
+enum ELinkActionType {
+    ELinkActionType_NONE = 0;
+    ELinkActionType_MANUAL = 1;
+    ELinkActionType_AUTO = 2;
+    ELinkActionType_INVALID = -1;
+}
+
+enum EHittingDirection {
+    EHittingDirection_TOUP = 0;
+    EHittingDirection_TOLEFT = 1;
+    EHittingDirection_TODOWN = 2;
+    EHittingDirection_TORIGHT = 3;
+    EHittingDirection_RANDOM = 4;
+    EHittingDirection_NONE = 5;
+    EHittingDirection_INVALID = -1;
+}
+
+enum EDialogType {
+    EDialogType_DEFAULT = 0;
+    EDialogType_EVENT = 1;
+    EDialogType_FOCUS = 2;
+    EDialogType_INVALID = -1;
+}
+
+enum ECheckMethod {
+    ECheckMethod_PARAM_IS_EQUAL_TO_DATA = 0;
+    ECheckMethod_PARAM_IS_LESS_THAN_DATA = 1;
+    ECheckMethod_PARAM_IS_GREATER_THAN_DATA = 2;
+    ECheckMethod_PARAM_IS_EQUAL_OR_LESS_THAN_DATA = 3;
+    ECheckMethod_PARAM_IS_EQUAL_OR_GREATER_THAN_DATA = 4;
+    ECheckMethod_INVALID = -1;
+}
+
+enum ENpcType {
+    ENpcType_CITIZEN = 0;
+    ENpcType_MONSTER = 1;
+    ENpcType_GUARD = 2;
+    ENpcType_DECORATION = 3;
+    ENpcType_INVALID = -1;
+}
+
+enum ENpcGrade {
+    ENpcGrade_NORMAL = 0;
+    ENpcGrade_ELITE = 1;
+    ENpcGrade_BOSS = 2;
+    ENpcGrade_INVALID = -1;
+}
+
+enum EBossType {
+    EBossType_NONE = 0;
+    EBossType_FIELD = 1;
+    EBossType_DAILY = 2;
+    EBossType_RANDOM = 3;
+    EBossType_LUCKY = 4;
+    EBossType_SIEGE = 5;
+    EBossType_INVALID = -1;
+}
+
+enum ENpcRoleType {
+    ENpcRoleType_SHOP_GOODS = 0;
+    ENpcRoleType_SHOP_SCROLL = 1;
+    ENpcRoleType_SHOP_EQUIPMENT = 2;
+    ENpcRoleType_SHOP_GUILD = 3;
+    ENpcRoleType_SHOP_ESSENCE = 4;
+    ENpcRoleType_STORAGE = 5;
+    ENpcRoleType_FIELD_DUNGEON = 6;
+    ENpcRoleType_DEATH_PENALTY_RESTORE = 7;
+    ENpcRoleType_SHOP_EVENT = 8;
+    ENpcRoleType_SHOP_SKILLBOOK = 9;
+    ENpcRoleType_DAILY_QUEST = 10;
+    ENpcRoleType_SHOP_AZIT = 11;
+    ENpcRoleType_INVALID = -1;
+}
+
+enum ENpcSpecializedDefenseType {
+    ENpcSpecializedDefenseType_NONE = 0;
+    ENpcSpecializedDefenseType_SHORT_RANGE = 1;
+    ENpcSpecializedDefenseType_LONG_RANGE = 2;
+    ENpcSpecializedDefenseType_INVALID = -1;
+}
+
+enum EInteractiveObjectType {
+    EInteractiveObjectType_NONE = 0;
+    EInteractiveObjectType_COREALTAR = 1;
+    EInteractiveObjectType_TREASURE = 2;
+    EInteractiveObjectType_SIEGETHRONE = 3;
+    EInteractiveObjectType_INVALID = -1;
+}
+
+enum EDestroyableObjectType {
+    EDestroyableObjectType_NONE = 0;
+    EDestroyableObjectType_SIEGEGATE = 1;
+    EDestroyableObjectType_GUARDIANSTONE = 2;
+    EDestroyableObjectType_INVALID = -1;
+}
+
+enum EScreenType {
+    EScreenType_NONE = 0;
+    EScreenType_SUB_NOTICE = 1;
+    EScreenType_MAIN_NOTICE = 2;
+    EScreenType_REWARD_NOTICE = 3;
+    EScreenType_INVALID = -1;
+}
+
+enum ECharacterRaceType {
+    ECharacterRaceType_SERAPHIM_MALE = 0;
+    ECharacterRaceType_HUMAN_MALE = 1;
+    ECharacterRaceType_HUMAN_FEMALE = 2;
+    ECharacterRaceType_ELF_FEMALE = 3;
+    ECharacterRaceType_KIKI = 4;
+    ECharacterRaceType_INVALID = -1;
+}
+
+enum EWeaponType {
+    EWeaponType_GSWORD = 0;
+    EWeaponType_MACE = 1;
+    EWeaponType_DSWORD = 2;
+    EWeaponType_STAFF = 3;
+    EWeaponType_ORB = 4;
+    EWeaponType_BOW = 5;
+    EWeaponType_ALL = 6;
+    EWeaponType_INVALID = -1;
+}
+
+enum EGameStatType {
+    EGameStatType_POWER = 0;
+    EGameStatType_ENDURE = 1;
+    EGameStatType_VITAL = 2;
+    EGameStatType_CLEVER = 3;
+    EGameStatType_DAMAGE = 4;
+    EGameStatType_WEAPON_DAMAGE = 5;
+    EGameStatType_WEAPON_ADD_DAMAGE = 6;
+    EGameStatType_PVP_DAMAGE = 7;
+    EGameStatType_ABSOLUTE_EVADE = 8;
+    EGameStatType_ACCURACY = 9;
+    EGameStatType_CRITICAL_RATE = 10;
+    EGameStatType_PVP_CRITICAL_RATE = 11;
+    EGameStatType_CRITICAL_DAMAGE_RATE = 12;
+    EGameStatType_CRITICAL_RESIST_RATE = 13;
+    EGameStatType_PVP_CRITICAL_RESIST_RATE = 14;
+    EGameStatType_CRITICAL_DAMAGE_RESIST_RATE = 15;
+    EGameStatType_DEFENSE = 16;
+    EGameStatType_PVP_DEFENSE = 17;
+    EGameStatType_PENETRATE = 18;
+    EGameStatType_MAX_HP = 19;
+    EGameStatType_HP_REGEN = 20;
+    EGameStatType_HP_REGEN_ABSOLUTE = 21;
+    EGameStatType_MAX_MP = 22;
+    EGameStatType_MP_REGEN = 23;
+    EGameStatType_MP_REGEN_ABSOLUTE = 24;
+    EGameStatType_HP_POTION_EFFICIENCY_RATE = 25;
+    EGameStatType_HP_POTION_EFFICIENCY = 26;
+    EGameStatType_ATTACK_SPEED_RATE = 27;
+    EGameStatType_SKILL_SPEED_RATE = 28;
+    EGameStatType_MOVE_SPEED_RATE = 29;
+    EGameStatType_INCREASE_SKILL_DAMAGE_RATE = 30;
+    EGameStatType_DECREASE_SKILL_DAMAGE_RATE = 31;
+    EGameStatType_INCREASE_WEAPON_DAMAGE_RATE = 32;
+    EGameStatType_DECREASE_WEAPON_DAMAGE_RATE = 33;
+    EGameStatType_COOLTIME_REDUCTION_RATE = 34;
+    EGameStatType_STUN_RATE = 35;
+    EGameStatType_STUN_RESIST_RATE = 36;
+    EGameStatType_DEBUFF_RATE = 37;
+    EGameStatType_DEBUFF_RESIST_RATE = 38;
+    EGameStatType_STIFFEN_RATE = 39;
+    EGameStatType_STIFFEN_RESIST_RATE = 40;
+    EGameStatType_EXP_BONUS_RATE = 41;
+    EGameStatType_MAX_WEIGHT = 42;
+    EGameStatType_WEAPON_MIN_DAMAGE = 43;
+    EGameStatType_WEAPON_MIN_DAMAGE_RATE = 44;
+    EGameStatType_WEAPON_BLOCK_RATE = 45;
+    EGameStatType_WEAPON_BLOCK_PIERCE_RATE = 46;
+    EGameStatType_VACUITY_ADD_DAMAGE = 47;
+    EGameStatType_VACUITY_ACCURACY = 48;
+    EGameStatType_VACUITY_WEAPON_DAMAGE = 49;
+    EGameStatType_VACUITY_WEAPON_DAMAGE_RATE = 50;
+    EGameStatType_SHIELD = 51;
+    EGameStatType_DAMAGE_BOSS = 52;
+    EGameStatType_DAMAGE_BOSS_REDUCTION = 53;
+    EGameStatType_PVE_TAKE_DAMAGE = 54;
+    EGameStatType_SKILL_RANGE_BONUS = 55;
+    EGameStatType_HEAL = 56;
+    EGameStatType_TAKE_HEAL = 57;
+    EGameStatType_HEAL_RATE = 58;
+    EGameStatType_TAKE_HEAL_RATE = 59;
+    EGameStatType_FINAL_DAMAGE_REDUCTION_RATE = 60;
+    EGameStatType_FINAL_DAMAGE_REDUCTION_PENETRATE_RATE = 61;
+    EGameStatType_LEAST_DAMAGE = 62;
+    EGameStatType_LEAST_DAMAGE_RESIST = 63;
+    EGameStatType_FIRE_DAMAGE = 64;
+    EGameStatType_WATER_DAMAGE = 65;
+    EGameStatType_EARTH_DAMAGE = 66;
+    EGameStatType_WIND_DAMAGE = 67;
+    EGameStatType_DAMAGE_MELEE = 68;
+    EGameStatType_DAMAGE_RANGE = 69;
+    EGameStatType_DAMAGE_MAGIC = 70;
+    EGameStatType_DEFENSE_MELEE = 71;
+    EGameStatType_DEFENSE_RANGE = 72;
+    EGameStatType_DEFENSE_MAGIC = 73;
+    EGameStatType_CRITICAL_RATE_MELEE = 74;
+    EGameStatType_CRITICAL_RATE_RANGE = 75;
+    EGameStatType_CRITICAL_RATE_MAGIC = 76;
+    EGameStatType_CRITICAL_RESIST_RATE_MELEE = 77;
+    EGameStatType_CRITICAL_RESIST_RATE_RANGE = 78;
+    EGameStatType_CRITICAL_RESIST_RATE_MAGIC = 79;
+    EGameStatType_FINAL_DAMAGE_REDUCTION_MELEE_RATE = 80;
+    EGameStatType_FINAL_DAMAGE_REDUCTION_RANGE_RATE = 81;
+    EGameStatType_FINAL_DAMAGE_REDUCTION_MAGIC_RATE = 82;
+    EGameStatType_INVALID = -1;
+}
+
+enum ECharacterClass {
+    ECharacterClass_BLADER = 0;
+    ECharacterClass_MAGICIAN = 1;
+    ECharacterClass_GUNSLINGER = 2;
+    ECharacterClass_KNIGHT = 3;
+    ECharacterClass_WARLORD = 4;
+    ECharacterClass_AXCELER = 5;
+    ECharacterClass_ARCHER = 6;
+    ECharacterClass_ASSASSIN = 7;
+    ECharacterClass_ALL = 8;
+    ECharacterClass_INVALID = -1;
+}
+
+enum ECharacterClassBit {
+    ECharacterClassBit_NONE = 0;
+    ECharacterClassBit_BLADER = 1;
+    ECharacterClassBit_MAGICIAN = 2;
+    ECharacterClassBit_GUNSLINGER = 4;
+    ECharacterClassBit_KNIGHT = 8;
+    ECharacterClassBit_WARLORD = 16;
+    ECharacterClassBit_AXCELER = 32;
+    ECharacterClassBit_ARCHER = 64;
+    ECharacterClassBit_ASSASSIN = 128;
+    ECharacterClassBit_ALL = 255;
+    ECharacterClassBit_INVALID = -1;
+}
+
+enum EItemType {
+    EItemType_CURRENCY = 0;
+    EItemType_EQUIPMENT = 1;
+    EItemType_USABLE = 2;
+    EItemType_ITEM_BOX = 3;
+    EItemType_MATERIAL = 4;
+    EItemType_PET = 5;
+    EItemType_CHARACTER_CLASS = 6;
+    EItemType_INVALID = -1;
+}
+
+enum EUserItemType {
+    EUserItemType_PET = 0;
+    EUserItemType_CHARACTER_CLASS = 1;
+    EUserItemType_INVALID = -1;
+}
+
+enum ECurrencyType {
+    ECurrencyType_GOLD = 0;
+    ECurrencyType_MILEAGE = 1;
+    ECurrencyType_GUILD_COIN = 2;
+    ECurrencyType_GEM = 3;
+    ECurrencyType_GEM_FREE = 4;
+    ECurrencyType_INVALID = -1;
+}
+
+enum ESystemPointType {
+    ESystemPointType_ADDITIONAL_INVENTORY_SLOT_COUNT = 0;
+    ESystemPointType_INVALID = -1;
+}
+
+enum EEquipmentCategory {
+    EEquipmentCategory_WEAPON = 0;
+    EEquipmentCategory_ARMOR = 1;
+    EEquipmentCategory_ACCESSORY = 2;
+    EEquipmentCategory_INVALID = -1;
+}
+
+enum EEquipmentType {
+    EEquipmentType_WEAPON = 0;
+    EEquipmentType_HAT = 1;
+    EEquipmentType_SUIT = 2;
+    EEquipmentType_GLOVES = 3;
+    EEquipmentType_PANTS = 4;
+    EEquipmentType_SHOES = 5;
+    EEquipmentType_CAPE = 6;
+    EEquipmentType_NECKLACE = 7;
+    EEquipmentType_BRACELET = 8;
+    EEquipmentType_RING = 9;
+    EEquipmentType_BELT = 10;
+    EEquipmentType_INSIGNIA = 11;
+    EEquipmentType_PROTECTOR = 12;
+    EEquipmentType_INVALID = -1;
+}
+
+enum EEquipmentSlot {
+    EEquipmentSlot_WEAPON = 0;
+    EEquipmentSlot_HAT = 1;
+    EEquipmentSlot_SUIT = 2;
+    EEquipmentSlot_GLOVES = 3;
+    EEquipmentSlot_PANTS = 4;
+    EEquipmentSlot_SHOES = 5;
+    EEquipmentSlot_CAPE = 6;
+    EEquipmentSlot_NECKLACE = 7;
+    EEquipmentSlot_BRACELET_0 = 8;
+    EEquipmentSlot_BRACELET_1 = 9;
+    EEquipmentSlot_RING_0 = 10;
+    EEquipmentSlot_RING_1 = 11;
+    EEquipmentSlot_BELT = 12;
+    EEquipmentSlot_INSIGNIA_0 = 13;
+    EEquipmentSlot_INSIGNIA_1 = 14;
+    EEquipmentSlot_PROTECTOR = 15;
+    EEquipmentSlot_INVALID = -1;
+}
+
+enum EHitType {
+    EHitType_NONE = 0;
+    EHitType_DODGE = 1;
+    EHitType_BLOCK = 2;
+    EHitType_MAX_DAMAGE = 4;
+    EHitType_CRITICAL = 8;
+    EHitType_INVALID = -1;
+}
+
+enum FactionRelation {
+    FactionRelation_Supportive = 0;
+    FactionRelation_Friendly = 1;
+    FactionRelation_Hostile = 2;
+    FactionRelation_Aggressive = 3;
+    FactionRelation_INVALID = -1;
+}
+
+enum ENpcAttribute {
+    ENpcAttribute_NORMAL = 0;
+    ENpcAttribute_FIRE = 1;
+    ENpcAttribute_WATER = 2;
+    ENpcAttribute_EARTH = 3;
+    ENpcAttribute_WIND = 4;
+    ENpcAttribute_INVALID = -1;
+}
+
+enum ENpcAttackRangeType {
+    ENpcAttackRangeType_MELEE = 0;
+    ENpcAttackRangeType_RANGE = 1;
+    ENpcAttackRangeType_INVALID = -1;
+}
+
+enum ENameplateShowType {
+    ENameplateShowType_NEVER = 0;
+    ENameplateShowType_ALWAYS = 1;
+    ENameplateShowType_BY_CONDITION = 2;
+    ENameplateShowType_INVALID = -1;
+}
+
+enum ERewardItemType {
+    ERewardItemType_CURRENCY = 0;
+    ERewardItemType_EQUIPMENT = 1;
+    ERewardItemType_USABLE = 2;
+    ERewardItemType_ITEM_BOX = 3;
+    ERewardItemType_MATERIAL = 4;
+    ERewardItemType_PET = 5;
+    ERewardItemType_CHARACTER_CLASS = 6;
+    ERewardItemType_REWARD_GROUP = 7;
+    ERewardItemType_FIXED_REWARD_GROUP = 8;
+    ERewardItemType_RANDOM_REWARD_GROUP = 9;
+    ERewardItemType_NONE = 10;
+    ERewardItemType_INVALID = -1;
+}
+
+enum ERewardSelectionType {
+    ERewardSelectionType_INDEPENDENT = 0;
+    ERewardSelectionType_COMBINATION = 1;
+    ERewardSelectionType_ALL = 2;
+    ERewardSelectionType_INVALID = -1;
+}
+
+enum EDropApplyType {
+    EDropApplyType_MANUAL = 0;
+    EDropApplyType_FORMULA = 1;
+    EDropApplyType_INVALID = -1;
+}
+
+enum ESpeechballoonEffectType {
+    ESpeechballoonEffectType_NONE = 0;
+    ESpeechballoonEffectType_SHAKE = 1;
+    ESpeechballoonEffectType_INVALID = -1;
+}
+
+enum EPopupButtonType {
+    EPopupButtonType_None = 0;
+    EPopupButtonType_Yes = 1;
+    EPopupButtonType_No = 2;
+    EPopupButtonType_Custom = 3;
+    EPopupButtonType_INVALID = -1;
+}
+
+enum EItemGradeType {
+    EItemGradeType_NONE = 0;
+    EItemGradeType_GRADE1 = 1;
+    EItemGradeType_GRADE2 = 2;
+    EItemGradeType_GRADE3 = 3;
+    EItemGradeType_GRADE4 = 4;
+    EItemGradeType_GRADE5 = 5;
+    EItemGradeType_GRADE6 = 6;
+    EItemGradeType_SPECIAL = 7;
+    EItemGradeType_INVALID = -1;
+}
+
+enum EQuickSlotType {
+    EQuickSlotType_NONE = 0;
+    EQuickSlotType_HP = 1;
+    EQuickSlotType_MP = 2;
+    EQuickSlotType_PET_SCROLL = 3;
+    EQuickSlotType_INVALID = -1;
+}
+
+enum EItemUsableType {
+    EItemUsableType_UNLOCK_LOBBY_CHARACTER_SLOT = 0;
+    EItemUsableType_SKILLBOOK = 1;
+    EItemUsableType_REGEN_HP = 2;
+    EItemUsableType_REGEN_MP = 3;
+    EItemUsableType_INVOKE_EFFECT = 4;
+    EItemUsableType_TELEPORT_TO_TOWN = 5;
+    EItemUsableType_TELEPORT_TO_RANDOM = 6;
+    EItemUsableType_QUEST_SCROLL = 7;
+    EItemUsableType_FIELD_DUNGEON_RECHARGE = 8;
+    EItemUsableType_VACUITY = 9;
+    EItemUsableType_GAIN_EXP = 10;
+    EItemUsableType_SEASON_PASS = 11;
+    EItemUsableType_GUILD_AZIT_ENTRY = 12;
+    EItemUsableType_INVALID = -1;
+}
+
+enum EItemBoxType {
+    EItemBoxType_PACKAGE = 0;
+    EItemBoxType_RANDOM = 1;
+    EItemBoxType_SELECTION = 2;
+    EItemBoxType_INVALID = -1;
+}
+
+enum EItemMaterialType {
+    EItemMaterialType_ItemEnhance = 0;
+    EItemMaterialType_Junk = 1;
+    EItemMaterialType_SealEnhance = 2;
+    EItemMaterialType_Blacksmith = 3;
+    EItemMaterialType_Jewelry = 4;
+    EItemMaterialType_Alchemy = 5;
+    EItemMaterialType_ReturnTown = 6;
+    EItemMaterialType_TeleportBookmark = 7;
+    EItemMaterialType_Roulette = 8;
+    EItemMaterialType_ItemEnhanceAssist = 9;
+    EItemMaterialType_NameChange = 10;
+    EItemMaterialType_SkillCostMaterial = 11;
+    EItemMaterialType_Tribute = 12;
+    EItemMaterialType_ItemEnchant = 13;
+    EItemMaterialType_INVALID = -1;
+}
+
+enum EEffectInstantType {
+    EEffectInstantType_HP_INT = 0;
+    EEffectInstantType_HP_PER = 1;
+    EEffectInstantType_MP_INT = 2;
+    EEffectInstantType_MP_PER = 3;
+    EEffectInstantType_EXP_PER = 4;
+    EEffectInstantType_EXP_INT = 5;
+    EEffectInstantType_INVALID = -1;
+}
+
+enum ENpcBaseAiType {
+    ENpcBaseAiType_NONE = 0;
+    ENpcBaseAiType_WANDER = 1;
+    ENpcBaseAiType_PATROL = 2;
+    ENpcBaseAiType_INVALID = -1;
+}
+
+enum ENpcMoveStance {
+    ENpcMoveStance_WALK = 0;
+    ENpcMoveStance_RUN = 1;
+    ENpcMoveStance_INVALID = -1;
+}
+
+enum ENpcPatrolType {
+    ENpcPatrolType_ONEWAY = 0;
+    ENpcPatrolType_LOOP = 1;
+    ENpcPatrolType_BACKWARD = 2;
+    ENpcPatrolType_INVALID = -1;
+}
+
+enum EShareLocationType {
+    EShareLocationType_Party = 0;
+    EShareLocationType_Guild = 1;
+    EShareLocationType_INVALID = -1;
+}
+
+enum EBattleEffectAreaType {
+    EBattleEffectAreaType_NONE = 0;
+    EBattleEffectAreaType_PARTY = 1;
+    EBattleEffectAreaType_ALLY = 2;
+    EBattleEffectAreaType_ENEMY = 3;
+    EBattleEffectAreaType_ANY = 4;
+    EBattleEffectAreaType_INVALID = -1;
+}
+
+enum ETargetOriginType {
+    ETargetOriginType_CASTER = 0;
+    ETargetOriginType_TARGET = 1;
+    ETargetOriginType_INVALID = -1;
+}
+
+enum EBattleEffectApplyType {
+    EBattleEffectApplyType_ATTACK = 0;
+    EBattleEffectApplyType_RECOVER = 1;
+    EBattleEffectApplyType_INVALID = -1;
+}
+
+enum EObjectOperationStateTypes {
+    EObjectOperationStateTypes_STARTED = 0;
+    EObjectOperationStateTypes_INTERACTING = 1;
+    EObjectOperationStateTypes_FINISHED = 2;
+    EObjectOperationStateTypes_FAILED = 3;
+    EObjectOperationStateTypes_INVALID = -1;
+}
+
+enum EEffectOverTimeShareType {
+    EEffectOverTimeShareType_SHARED = 0;
+    EEffectOverTimeShareType_CASTER = 1;
+    EEffectOverTimeShareType_INVALID = -1;
+}
+
+enum EMailReasonType {
+    EMailReasonType_BY_CHARACTER_TO_CHARACTER = 0;
+    EMailReasonType_BY_CHARACTER_TO_GUILD = 1;
+    EMailReasonType_BY_CHEAT = 10;
+    EMailReasonType_BY_ONTIME_EVENT = 11;
+    EMailReasonType_BY_TRADING_BUY = 12;
+    EMailReasonType_BY_CHAT_REPORT_WARNING = 13;
+    EMailReasonType_BY_CHAT_REPORT_BAN = 14;
+    EMailReasonType_BY_SIEGE_BID_REFUND = 15;
+    EMailReasonType_BY_SIEGE_REWARD = 16;
+    EMailReasonType_BY_GUILD_DUNGEON = 17;
+    EMailReasonType_BY_GUILD_DUNGEON_BONUS = 18;
+    EMailReasonType_BY_CANCEL_CHARACTER_GIFT = 19;
+    EMailReasonType_BY_CHARACTER_GIFT_COMPLETE = 20;
+    EMailReasonType_BY_SERVICE_QNA = 500;
+    EMailReasonType_BY_GOT = 501;
+    EMailReasonType_BY_GOT_MASSIVE = 502;
+    EMailReasonType_BY_COUPON = 503;
+    EMailReasonType_BY_EQUIPMENT_RESTORATION = 504;
+    EMailReasonType_RESERVED_FOR_EMERGENCY1 = 1000;
+    EMailReasonType_RESERVED_FOR_EMERGENCY2 = 1001;
+    EMailReasonType_RESERVED_FOR_EMERGENCY3 = 1002;
+    EMailReasonType_INVALID = -1;
+}
+
+enum EBattleEffectSequentialHitDirectionType {
+    EBattleEffectSequentialHitDirectionType_NONE = 0;
+    EBattleEffectSequentialHitDirectionType_TO_LEFT = 1;
+    EBattleEffectSequentialHitDirectionType_TO_RIGHT = 2;
+    EBattleEffectSequentialHitDirectionType_TO_FRONT = 3;
+    EBattleEffectSequentialHitDirectionType_TO_BACK = 4;
+    EBattleEffectSequentialHitDirectionType_INVALID = -1;
+}
+
+enum EServerDependentDataType {
+    EServerDependentDataType_NONE = 0;
+    EServerDependentDataType_CASH_SHOP = 1;
+    EServerDependentDataType_EVENT = 2;
+    EServerDependentDataType_INVALID = -1;
+}
+
+enum ECashCurrencyType {
+    ECashCurrencyType_KRW = 0;
+    ECashCurrencyType_USD = 1;
+    ECashCurrencyType_JPY = 2;
+    ECashCurrencyType_EUR = 3;
+    ECashCurrencyType_CNY = 4;
+    ECashCurrencyType_GBP = 5;
+    ECashCurrencyType_INVALID = -1;
+}
+
+enum ECashShopGoodsType {
+    ECashShopGoodsType_GENERAL = 0;
+    ECashShopGoodsType_CASH = 1;
+    ECashShopGoodsType_INVALID = -1;
+}
+
+enum ECashShopGoodsSelectType {
+    ECashShopGoodsSelectType_FIXED = 0;
+    ECashShopGoodsSelectType_SELECTABLE = 1;
+    ECashShopGoodsSelectType_INVALID = -1;
+}
+
+enum EGoodsDisplayFlagType {
+    EGoodsDisplayFlagType_NONE = 0;
+    EGoodsDisplayFlagType_NEW = 1;
+    EGoodsDisplayFlagType_HOT = 2;
+    EGoodsDisplayFlagType_RECOMMAND = 3;
+    EGoodsDisplayFlagType_EVENT = 4;
+    EGoodsDisplayFlagType_SALE = 5;
+    EGoodsDisplayFlagType_INVALID = -1;
+}
+
+enum EEffectType {
+    EEffectType_NORMAL = 0;
+    EEffectType_OVERTIME = 1;
+    EEffectType_STATUS = 2;
+    EEffectType_CONDITIONAL = 3;
+    EEffectType_SHIELD = 4;
+    EEffectType_REACTION = 5;
+    EEffectType_BRUTAL = 6;
+    EEffectType_INVALID = -1;
+}
+
+enum EffectCauserType {
+    EffectCauserType_NONE = 0;
+    EffectCauserType_ITEM = 1;
+    EffectCauserType_SKILL = 2;
+    EffectCauserType_EFFECT_OVERTIME = 3;
+    EffectCauserType_PC_STATE_CHANGE = 4;
+    EffectCauserType_CHEAT = 5;
+    EffectCauserType_PET = 6;
+    EffectCauserType_PVE_RANKING = 7;
+    EffectCauserType_PVP_RANKING = 8;
+    EffectCauserType_NPC_STATE_CHANGE = 9;
+    EffectCauserType_GUILD = 10;
+    EffectCauserType_COREALTAR = 11;
+    EffectCauserType_PROPENSITY = 12;
+    EffectCauserType_BRUTAL_START = 13;
+    EffectCauserType_BRUTAL_FROM_DB_CACHE = 14;
+    EffectCauserType_BRUTAL_UPDATE = 15;
+    EffectCauserType_SIEGE_WALL_DESTROY = 16;
+    EffectCauserType_WEAPON = 17;
+    EffectCauserType_GUILD_AZIT = 18;
+    EffectCauserType_TRUSTED_DEVICE = 19;
+    EffectCauserType_INVALID = -1;
+}
+
+enum EEffectElementType {
+    EEffectElementType_STAT = 0;
+    EEffectElementType_PERMISSION = 1;
+    EEffectElementType_BATTLE_EFFECT = 2;
+    EEffectElementType_COOLTIME_REDUCTION = 3;
+    EEffectElementType_SHIELD = 4;
+    EEffectElementType_INVALID = -1;
+}
+
+enum ETriggerEffectActionType {
+    ETriggerEffectActionType_NONE = 0;
+    ETriggerEffectActionType_REMOVE = 1;
+    ETriggerEffectActionType_TIME_PAUSE = 2;
+    ETriggerEffectActionType_INVALID = -1;
+}
+
+enum EPlatformStoreType {
+    EPlatformStoreType_GooglePlayStore = 0;
+    EPlatformStoreType_AppleAppStore = 1;
+    EPlatformStoreType_INVALID = -1;
+}
+
+enum EItemSortType {
+    EItemSortType_TEMPLATE_ID = 0;
+    EItemSortType_ITEM_TYPE = 1;
+    EItemSortType_GRADE = 2;
+    EItemSortType_NAME = 3;
+    EItemSortType_EQUIPPED = 4;
+    EItemSortType_BOOKMARK = 5;
+    EItemSortType_NEW = 6;
+    EItemSortType_OWNED = 7;
+    EItemSortType_RED_DOT = 8;
+    EItemSortType_ENHANCE = 9;
+    EItemSortType_TRADEABLE = 10;
+    EItemSortType_DB_ID = 11;
+    EItemSortType_INVALID = -1;
+}
+
+enum ESortOrderType {
+    ESortOrderType_ASCENDING = 0;
+    ESortOrderType_DESCENDING = 1;
+    ESortOrderType_INVALID = -1;
+}
+
+enum EStorageType {
+    EStorageType_DEFAULT_INVENTORY = 0;
+    EStorageType_ACCOUNT_WAREHOUSE = 1;
+    EStorageType_TRADING = 2;
+    EStorageType_GARBAGE = 3;
+    EStorageType_INVALID = -1;
+}
+
+enum ECharacterParticleLocationType {
+    ECharacterParticleLocationType_BONE_OR_SOCKET = 0;
+    ECharacterParticleLocationType_CAPSULE = 1;
+    ECharacterParticleLocationType_INVALID = -1;
+}
+
+enum EFxDirectionType {
+    EFxDirectionType_INSTIGATOR_TO_VICTIM = 0;
+    EFxDirectionType_VICTIM_TO_INSTIGATOR = 1;
+    EFxDirectionType_INVALID = -1;
+}
+
+enum ECharacterParticleCapsuleLocationType {
+    ECharacterParticleCapsuleLocationType_MID = 0;
+    ECharacterParticleCapsuleLocationType_BOTTOM = 1;
+    ECharacterParticleCapsuleLocationType_TOP = 2;
+    ECharacterParticleCapsuleLocationType_INVALID = -1;
+}
+
+enum EStatDomainType {
+    EStatDomainType_PC_LEVEL = 0;
+    EStatDomainType_CHARACTER_CLASS = 1;
+    EStatDomainType_CHARACTER_CLASS_COLLECTION = 2;
+    EStatDomainType_EQUIPMENT = 3;
+    EStatDomainType_STAT_EFFECT = 4;
+    EStatDomainType_PASSIVE_SKILL = 5;
+    EStatDomainType_PET = 6;
+    EStatDomainType_PET_COLLECTION = 7;
+    EStatDomainType_ITEM_COLLECTION = 8;
+    EStatDomainType_STAT_POINT = 9;
+    EStatDomainType_CONVERSION = 10;
+    EStatDomainType_GUILD_LEVEL = 11;
+    EStatDomainType_RUNE = 12;
+    EStatDomainType_VACUITY = 13;
+    EStatDomainType_INVALID = -1;
+}
+
+enum EStatDomainGroupType {
+    EStatDomainGroupType_STAT_POINT = 0;
+    EStatDomainGroupType_EQUIPMENT = 1;
+    EStatDomainGroupType_COLLECTION = 2;
+    EStatDomainGroupType_CHARACTER_CLASS = 3;
+    EStatDomainGroupType_BUFF = 4;
+    EStatDomainGroupType_INVALID = -1;
+}
+
+enum EErrorType {
+    EErrorType_SUCCESS = 0;
+    EErrorType_INVALID_ID = 1;
+    EErrorType_INVALID_PC_STATE = 2;
+    EErrorType_INVALID_ITEM_ID = 3;
+    EErrorType_INVALID_ITEM = 4;
+    EErrorType_INVALID_ITEM_COUNT = 5;
+    EErrorType_INVALID_TEMPLATE = 6;
+    EErrorType_INVALID_CURRENCY_TYPE = 7;
+    EErrorType_INVALID_CURRENCY_AMOUNT = 8;
+    EErrorType_INVALID_MATERIAL = 9;
+    EErrorType_INVALID_SLOT = 10;
+    EErrorType_INVALID_SLOT_SET = 11;
+    EErrorType_INVALID_LEVEL = 12;
+    EErrorType_INVALID_SKILL = 13;
+    EErrorType_INVALID_SKILL_PACK = 14;
+    EErrorType_INVALID_SKILL_MECHANISM = 15;
+    EErrorType_INVALID_SKILL_DASH = 16;
+    EErrorType_INVALID_SKILL_ROOT_SKILL_PACK = 17;
+    EErrorType_INVALID_CASTER = 18;
+    EErrorType_INVALID_TARGET = 19;
+    EErrorType_INVALID_DISTANCE = 20;
+    EErrorType_INVALID_LINK_SKILL_TIME = 21;
+    EErrorType_INVALID_CURRENT_ACTION = 22;
+    EErrorType_INVALID_ACTION_CONDITION = 23;
+    EErrorType_INVALID_GOODS = 24;
+    EErrorType_INVALID_HASH = 25;
+    EErrorType_INVALID_MAIL = 26;
+    EErrorType_INVALID_QUEST = 27;
+    EErrorType_INVALID_QUEST_STATE = 28;
+    EErrorType_INVALID_CONDITION = 29;
+    EErrorType_INVALID_TYPE = 30;
+    EErrorType_INVALID_ZONE_ID = 31;
+    EErrorType_INVALID_SUBZONE_ID = 32;
+    EErrorType_INVALID_ITEM_TYPE = 33;
+    EErrorType_INVALID_STONE = 34;
+    EErrorType_INVALID_SESSION = 35;
+    EErrorType_INVALID_SESSION_STATE = 36;
+    EErrorType_INVALID_INDEX = 37;
+    EErrorType_INVALID_GRADE = 38;
+    EErrorType_INVALID_REALM_ID = 39;
+    EErrorType_INVALID_AUTH_KEY = 40;
+    EErrorType_INVALID_PASSWORD = 41;
+    EErrorType_INVALID_GUILD_INVITATION = 42;
+    EErrorType_INVALID_GUILD_JOIN_REQUEST = 43;
+    EErrorType_INVALID_PET_ID = 44;
+    EErrorType_INVALID_POSITION = 45;
+    EErrorType_INVALID_EMISSION_LEVEL = 46;
+    EErrorType_INVALID_COUNT = 47;
+    EErrorType_INVALID_NPC_SHOP = 48;
+    EErrorType_INVALID_CHANNEL = 49;
+    EErrorType_INVALID_USER_STATE = 50;
+    EErrorType_LACK_OF_CURRENCY = 1000;
+    EErrorType_LACK_OF_MATERIAL = 1001;
+    EErrorType_LACK_OF_MP = 1002;
+    EErrorType_LACK_OF_GOLD = 1003;
+    EErrorType_LACK_OF_MILEAGE = 1004;
+    EErrorType_LACK_OF_ITEM = 1005;
+    EErrorType_LACK_OF_EMISSION_LEVEL = 1006;
+    EErrorType_LACK_OF_REMAIN_COUNT = 1007;
+    EErrorType_LACK_OF_HP = 1008;
+    EErrorType_LACK_OF_ENHANCEMENT_MATERIAL = 1009;
+    EErrorType_LACK_OF_PET = 1010;
+    EErrorType_LACK_OF_PET_SCROLL = 1011;
+    EErrorType_LACK_OF_GUILD_DONATE_COUNT = 1012;
+    EErrorType_LACK_OF_GUILD_COIN = 1013;
+    EErrorType_LACK_OF_CUSTOMIZE_TICKET = 1014;
+    EErrorType_LACK_OF_GEM = 1015;
+    EErrorType_MAX_WEIGHT = 1100;
+    EErrorType_MAX_INVENTORY_SLOT = 1101;
+    EErrorType_MAX_STORAGE_SLOT = 1102;
+    EErrorType_MAX_CURRENCY = 1103;
+    EErrorType_MAX_GOLD = 1104;
+    EErrorType_MAX_MILEAGE = 1105;
+    EErrorType_MAX_STAT_HP = 1106;
+    EErrorType_MAX_STAT_MP = 1107;
+    EErrorType_MAX_STAT_HP_MP = 1108;
+    EErrorType_MAX_LEVEL = 1109;
+    EErrorType_MAX_EXP = 1110;
+    EErrorType_MAX_STACK_COUNT = 1111;
+    EErrorType_MAX_LOBBY_CHARACTER_SLOT = 1112;
+    EErrorType_MAX_GLOBAL_QUEST_COUNT = 1113;
+    EErrorType_MAX_PURCHASE_COUNT = 1114;
+    EErrorType_MAX_EQUIPMENT_ENHANCEMENT_LEVEL = 1115;
+    EErrorType_MAX_GUILD_MEMBER = 1116;
+    EErrorType_MAX_EQUIPMENT_ENHANCEMENT_COUNT = 1117;
+    EErrorType_MAX_GUILD_COIN = 1118;
+    EErrorType_MAX_GEM = 1119;
+    EErrorType_DUPLICATED_ID = 1200;
+    EErrorType_DUPLICATED_DISPLAYNAME = 1201;
+    EErrorType_DUPLICATED_INDEX = 1202;
+    EErrorType_DUPLICATED_CHARGER = 1203;
+    EErrorType_DUPLICATED_SLOT = 1204;
+    EErrorType_NOT_RECEIVED_QUEST = 1300;
+    EErrorType_NOT_COMPLETED = 1301;
+    EErrorType_NOT_EXISTS_QUEST = 1302;
+    EErrorType_NOT_ADDITIONAL_REWARDED = 1303;
+    EErrorType_NOT_COMPLETED_ALL_QUEST = 1304;
+    EErrorType_NOT_IMPLEMENTED = 1305;
+    EErrorType_NOT_FOUND_USER = 1306;
+    EErrorType_NOT_FOUND_WORLD = 1307;
+    EErrorType_FAIL = 1400;
+    EErrorType_FAIL_LOGIN = 1401;
+    EErrorType_FAIL_DB_JOB = 1402;
+    EErrorType_FAIL_PREV_DB_JOB_NOT_FINISHED = 1403;
+    EErrorType_FAIL_CONSUME_ITEM = 1404;
+    EErrorType_FAIL_COOLTIME = 1405;
+    EErrorType_FAIL_BUFF = 1406;
+    EErrorType_FAIL_DEBUFF = 1407;
+    EErrorType_FAIL_START_ACTION = 1408;
+    EErrorType_FAIL_USE_SKILL_SLOT = 1409;
+    EErrorType_FAIL_NOT_ENOUGH_LEVEL = 1410;
+    EErrorType_FAIL_NOT_ENOUGH_RANK = 1411;
+    EErrorType_FAIL_INACCESSIBLE_GOODS = 1412;
+    EErrorType_FAIL_EXPIRED = 1413;
+    EErrorType_FAIL_ALREADY_RECEIVED = 1414;
+    EErrorType_FAIL_ALREADY_LEARNED = 1415;
+    EErrorType_FAIL_ALREADY_COMPLETE = 1416;
+    EErrorType_FAIL_LEARN_SKILL = 1417;
+    EErrorType_FAIL_NOT_SELLABLE_ITEM = 1418;
+    EErrorType_FAIL_BOOKMARKED_ITEM = 1419;
+    EErrorType_FAIL_EQUIPPED_ITEM = 1420;
+    EErrorType_FAIL_NOT_DEAD_CHARACTER = 1421;
+    EErrorType_FAIL_CONDITION = 1422;
+    EErrorType_FAIL_NOT_ENOUGH_SLOT = 1423;
+    EErrorType_FAIL_NOT_FIT_LENGTH = 1424;
+    EErrorType_FAIL_LOW_PERFECTION = 1425;
+    EErrorType_FAIL_CREATE_CHARACTER = 1426;
+    EErrorType_FAIL_DELETE_CHARACTER = 1427;
+    EErrorType_FAIL_CANCEL_DELETE_CHARACTER_ALREADY_DELETED = 1428;
+    EErrorType_FAIL_CANCEL_DELETE_CHARACTER_NOT_RESERVED = 1429;
+    EErrorType_FAIL_ZERO_EXP = 1430;
+    EErrorType_FAIL_GET_LOBBY_CHARACTER = 1431;
+    EErrorType_FAIL_SELECT_LOBBY_CHARACTER_DELETED = 1432;
+    EErrorType_FAIL_SELECT_LOBBY_CHARACTER_DELETE_RESERVED = 1433;
+    EErrorType_FAIL_EMPTY_INBOX = 1434;
+    EErrorType_FAIL_ACTION_IN_PROGRESS = 1435;
+    EErrorType_FAIL_ZONE_MISMATCH = 1436;
+    EErrorType_FAIL_NOT_EXIST_RECEIVABLE_ITEM = 1437;
+    EErrorType_FAIL_NOT_EXIST_COORDINATOR = 1438;
+    EErrorType_FAIL_REALM_OFFLINE = 1439;
+    EErrorType_FAIL_REALM_MAX_USER = 1440;
+    EErrorType_FAIL_LOAD_USER_INFO = 1441;
+    EErrorType_FAIL_ENHANCEMENT_ASSIST_NOT_AVAILABLE = 1442;
+    EErrorType_FAIL_NOT_MATCHED_SEAL_LEVEL = 1443;
+    EErrorType_FAIL_SEAL_MAXLEVEL = 1444;
+    EErrorType_FAIL_SEAL_SAMELEVEL = 1445;
+    EErrorType_FAIL_SEAL_INVALID_TARGETLEVEL = 1446;
+    EErrorType_FAIL_SEAL_INIT_ATTACHED_SLOT = 1447;
+    EErrorType_FAIL_NOT_ENOUGH_SEAL_LEVEL = 1448;
+    EErrorType_FAIL_UNREMOVABLE_ITEM = 1449;
+    EErrorType_FAIL_ALREADY_STARTED_QUEST = 1450;
+    EErrorType_FAIL_REWARD_SELCTOR = 1451;
+    EErrorType_FAIL_NOT_FOUND_PC = 1452;
+    EErrorType_FAIL_CHANGE_ZONE = 1453;
+    EErrorType_FAIL_CANNOT_REMOVE_BOOKMARKED_ITEM = 1454;
+    EErrorType_FAIL_EQUAL_PVP_MODE = 1455;
+    EErrorType_FAIL_NOT_FOUND_MAP = 1456;
+    EErrorType_FAIL_NOT_MATCH_SLOT = 1457;
+    EErrorType_FAIL_EMPTY_SLOT = 1458;
+    EErrorType_FAIL_NOT_CHANGE_AUTO_EQUIP = 1459;
+    EErrorType_FAIL_PURCHASE_NOT_JOINED_GUILD = 1460;
+    EErrorType_FAIL_PURCHASE_NOT_ENOUGH_GUILD_LEVEL = 1461;
+    EErrorType_FAIL_NOT_ACTIVATED_PET = 1462;
+    EErrorType_FAIL_ALREADY_RECEIVED_QUEST = 1463;
+    EErrorType_FAIL_ITEM_NOT_CREATED = 1464;
+    EErrorType_FAIL_SKILL_SAMELEVEL = 1465;
+    EErrorType_FAIL_EQUIP_SAME_EQUIPMENT_GROUP = 1466;
+    EErrorType_FAIL_SERVER_DOWN = 1467;
+    EErrorType_FAIL_DATA_RELOAD = 1468;
+    EErrorType_FAIL_CONTENT_DEACTIVATED = 1469;
+    EErrorType_FAIL_TELEPORT_NO_PERMISSION = 1470;
+    EErrorType_FAIL_OVER_MAX_LEVEL = 1471;
+    EErrorType_FAIL_NAME_CONTAINS_PROHIBITION_WORD = 1472;
+    EErrorType_FAIL_DISABLED_TELEPORT_TO_RANDOM_SUBZONE = 1473;
+    EErrorType_FAIL_DISABLED_TELEPORT_TO_SUBZONE = 1474;
+    EErrorType_CANCEL_BY_SYSTEM = 1700;
+    EErrorType_CANCEL_BY_CONTROL = 1701;
+    EErrorType_CANCEL_BY_STATUS_EFFECT = 1702;
+    EErrorType_CANCEL_BY_DEATH = 1703;
+    EErrorType_FAIL_ALREADY_JOINED_GUILD = 3000;
+    EErrorType_FAIL_NO_AUTHORITY = 3001;
+    EErrorType_FAIL_GUILD_REJOINING_TIME_PENALTY = 3002;
+    EErrorType_FAIL_NOT_IN_GUILD = 3003;
+    EErrorType_FAIL_NOT_EXIST_GUILD = 3004;
+    EErrorType_FAIL_NOT_EXIST_GUILD_MEMBER = 3005;
+    EErrorType_FAIL_GUILD_JOINED = 3006;
+    EErrorType_FAIL_PRIVATE_GUILD = 3007;
+    EErrorType_FAIL_NOT_FOUND_GUILD = 3008;
+    EErrorType_FAIL_GUILD_MEMBER_FULL = 3009;
+    EErrorType_FAIL_GUILD_MANAGER_FULL = 3010;
+    EErrorType_FAIL_GUILD_INVITATION_FULL = 3011;
+    EErrorType_FAIL_GUILD_MEMBER_INVITATION_FULL = 3012;
+    EErrorType_FAIL_GUILD_JOIN_REQUEST_FULL = 3013;
+    EErrorType_FAIL_GUILD_MEMBER_JOIN_REQUEST_FULL = 3014;
+    EErrorType_FAIL_GUILD_ALREADY_INVITED = 3015;
+    EErrorType_FAIL_GUILD_ALREADY_REQUEST_TO_JOIN = 3016;
+    EErrorType_FAIL_GUILD_MEMBER_REMAIN = 3017;
+    EErrorType_GUILD_FAIL_BANISH_NEW_MEMBER = 3018;
+    EErrorType_GUILD_INVALID_JOIN_TYPE = 3019;
+    EErrorType_GUILD_NOT_GUILD_MEMBER = 3020;
+    EErrorType_GUILD_CAN_NOT_DELETE_CHARACTER = 3021;
+    EErrorType_GUILD_NO_AUTHORITY = 3022;
+    EErrorType_GUILD_ALREADY_ATTENDED = 3023;
+    EErrorType_GUILD_ALREADY_RECEIVED_ATTENDANCE_REWARD = 3024;
+    EErrorType_GUILD_NO_ATTENDANCE_REWARD = 3025;
+    EErrorType_GUILD_NOT_FOUND_CANDIDATE = 3026;
+    EErrorType_GUILD_SEARCH_WORD_TOO_SHORT = 3027;
+    EErrorType_GUILD_DUPLICATED_NAME = 3028;
+    EErrorType_GUILD_NAME_NOT_FIT_LENGTH = 3029;
+    EErrorType_GUILD_NAME_LOW_PERFECTION = 3030;
+    EErrorType_GUILD_DISBAND_FAIL_CAUSE_BID_HISTORY = 3031;
+    EErrorType_GUILD_DISBAND_FAIL_CAUSE_SIEGE_OWNER = 3032;
+    EErrorType_GUILD_ENEMY_ALREADY_ADDED = 3033;
+    EErrorType_GUILD_ENEMY_NOT_EXISTS = 3034;
+    EErrorType_GUILD_ENEMY_FULL = 3035;
+    EErrorType_GUILD_ENEMY_CAN_NOT_ADD_MYGUILD = 3036;
+    EErrorType_GUILD_NOT_EXIST_JOIN_REQUEST_LIST = 3037;
+    EErrorType_GUILD_ENEMY_CAN_NOT_REFRESH_YET = 3038;
+    EErrorType_GUILD_INVITATION_EXPIRE = 3039;
+    EErrorType_PARTY_UNKNOWN = 3100;
+    EErrorType_PARTY_ALREADY_JOINED = 3101;
+    EErrorType_PARTY_ALREADY_JOINED_OTHER = 3102;
+    EErrorType_PARTY_TARGET_ALEADY_JOINED_OTHER = 3103;
+    EErrorType_PARTY_NOT_JOINED = 3104;
+    EErrorType_PARTY_NOT_MEMBER = 3105;
+    EErrorType_PARTY_NOT_FOUND_DELEGATE_TARGET = 3106;
+    EErrorType_PARTY_NOT_FOUND_MEMBER = 3107;
+    EErrorType_PARTY_CAN_NOT_BANISH_SELF = 3108;
+    EErrorType_PARTY_ALREADY_MEMBER = 3109;
+    EErrorType_PARTY_INVITATION_FULL = 3110;
+    EErrorType_PARTY_NOT_FOUND_USER = 3111;
+    EErrorType_PARTY_RESPONSE_WAIT_OTHER = 3112;
+    EErrorType_PARTY_RESPONSE_WAIT_OUR = 3113;
+    EErrorType_PARTY_NO_PERMISSION = 3114;
+    EErrorType_PARTY_MEMBER_FULL = 3115;
+    EErrorType_PARTY_NOT_FOUND_INVITATION_WHEN_ACCEPT = 3116;
+    EErrorType_PARTY_NOT_FOUND_INVITATION_WHEN_CANCEL = 3117;
+    EErrorType_CHAT_SEND_FAIL = 3200;
+    EErrorType_CHAT_NO_PERMISSION = 3201;
+    EErrorType_CHAT_TOO_LONG = 3202;
+    EErrorType_CHAT_FAIL_COOLTIME = 3203;
+    EErrorType_CHAT_FAIL_COOLTIME_BY_BLOCK = 3204;
+    EErrorType_CHAT_NOT_JOINED_GUILD = 3205;
+    EErrorType_CHAT_NOT_JOINED_PARTY = 3206;
+    EErrorType_CHAT_RECEIVER_NOT_FOUND_OR_NOT_CONNECTED = 3207;
+    EErrorType_CHAT_NOT_IN_MAP = 3208;
+    EErrorType_CHAT_CHANNEL_NOT_FOUND = 3209;
+    EErrorType_CHAT_NOT_FOUND_RECEIVER = 3210;
+    EErrorType_CHAT_INVALID_RECEIVER_HINT = 3211;
+    EErrorType_CHAT_CAN_NOT_SEND_MYSELF = 3212;
+    EErrorType_CHAT_FAILED_TO_GET_MESSAGE_LIST = 3213;
+    EErrorType_CHAT_FAILED_BY_REPORTED = 3214;
+    EErrorType_INVALID_NAME_CONDITION = 3215;
+    EErrorType_SOCIAL_MOTION_FAIL_IS_IN_ACTION = 3300;
+    EErrorType_SOCIAL_MOTION_FAIL_IS_MOVING = 3301;
+    EErrorType_SOCIAL_MOTION_FAIL_STATUS_EFFECT = 3302;
+    EErrorType_SOCIAL_MOTION_NO_PERMISSION = 3303;
+    EErrorType_FAIL_LACK_OF_MATERIALS = 3400;
+    EErrorType_FAIL_TOO_MUCH_MATERIALS = 3401;
+    EErrorType_FAIL_MERGING_MAX_POINT = 3402;
+    EErrorType_LACK_OF_MERGING_MATERIALS = 3403;
+    EErrorType_FAIL_USE_USABLE_ITEM_OWNER_DEAD = 3500;
+    EErrorType_FAIL_USE_USABLE_ITEM_LEVEL_RESTRICTION = 3501;
+    EErrorType_FAIL_USE_USABLE_ITEM_NO_PERMISSION = 3502;
+    EErrorType_FAIL_USE_ITEMBOX_ITEM_MAX_COUNT_PER_OPENBOX = 3550;
+    EErrorType_SHARE_TARGET_FAIL_INVALID_TYPE = 3600;
+    EErrorType_FAIL_PVP_REACTION_INVALID_HISTORY = 3700;
+    EErrorType_FAIL_PVP_REACTION_NOT_SUITABLE_TARGET_RESULT = 3701;
+    EErrorType_FAIL_PVP_REACTION_NOT_AVAILABLE_TIME = 3702;
+    EErrorType_FAIL_PVP_REACTION_LACK_OF_COUNT = 3703;
+    EErrorType_FAIL_PVP_DERISION_NOT_EQUAL_REALM = 3704;
+    EErrorType_PARTY_TARGET_NOT_JOINED = 3800;
+    EErrorType_PARTY_JOIN_REQUEST_FULL = 3801;
+    EErrorType_PARTY_ALREADY_REQUESTED = 3802;
+    EErrorType_PARTY_NOT_FOUND_JOIN_REQUEST_WHEN_ACCEPT = 3803;
+    EErrorType_FIELD_DUNGEON_INVALID_TEMPLATE_ID = 3900;
+    EErrorType_FIELD_DUNGEON_INVALID_ENTER_METHOD = 3901;
+    EErrorType_FIELD_DUNGEON_NOT_ENOGUH_TIME = 3902;
+    EErrorType_FIELD_DUNGEON_CAN_NOT_EXIT_IN_BATTLE_ATTITUDE = 3903;
+    EErrorType_FIELD_DUNGEON_EXCESS_RECHARGING_COUNT = 3904;
+    EErrorType_FIELD_DUNGEON_CAN_NOT_RECHARGING_OVERTIME = 3905;
+    EErrorType_FIELD_DUNGEON_INVALID_NPC_ROLE = 3906;
+    EErrorType_FIELD_DUNGEON_INVALID_NPC_ID = 3907;
+    EErrorType_FIELD_DUNGEON_INVALID_PORTAL_ID = 3908;
+    EErrorType_FIELD_DUNGEON_LACK_OF_PC_LEVEL = 3909;
+    EErrorType_FIELD_DUNGEON_LACK_OF_DUNGEONTIME = 3910;
+    EErrorType_FAIL_ACHIEVEMENT_REWARD_INVALID_STATE = 4000;
+    EErrorType_FAIL_ACHIEVEMENT_REWARD_INVALID_CATEGORY = 4001;
+    EErrorType_FAIL_ALREADY_COMPLETED_ITEM_COLLECTION = 4100;
+    EErrorType_FAIL_ALREADY_REGISTERED_ITEM_COLLECTION_GROUP = 4101;
+    EErrorType_FAIL_ITEM_COLLECTION_REGISTER_INVALID_CONDITION = 4102;
+    EErrorType_EVENT_LOGIN_BONUS_ALREADY_REWARDED = 4200;
+    EErrorType_EVENT_INVALID_USER_TYPE = 4201;
+    EErrorType_LACK_OF_CHANGEABLE_COUNT = 4300;
+    EErrorType_FAIL_NOT_EXIST_CONFIRMABLE_CHANGEABLE_REWARD = 4301;
+    EErrorType_FAIL_CHANGEABLE_REWARD_SLOT_FULL = 4302;
+    EErrorType_FAIL_NOT_EXIST_CHANGEABLE_REWARD = 4303;
+    EErrorType_LACK_OF_GUARANTEED_REWARD_EQUAL_GRADE_COUNT = 4400;
+    EErrorType_FAIL_MAX_GUARANTEED_REWARD_EQUAL_GRADE_COUNT = 4401;
+    EErrorType_FAIL_ALREADY_COMPLETED_TUTORIAL = 4500;
+    EErrorType_FAIL_TUTORIAL_STATE = 4501;
+    EErrorType_FAIL_UNDECOMPOSABLE_ITEM = 4600;
+    EErrorType_FAIL_FIND_PC_LOGOUT = 4700;
+    EErrorType_FAIL_FIND_PC_NOT_FOUND = 4701;
+    EErrorType_FAIL_FIND_PC_NOT_FOUND_CWS = 4702;
+    EErrorType_FAIL_FIND_PC_DUPLICATE_REQUEST = 4703;
+    EErrorType_FAIL_FIND_PC_UNREACHABLE_PLACE = 4704;
+    EErrorType_TELEPORT_BOOKMARK_ALREADY_EXIST_SLOT = 4800;
+    EErrorType_TELEPORT_BOOKMARK_NOT_FOUND_SLOT = 4801;
+    EErrorType_TELEPORT_BOOKMARK_WRONG_MAP_ID = 4802;
+    EErrorType_TELEPORT_BOOKMARK_WRONG_POSITION = 4803;
+    EErrorType_FAIL_HTTP_REQUEST_WEB_EXCEPTION = 5000;
+    EErrorType_FAIL_HTTP_REQUEST_EXCEPTION = 5001;
+    EErrorType_TRADING_CLOSE = 5100;
+    EErrorType_TRADING_INVALID_ACCESS = 5101;
+    EErrorType_TRADING_INVALID_TYPE = 5102;
+    EErrorType_TRADING_MAX_REGIST_COUNT = 5103;
+    EErrorType_TRADING_BIND_ITEM_CAN_NOT_TRADE = 5104;
+    EErrorType_TRADING_NOT_FOUND_ITEM = 5105;
+    EErrorType_TRADING_LACK_OF_ITEM = 5106;
+    EErrorType_TRADING_EXPECTED_FEES_MATCH_FAIL = 5107;
+    EErrorType_TRADING_LACK_OF_FEES = 5108;
+    EErrorType_TRADING_BUY_FAIL_ALREADY_SOLD = 5109;
+    EErrorType_TRADING_BUY_FAIL_ALREADY_CANCELED = 5110;
+    EErrorType_TRADING_BUY_FAIL_EXPIRATION_ITEM = 5111;
+    EErrorType_TRADING_BUY_FAIL_MY_ITEM = 5112;
+    EErrorType_TRADING_BUY_FAIL_RRESTRICTED_ITEM = 5113;
+    EErrorType_TRADING_REGIST_INVALID_PRICE_RANGE = 5114;
+    EErrorType_TRADING_REGIST_INVALID_ITEM_COUNT = 5115;
+    EErrorType_TRADING_REGIST_BOOKMARKED_ITEM = 5116;
+    EErrorType_TRADING_CANCLE_FAIL_SOLD_ITEM = 5117;
+    EErrorType_TRADING_REGIST_EQUIPPED_ITEM = 5118;
+    EErrorType_TRADING_REGIST_RESTRICTED_ITEM = 5119;
+    EErrorType_PRIVATE_TRADING_BUYER_MAX_REGIST_COUNT = 5200;
+    EErrorType_PRIVATE_TRADING_SELLER_MAX_DAILY_REGIST_COUNT = 5201;
+    EErrorType_PRIVATE_TRADING_NOT_ENOUGH_BUYER_LEVEL = 5202;
+    EErrorType_PRIVATE_TRADING_REFUSED_FAIL_CANCELED_ITEM = 5203;
+    EErrorType_PRIVATE_TRADING_REEGIST_FAIL_MY_CHARACTER = 5204;
+    EErrorType_INVALID_ROULETTE_CANDIDATE_COUNT = 5300;
+    EErrorType_INVALID_SELECTED_REWARD_COUNT = 5301;
+    EErrorType_FAIL_ROULETTE_NOT_FILLED = 5302;
+    EErrorType_INVALID_ROULETTE_SLOT_COUNT = 5303;
+    EErrorType_FAIL_ROULETTE_SELECT_ONE = 5304;
+    EErrorType_FAIL_ROULETTE_SPIN_COUNT = 5305;
+    EErrorType_FAIL_ROULETTE_ALREADY_RECEIVED_REWARD = 5306;
+    EErrorType_FAIL_CAN_NOT_FREE_COST = 5307;
+    EErrorType_FAIL_LIMIT_REWARD = 5308;
+    EErrorType_FAIL_REFRESH_SPECIAL_ROULETTE = 5309;
+    EErrorType_ATTENDANCE_ALREADY_ATTEND = 5400;
+    EErrorType_ATTENDANCE_ALL_ATTEND = 5401;
+    EErrorType_MAIL_INVALID_ITEM = 5500;
+    EErrorType_MAIL_INVALID_ITEM_COUNT = 5501;
+    EErrorType_MAIL_INVALID_REASON = 5502;
+    EErrorType_MAIL_INVALID_TYPE = 5503;
+    EErrorType_MAIL_INVALID_ID = 5504;
+    EErrorType_MAIL_NOT_EXISTS_TARGET = 5505;
+    EErrorType_MAIL_FULL = 5506;
+    EErrorType_MAIL_TITLE_NOT_FIT_LENGTH = 5507;
+    EErrorType_MAIL_MESSAGE_NOT_FIT_LENGTH = 5508;
+    EErrorType_MAIL_MAX_SEND_COUNT_OVER = 5509;
+    EErrorType_INVALID_DUPLICATE_CHANGE_ZONE_COMMAND = 5510;
+    EErrorType_ACTIVATE_TIME_INVALID_ACCESS = 5600;
+    EErrorType_ACTIVATE_TIME_NOT_ENOUGH_TIME = 5601;
+    EErrorType_ACTIVATE_TIME_NOT_FOUND_NEXT_REWARD = 5602;
+    EErrorType_ACTIVATE_TIME_ALREADY_REWARDED = 5603;
+    EErrorType_ACTIVATE_TIME_NOT_FOUND_REWARD = 5604;
+    EErrorType_ACTIVATE_TIME_NOT_RECEIPT_PREV_REWARD = 5605;
+    EErrorType_EVENT_EXPIRATION_DATA = 5700;
+    EErrorType_EVENT_NOT_FOUND_CATALOG = 5701;
+    EErrorType_EVENT_NOT_STARTED_EVENT = 5702;
+    EErrorType_EVENT_ENDED_EVENT = 5703;
+    EErrorType_EVENT_ATTENDANCE_ALREADY_ATTEND = 5704;
+    EErrorType_EVENT_ATTENDANCE_ALL_ATTEND = 5705;
+    EErrorType_EVENT_ATTENDANCE_INVALID_TYPE = 5706;
+    EErrorType_EVENT_LEVEL_REWARD_NOT_ENOUGH_LEVEL = 5707;
+    EErrorType_EVENT_LEVEL_REWARD_ALREADY_REWARDED = 5708;
+    EErrorType_EVENT_LEVEL_REWARD_ALREADY_ALL_REWARDED = 5709;
+    EErrorType_EVENT_LEVEL_REWARD_PREV_LEVEL_NOT_REWARD = 5710;
+    EErrorType_EVENT_LEVEL_REWARD_INVALID_LEVEL = 5711;
+    EErrorType_EVENT_MISSION_INVALID_TEMPLATE = 5712;
+    EErrorType_EVENT_MISSION_INVALID_ACCESS = 5713;
+    EErrorType_EVENT_MISSION_NOT_ACHIEVED = 5714;
+    EErrorType_EVENT_MISSION_ALREADY_REWARDED = 5715;
+    EErrorType_FAIL_NOT_EXISTS_NAME = 5800;
+    EErrorType_FAIL_MAX_CHAT_BLOCK_COUNT = 5801;
+    EErrorType_FAIL_ALREADY_CHAT_BLOCKED = 5802;
+    EErrorType_FAIL_CAN_NOT_CHAT_BLOCK_SELF = 5803;
+    EErrorType_FAIL_NOT_CHAT_BLOCKED_USER = 5804;
+    EErrorType_CHAT_BLOCK_REQUEST_IS_NOT_FINISH_YET = 5805;
+    EErrorType_FAIL_ALREADY_REPORTED = 5900;
+    EErrorType_FAIL_MAX_REPORT_COUNT = 5901;
+    EErrorType_FAIL_NOT_INITIALIZE_CHAT_REPORT = 5902;
+    EErrorType_FAIL_CAN_NOT_CHAT_REPORT_SELF = 5903;
+    EErrorType_FAIL_ITEM_PERIOD_EXPIRED = 6000;
+    EErrorType_FAIL_NOT_EXISTS_ESCAPE_PONINT = 6100;
+    EErrorType_RANKING_BLACKLIST_ALREADY_EXISTS = 6200;
+    EErrorType_RANKING_BLACKLIST_NOT_EXISTS = 6201;
+    EErrorType_FAIL_NOT_EXISTS_FRIENDLIST = 6300;
+    EErrorType_FAIL_ALREADY_INVITE = 6301;
+    EErrorType_FAIL_ALREADY_INVITED = 6302;
+    EErrorType_FAIL_MAX_INVITER_COUNT = 6303;
+    EErrorType_FAIL_MAX_INVITEE_COUNT = 6304;
+    EErrorType_FAIL_MAX_INVITABLE_COUNT = 6305;
+    EErrorType_FAIL_SAME_ACCOUNT = 6306;
+    EErrorType_FAIL_ONYOURSELF_INVITE = 6307;
+    EErrorType_FAIL_ALREADY_FRIEND = 6308;
+    EErrorType_FAIL_INVITE_DEADLINE = 6309;
+    EErrorType_FAIL_MAX_MY_FRIEND_COUNT = 6310;
+    EErrorType_FAIL_MAX_OTHER_FRIEND_COUNT = 6311;
+    EErrorType_FAIL_NOT_EXISTS_INVITER = 6312;
+    EErrorType_FAIL_NOT_EXISTS_INVITEE = 6313;
+    EErrorType_FAIL_NOT_EXISTS_FRIEND = 6314;
+    EErrorType_FAIL_NOT_EXISTS_PC = 6315;
+    EErrorType_FAIL_INVITE_ALREADY_FRIEND = 6316;
+    EErrorType_FAIL_ALL_ACCEPT = 6317;
+    EErrorType_FAIL_REGISTERED_VIGILANCELIST_MYCHARACTER = 6318;
+    EErrorType_FAIL_REGISTERED_OTHER_VIGILANCELIST = 6319;
+    EErrorType_FAIL_DEATH_PENALTY_INVALID_ACCESS = 6400;
+    EErrorType_FAIL_DEATH_PENALTY_INVALID_EXPECTED_COST = 6401;
+    EErrorType_FAIL_DEATH_PENALTY_NOT_FOUND_LEVEL_TEMPLATE = 6402;
+    EErrorType_FAIL_DEATH_PENALTY_NOT_FOUND_ITEM = 6403;
+    EErrorType_FAIL_DEATH_PENALTY_EXPIRATION_ITEM = 6404;
+    EErrorType_CASHSHOP_RESTORE_OTHER_REALM = 6500;
+    EErrorType_CASHSHOP_RESTORE_INVALID_EXTERNAL_ID = 6501;
+    EErrorType_CASHSHOP_RESTORE_INVALID_STAMP_TOKEN = 6502;
+    EErrorType_CASHSHOP_RESTORE_INVALID_STAMP_ID = 6503;
+    EErrorType_CASHSHOP_RESTORE_WRONG_RECEIPT = 6504;
+    EErrorType_CASHSHOP_RESTORE_NOT_CONSUMED = 6505;
+    EErrorType_CASHSHOP_RESTORE_PURCHASE_CANCELED = 6506;
+    EErrorType_CASHSHOP_RESTORE_PURCHASE_LIMIT = 6507;
+    EErrorType_CASHSHOP_RESTORE_CONDITIONAL_CHECK_FAILED = 6508;
+    EErrorType_CASHSHOP_RESTORE_INVALID_PARAMETER = 6509;
+    EErrorType_CASHSHOP_RESTORE_AWS_TOO_MANY_REQUEST = 6510;
+    EErrorType_CASHSHOP_RESTORE_ALREADY_USED_RECEIPT = 6511;
+    EErrorType_CASHSHOP_RESTORE_STORE_ERROR = 6512;
+    EErrorType_CASHSHOP_RESTORE_INVALID_TRANSACTION_FLOW = 6513;
+    EErrorType_CASHSHOP_RESTORE_AWS_ERROR = 6514;
+    EErrorType_CASHSHOP_RESTORE_DATA_INTEGRITY_VIOLATION = 6515;
+    EErrorType_CASHSHOP_RESTORE_INVALID_ORDER_ID = 6516;
+    EErrorType_CASHSHOP_RESTORE_SERVER_BAD_STATE = 6517;
+    EErrorType_CASHSHOP_RESTORE_IN_PROGRESS = 6518;
+    EErrorType_CASHSHOP_API_REQUEST_FAIL = 6519;
+    EErrorType_CASHSHOP_ERROR_AFTER_REWARDED = 6520;
+    EErrorType_CASHSHOP_RESTORE_UNKOWN_MARKET_TYPE = 6521;
+    EErrorType_CASHSHOP_RESTORE_EXPIRED_GOODS = 6522;
+    EErrorType_FAIL_BACK_TO_LOBBY_BATTLE_ATTITUDE = 6600;
+    EErrorType_FAIL_BACK_TO_LOBBY_INVALID_PC_STATE = 6601;
+    EErrorType_FAIL_LOGOUT_BATTLE_ATTITUDE = 6602;
+    EErrorType_FAIL_ENTER_BY_CREATE_RESTRICT = 6603;
+    EErrorType_FAIL_CREATE_CHARACTER_BY_CREATE_RESTRICT = 6604;
+    EErrorType_GUILD_DUNGEON_INVALID_TEMPLATE = 6700;
+    EErrorType_GUILD_DUNGEON_INVALID_LEVEL = 6701;
+    EErrorType_GUILD_DUNGEON_CAN_NOT_ENTERABLE_LEVEL = 6702;
+    EErrorType_GUILD_DUNGEON_LACK_OF_CREATION_COUNT = 6703;
+    EErrorType_GUILD_DUNGEON_LACK_OF_CREATION_COST = 6704;
+    EErrorType_GUILD_DUNGEON_ALREADY_CREATED = 6705;
+    EErrorType_GUILD_DUNGEON_NOT_ENOUGH_GUILD_LEVEL = 6706;
+    EErrorType_GUILD_DUNGEON_NOT_CREATED = 6707;
+    EErrorType_INVALID_GUILD_DUNGEON_ID = 6708;
+    EErrorType_INVALID_GUILD_DUNGEON_LEVEL = 6709;
+    EErrorType_GUILD_DUNGEON_NOT_ENOUGH_TIME = 6710;
+    EErrorType_GUILD_DUNGEON_INVALID_EXIT_REQUEST = 6711;
+    EErrorType_GUILD_DUNGEON_COMPLETE_FAIL = 6712;
+    EErrorType_GUILD_DUNGEON_MAX_CHARGING_COUNT = 6713;
+    EErrorType_GUILD_DUNGEON_LACK_OF_CHARGING_MATERIAL = 6714;
+    EErrorType_GUILD_DUNGEON_NOT_COMPLETE = 6715;
+    EErrorType_CS_CREATE_GUILD_DUNGEON_FAIL = 6716;
+    EErrorType_GUILD_DUNGEON_STATE_NOT_OPEN = 6717;
+    EErrorType_GUILD_DUNGEON_ALREADY_HAS_CREATION_COUNT = 6718;
+    EErrorType_FAIL_DISABLED_TELEPORT_BOOKMARK_SUBZONE = 6800;
+    EErrorType_FAIL_CAN_NOT_TELEPORT_TO_SAME_MAP_CUZ_PERMISSION = 6801;
+    EErrorType_CHAT_CAN_NOT_BLOCK_PRIVILEGED_USER = 6900;
+    EErrorType_CHAT_CAN_NOT_WHISPER_PRIVILEGED_USER = 6901;
+    EErrorType_CHAT_CAN_NOT_REPORT_PRIVILEGED_USER = 6902;
+    EErrorType_CAN_NOT_DELETE_INACTIVE_CHARACTER = 7000;
+    EErrorType_ALREADY_ACTIVE_CHARACTER = 7001;
+    EErrorType_FAIL_SELECT_LOBBY_CHARACTER_INACTIVE = 7002;
+    EErrorType_FAIL_INVALID_RESTORATION_REQUEST = 7100;
+    EErrorType_FAIL_RESTORATION_SERVER_ERROR = 7101;
+    EErrorType_FAIL_ALREADY_RESTORED_USER = 7102;
+    EErrorType_FAIL_INVALID_OS_TYPE = 7200;
+    EErrorType_FAIL_INVALID_PC = 7201;
+    EErrorType_FAIL_SHOPMODE_CAN_PURCHASE_CASH_GOODS_ONLY = 7202;
+    EErrorType_GUILD_UNION_UNKNOWN = 7300;
+    EErrorType_GUILD_UNION_ALREADY_JOINED = 7301;
+    EErrorType_GUILD_UNION_CREATE_FAILED = 7302;
+    EErrorType_GUILD_UNION_NOT_JOINED = 7303;
+    EErrorType_GUILD_UNION_NO_PERMISSION = 7304;
+    EErrorType_GUILD_UNION_DESTROY_FAILED_MEMBER_EXIST = 7305;
+    EErrorType_GUILD_UNION_CAN_NOT_INVITE_MYGUILD = 7306;
+    EErrorType_GUILD_UNION_TARGET_JOINED_OUR = 7307;
+    EErrorType_GUILD_UNION_TARGET_JOINED_OTHER = 7308;
+    EErrorType_GUILD_UNION_MAX_UNION_INVITATION = 7309;
+    EErrorType_GUILD_UNION_MAX_GUILD_INVITATION = 7310;
+    EErrorType_GUILD_UNION_ALREADY_INVITED = 7311;
+    EErrorType_GUILD_UNION_INVALID_INVITATION = 7312;
+    EErrorType_GUILD_UNION_NOT_EXISTS_UNION = 7313;
+    EErrorType_GUILD_UNION_MAX_MEMBER = 7314;
+    EErrorType_GUILD_UNION_CAN_NOT_LEAVE_LEADER = 7315;
+    EErrorType_GUILD_UNION_TARGET_IS_NOT_MEMBER = 7316;
+    EErrorType_GUILD_UNION_CAN_NOT_BANISH_MYGUILD = 7317;
+    EErrorType_GUILD_UNION_MEMBER_CAN_NOT_DISBAND = 7318;
+    EErrorType_GUILD_UNION_REJOIN_PENALTY = 7319;
+    EErrorType_CHAT_NOT_JOINED_GUILD_UNION = 7320;
+    EErrorType_GUILD_UNION_CHAT_FAILED_TO_GET_UNREAD = 7321;
+    EErrorType_DEATH_PENALTY_EXP_LOSS_NOT_FOUND = 7400;
+    EErrorType_LACK_OF_CHARACTER_CLASS = 7500;
+    EErrorType_INVALID_CHARACTER_CLASS_ID = 7501;
+    EErrorType_INVALID_CURRENT_CHARACTER_CLASS = 7502;
+    EErrorType_SAME_CHARACTER_CLASS = 7503;
+    EErrorType_CHARACTER_CLASS_CHANGE_NO_PERMISSION = 7504;
+    EErrorType_INCOMPATIBLE_WEAPON_TYPE = 7505;
+    EErrorType_DROPITEM_FAIL_NOT_EXIST = 7600;
+    EErrorType_DROPITEM_FAIL_ALREADY_LOOTED = 7601;
+    EErrorType_DROPITEM_FAIL_NO_PRIORITY = 7602;
+    EErrorType_SAME_PRESET_INDEX = 7700;
+    EErrorType_INVALID_PRESET_INDEX = 7701;
+    EErrorType_PRESET_CHANGE_DEAD_STATE = 7702;
+    EErrorType_PRESET_CHANGE_NO_PERMISSION = 7703;
+    EErrorType_MAX_ITEM_DECOMPOSITION_COUNT = 7800;
+    EErrorType_FAIL_TO_DECOMPOSE_ENHANCED_ITEM = 7801;
+    EErrorType_FAIL_NOT_MATCH_ENHANCEMENT_LEVEL = 7900;
+    EErrorType_INVALID_EQUIPMENT_ENHANCEMENT_TARGET_LEVEL = 7901;
+    EErrorType_INVALID_EQUIPMENT_ENHANCEMENT_RESULT = 7902;
+    EErrorType_REALM_GROUP_CHAT_UNKNOWN = 8000;
+    EErrorType_FAIL_USE_SCROLL_QUEST = 8100;
+    EErrorType_FAIL_GET_CANDIDATE_LIST = 8101;
+    EErrorType_FAIL_GET_CANDIDATE_TEMPLATE = 8102;
+    EErrorType_FAIL_OVER_PROGRESS_QUEST_COUNT = 8103;
+    EErrorType_FAIL_OVER_COMPLETE_QUEST_COUNT = 8104;
+    EErrorType_FAIL_PUBLISH_DAILY_QUEST_LIST = 8105;
+    EErrorType_FAIL_EXCHANGE_SCROLL_QUEST = 8106;
+    EErrorType_LACK_OF_EXCHANGE_COST_BY_SCROLL_QUEST = 8107;
+    EErrorType_INVALID_EXCHANGE_TEMPLATE_BY_SCROLL_QUEST = 8108;
+    EErrorType_FAIL_OVER_SCROLL_QUEST_EXCHANGE_COUNT = 8109;
+    EErrorType_INVALID_EXCHANGE_TEMPLATE_BY_DAILY_QUEST = 8110;
+    EErrorType_FAIL_OVER_DAILY_QUEST_EXCHANGE_COUNT = 8111;
+    EErrorType_LACK_OF_EXCHANGE_COST_BY_DAILY_QUEST = 8112;
+    EErrorType_VACUITY_POINT_OVERFLOW = 8200;
+    EErrorType_NOT_ENOUGH_VACUITY_POINT_CHANGE_MODE = 8201;
+    EErrorType_LACK_OF_VACUITY_POINT = 8202;
+    EErrorType_IS_NOT_VACUITY_MODE = 8203;
+    EErrorType_INVALID_VACUITYLEVELUP_TEMPLATE = 8204;
+    EErrorType_FAIL_SIEGE_INVALID_STEP = 8205;
+    EErrorType_FAIL_SIEGE_BID_MINIMUM_AMOUNT = 8206;
+    EErrorType_FAIL_SIEGE_BID_MAXIMUM_AMOUNT = 8207;
+    EErrorType_FAIL_SIEGE_BID_OCCUPIED_GUILD = 8208;
+    EErrorType_FAIL_SIEGE_ALREADY_BID = 8209;
+    EErrorType_FAIL_SIEGE_BID_FAILED = 8210;
+    EErrorType_FAIL_SIEGE_NOT_INVOLVED_GUILD = 8211;
+    EErrorType_FAIL_SIEGE_NOT_FOUND = 8212;
+    EErrorType_FAIL_SIEGE_RANDOM_TELEPORT = 8213;
+    EErrorType_FAIL_SIEGE_TELEPORT_POINT_TEAM_MISMATCH = 8214;
+    EErrorType_FAIL_SIEGE_HUNT_TELEPORT = 8215;
+    EErrorType_FAIL_SIEGE_NOT_ACTIVE = 8216;
+    EErrorType_FAIL_SIEGE_FIELD_TEMPLATE_NOT_FOUND = 8217;
+    EErrorType_FAIL_SIEGE_CANNOT_REQUEST_JOIN_GUILD = 8218;
+    EErrorType_FAIL_SIEGE_CANNOT_APPROVE_JOIN_GUILD = 8219;
+    EErrorType_FAIL_SIEGE_CANNOT_BANISH_FROM_GUILD = 8220;
+    EErrorType_FAIL_SIEGE_CANNOT_INVITE_GUILD = 8221;
+    EErrorType_FAIL_SIEGE_CANNOT_LEAVE_GUILD = 8222;
+    EErrorType_FAIL_SIEGE_NOT_OWNER_GUILD = 8223;
+    EErrorType_FAIL_SIEGE_SAME_TAX_RATE = 8224;
+    EErrorType_FAIL_SIEGE_INVALID_TAX_RATE = 8225;
+    EErrorType_FAIL_SIEGE_INVALID_MEMBER_LIST = 8226;
+    EErrorType_FAIL_SIEGE_NOT_MASTER = 8227;
+    EErrorType_FAIL_SIEGE_INVALID_MEMBER_REWARD = 8228;
+    EErrorType_FAIL_SIEGE_INVALID_REWARD_TOTAL = 8229;
+    EErrorType_FAIL_SIEGE_CANNOT_CHANGE_GUILD_EMBLEM = 8230;
+    EErrorType_FAIL_SIEGE_CANNOT_ENTRUST_GUILD_MASTER = 8231;
+    EErrorType_FAIL_SIEGE_SHOP_BUY_GOODS_WIN_STREAK = 8232;
+    EErrorType_FAIL_SIEGE_WARP_IN_SIEGE_SLOT = 8233;
+    EErrorType_FAIL_SIEGE_CANNOT_BUY_NOT_MEMBER = 8234;
+    EErrorType_FAIL_SIEGE_CANNOT_DISTRIBUTE_NOT_MEMBER = 8235;
+    EErrorType_TRACKING_CANNOT_MOVE_PC = 8400;
+    EErrorType_TRACKING_CANNOT_MOVE_MURDERER = 8401;
+    EErrorType_FAIL_PVP_REACTION_NOT_LATEST_HISTORY = 8402;
+    EErrorType_INVALID_RUNE_LEVELUP = 8500;
+    EErrorType_INVALID_RUNE_BONUS_ACTIVATE = 8501;
+    EErrorType_INVALID_RUNE_BONUS_RESET = 8502;
+    EErrorType_INVALID_RUNE_SETLEVEL = 8503;
+    EErrorType_ALREADY_RUNE_BONUS_ACTIVATED = 8504;
+    EErrorType_LACK_OF_RUNE_BONUS_POINT = 8505;
+    EErrorType_INVALID_COREALTAR_INFO = 8600;
+    EErrorType_INVALID_COREALTAR_ACTIVATE = 8601;
+    EErrorType_ALREADY_COREALTAR_ACTIVATED = 8602;
+    EErrorType_INVALID_COREALTAR_POSISION = 8603;
+    EErrorType_COREALTAR_ACTIVATE_USER_COOLTIME = 8604;
+    EErrorType_COREALTAR_INFO_COOLTIME = 8605;
+    EErrorType_INVALID_RULESELECTOR_REQUEST = 8700;
+    EErrorType_INVALID_RULESELECTOR_STATE = 8701;
+    EErrorType_INVALID_RULESELECTOR_VOTE_PERIOD = 8702;
+    EErrorType_RULESELECTOR_VOTE_COOLTIME = 8703;
+    EErrorType_RULESELECTOR_INFO_COOLTIME = 8704;
+    EErrorType_DAILY_BOSS_SCHEDULE_NOT_FOUND = 8800;
+    EErrorType_DAILY_BOSS_EVENT_DUNGEON_NOT_ENABLE_TIME = 8801;
+    EErrorType_DAILY_BOSS_NOT_ENTERABLE_TIME = 8802;
+    EErrorType_DAILY_BOSS_CAN_NOT_EXIT_IN_BATTLE_ATTITUDE = 8803;
+    EErrorType_DAILY_BOSS_NOT_IN_TOWN = 8804;
+    EErrorType_FAIL_ADD_VIGILANCE_CHECK_ON_YOURSELF = 8900;
+    EErrorType_FAIL_ADD_VIGILANCE_CHECK_VIGILANCE_LIST_FULL = 8901;
+    EErrorType_FAIL_ADD_VIGILANCE_CHECK_ALREADY_VIGILANCE = 8902;
+    EErrorType_FAIL_ADD_VIGILANCE_CHECK_GET_REGISTERED_AMITY_LIST = 8903;
+    EErrorType_FAIL_ADD_VIGILANCE_CHECK_FRIEND = 8904;
+    EErrorType_FAIL_ADD_VIGILANCE_CHECK_FRIEND_INVITE = 8905;
+    EErrorType_FAIL_ADD_VIGILANCE_CHECK_FRIEND_INVITED = 8906;
+    EErrorType_FAIL_REMOVE_VIGILANCE_AMITY_ON_YOURSELF = 8907;
+    EErrorType_FAIL_REMOVE_VIGILANCE_AMITY_EMPTY = 8908;
+    EErrorType_FAIL_REMOVE_VIGILANCE_AMITY_NOT_ADDED = 8909;
+    EErrorType_FAIL_ADD_AMITY_CHECK_ON_YOURSELF = 9000;
+    EErrorType_FAIL_ADD_AMITY_CHECK_AMITY_LIST_FULL = 9001;
+    EErrorType_FAIL_ADD_AMITY_CHECK_ALREADY_AMITY = 9002;
+    EErrorType_FAIL_ADD_AMITY_CHECK_GET_REGISTERED_VIGILANCE_LIST = 9003;
+    EErrorType_CANCEL_ACTION_BY_TAUNT = 9100;
+    EErrorType_INVALID_TAUNT_CASTER = 9101;
+    EErrorType_FAIL_USE_SKILL_BY_PERMISSION = 9200;
+    EErrorType_FAIL_USE_SKILL_CHARACTER_CANNOT_ACT = 9201;
+    EErrorType_NOT_ENOUGH_SKILL_INVOKE_CONDITION = 9202;
+    EErrorType_INVALID_MATERIAL_GROUP = 9300;
+    EErrorType_INVALID_SKILL_ENHANCEMENT_LEVEL = 9301;
+    EErrorType_SKILL_ENHANCEMENT_MAX_LEVEL_EXCEED = 9302;
+    EErrorType_FAIL_INPLACE_REVIVAL = 9400;
+    EErrorType_FAIL_REVIVAL_DELAY_TIME = 9401;
+    EErrorType_FAIL_BRUTAL_LIST_UPDATE_INTERVAL_TIME = 9500;
+    EErrorType_FAIL_FIND_BRUTAL = 9501;
+    EErrorType_FAIL_NOT_BRUTAL_TRACKABLE_TIME = 9502;
+    EErrorType_FAIL_NOT_BRUTAL_TRACKABLE_STATE = 9503;
+    EErrorType_FAIL_INTERACTION_BY_PERMISSION = 9600;
+    EErrorType_FAIL_OCCUPIED_INTERACTION = 9601;
+    EErrorType_FAIL_INTERACTION_BY_REACT_MOVE_ACTION = 9602;
+    EErrorType_FAIL_SIEGE_SLOT_ALREADY_ACTIVATED = 9700;
+    EErrorType_FAIL_SIEGE_SLOT_ALREADY_DEACTIVATED = 9701;
+    EErrorType_FAIL_SIEGE_SLOT_TEAM_MISMATCH = 9702;
+    EErrorType_FAIL_SIEGE_SLOT_BY_OTHER_TEAM = 9703;
+    EErrorType_FAIL_SIEGE_WALL_REACTIVATE_INTERVAL = 9704;
+    EErrorType_FAIL_SIEGE_SLOT_NO_PERMISSION = 9705;
+    EErrorType_FAIL_SIEGE_SLOT_PC_NOT_ON_SLOT = 9706;
+    EErrorType_FAIL_SIEGE_SLOT_DEACTIVATE_BATTLE_ATTITUDE = 9707;
+    EErrorType_FAIL_ALREADY_INTERACTION_THRONE = 9800;
+    EErrorType_FAIL_INTERACT_THRONE_BY_TEAM = 9801;
+    EErrorType_FAIL_INTERACT_THRONE_BY_BATTLEPHASE = 9802;
+    EErrorType_FAIL_SIEGE_PORTAL = 9803;
+    EErrorType_FAIL_SIEGE_TOWER_INVALID_ID = 9900;
+    EErrorType_FAIL_SIEGE_TOWER_INVALID_STATE = 9901;
+    EErrorType_FAIL_SIEGE_TOWER_INACTIVATE = 9902;
+    EErrorType_FAIL_SIEGE_TOWER_INFO_COOLTIME = 9903;
+    EErrorType_FAIL_SIEGE_TOWER_BUILD_COOLTIME = 9904;
+    EErrorType_FAIL_SIEGE_TOWER_ALREADY_COMPLETED_REWARD = 9905;
+    EErrorType_FAIL_SIEGE_TOWER_EXPIRED_COMPLETED_REWARD = 9906;
+    EErrorType_FAIL_SIEGE_TOWER_INVALID_BUILD_PERIOD = 9907;
+    EErrorType_FAIL_OFFLINE_HUNT_INVALID_ID = 10000;
+    EErrorType_FAIL_OFFLINE_HUNT_NOT_ENOUGH_CONDITION = 10001;
+    EErrorType_FAIL_OFFLINE_HUNT_NOT_ENOUGH_TIME = 10002;
+    EErrorType_FAIL_OFFLINE_HUNT_CLOSED = 10003;
+    EErrorType_FAIL_OFFLINE_HUNT_INVALID_STATE = 10004;
+    EErrorType_FAIL_OFFLINE_HUNT_TIMEOUT = 10005;
+    EErrorType_INVALID_GOODS_SELECTABLE_SLOT = 10100;
+    EErrorType_INVALID_SEASON_PASS_NUMBER = 10200;
+    EErrorType_ALREADY_SEASON_PASS_PREMIUM_ACTIVATED = 10201;
+    EErrorType_FAIL_SEASON_PASS_PREMIUM_NOT_ACTIVATED = 10202;
+    EErrorType_FAIL_NOT_ENOUGH_SEASON_PASS_POINT = 10203;
+    EErrorType_ALREADY_RECEIVED_ALL_REWARD = 10204;
+    EErrorType_FAIL_WARP_TO_OUTER = 10300;
+    EErrorType_FAIL_PREOCCUPATION_CHARACTER_TIMEOVER = 10400;
+    EErrorType_FAIL_CHARACTER_GIFT_NOT_TOWN = 10500;
+    EErrorType_FAIL_CHARACTER_GIFT_NOT_PERMANENT_FIELD = 10501;
+    EErrorType_FAIL_CHARACTER_GIFT_NOT_ENOUGH_PC_LEVEL = 10502;
+    EErrorType_FAIL_CHARACTER_GIFT_COOLTIME = 10503;
+    EErrorType_FAIL_CHARACTER_GIFT_DUPLICATED = 10504;
+    EErrorType_FAIL_CHARACTER_GIFT_DB_FAILED = 10505;
+    EErrorType_FAIL_CHARACTER_GIFT_NOT_PRESENTED = 10506;
+    EErrorType_FAIL_CHARACTER_GIFT_IN_PROGRESS = 10507;
+    EErrorType_FAIL_CHARACTER_GIFT_NOT_ENOUGH_CHARACTER_SLOT = 10508;
+    EErrorType_FAIL_CHARACTER_GIFT_CONDITION_GUILD_JOIN = 10509;
+    EErrorType_FAIL_CHARACTER_GIFT_CONDITION_GUILD_JOIN_REQUEST = 10510;
+    EErrorType_FAIL_CHARACTER_GIFT_CONDITION_PARTY = 10511;
+    EErrorType_FAIL_CHARACTER_GIFT_CONDITION_TRADING = 10512;
+    EErrorType_FAIL_CHARACTER_GIFT_CONDITION_CASH_SHOP = 10513;
+    EErrorType_FAIL_CHARACTER_GIFT_CONDITION_MAIL = 10514;
+    EErrorType_FAIL_CHARACTER_GIFT_CONDITION_DEATH_PENALTY = 10515;
+    EErrorType_FAIL_CHARACTER_GIFT_CONDITION_COMMUNITY = 10516;
+    EErrorType_FAIL_CHARACTER_GIFT_CONDITION_CHARACTER_LEVEL = 10517;
+    EErrorType_FAIL_CHARACTER_GIFT_CONDITION_CHARACTER_POSITION = 10518;
+    EErrorType_FAIL_CHARACTER_GIFT_CONDITION_COOLTIME = 10519;
+    EErrorType_FAIL_CHARACTER_GIFT_CANNOT_SELECT = 10520;
+    EErrorType_FAIL_CHARACTER_GIFT_INVALID_PASSWORD_FORMAT = 10521;
+    EErrorType_FAIL_CHARACTER_GIFT_CANCEL_ALREADY_USE = 10522;
+    EErrorType_FAIL_CHARACTER_GIFT_CANCEL_INTERVAL = 10523;
+    EErrorType_FAIL_CHARACTER_GIFT_HAS_RESTRICTION = 10524;
+    EErrorType_FAIL_CHARACTER_GIFT_CANNOT_RECEIVE_MAIL = 10525;
+    EErrorType_FAIL_CHARACTER_GIFT_NOT_REGISTERED_DEVICE = 10526;
+    EErrorType_FAIL_CHARACTER_GIFT_SAME_USER = 10527;
+    EErrorType_FAIL_CHARACTER_GIFT_INVALID_PASSWORD = 10528;
+    EErrorType_FAIL_CHARACTER_GIFT_INVALID_GIFTCODE = 10529;
+    EErrorType_FAIL_CHARACTER_GIFT_ALREADY_USE = 10530;
+    EErrorType_FAIL_CHARACTER_GIFT_INVALID_STATE = 10531;
+    EErrorType_FAIL_CHARACTER_GIFT_CONDITION_REWARD_CHANGE = 10532;
+    EErrorType_FAIL_CHARACTER_GIFT_DUPLICATED_REQUEST = 10533;
+    EErrorType_GUILDAZIT_FAILRENTALCONDITION = 10600;
+    EErrorType_GUILDAZIT_FAILRENTALNOTENOUGHRANK = 10601;
+    EErrorType_GUILDAZIT_FAILRENTALPERIODMAX = 10602;
+    EErrorType_GUILDAZIT_FAILRENTALNOTENOUGHCURRENCY = 10603;
+    EErrorType_GUILDAZIT_NOTRENTAL = 10604;
+    EErrorType_GUILDAZIT_FAILMAPTYPE = 10605;
+    EErrorType_GUILDAZIT_NOTENOUGHENTRYITEM = 10606;
+    EErrorType_GUILDAZIT_NOTENOUGHTELEPORTBOOKMARKITEM = 10607;
+    EErrorType_GUILDAZIT_EXPIRED = 10608;
+    EErrorType_GUILDAZIT_FAILCONDITIONENTRYITEM = 10609;
+    EErrorType_GUILDAZIT_NPCSHOP_NOT_OCCUPY_SIEGE = 10610;
+    EErrorType_REALM_IMMIGRATION_INVALID_REALM = 10700;
+    EErrorType_REALM_IMMIGRATION_DEPARTURE_GATE_CLOSED = 10701;
+    EErrorType_REALM_IMMIGRATION_IMPOSSIBLE_ARRIVAL_REALM = 10702;
+    EErrorType_REALM_IMMIGRATION_ARRIVAL_GATE_CLOSED = 10703;
+    EErrorType_REALM_IMMIGRATION_NOT_AVAILABLE = 10704;
+    EErrorType_REALM_IMMIGRATION_GUILD_DEPARTURE_GATE_CLOSED = 10705;
+    EErrorType_REALM_IMMIGRATION_GUILD_ARRIVAL_GATE_CLOSED = 10706;
+    EErrorType_REALM_IMMIGRATION_FAIL_OTHER_REALM_CLOSED = 10707;
+    EErrorType_REALM_IMMIGRATION_FAIL_GUILD_CONDITION_NOT_IN_GUILD = 10708;
+    EErrorType_REALM_IMMIGRATION_FAIL_GUILD_CONDITION_GUILD_DUNGEON = 10709;
+    EErrorType_REALM_IMMIGRATION_FAIL_GUILD_CONDITION_GUILD_JOIN_TYPE = 10710;
+    EErrorType_REALM_IMMIGRATION_FAIL_GUILD_CONDITION_GUILD_MASTER = 10711;
+    EErrorType_REALM_IMMIGRATION_FAIL_GUILD_CONDITION_GUILD_MEMBER = 10712;
+    EErrorType_REALM_IMMIGRATION_FAIL_GUILD_CONDITION_RECEIVED_JOIN_REQUEST = 10713;
+    EErrorType_REALM_IMMIGRATION_FAIL_GUILD_CONDITION_SENT_INVITATION = 10714;
+    EErrorType_REALM_IMMIGRATION_FAIL_CONDITION_CASH_SHOP_INBOX_GOODS = 10715;
+    EErrorType_REALM_IMMIGRATION_FAIL_CONDITION_DEATH_PENALTY_ITEM = 10716;
+    EErrorType_REALM_IMMIGRATION_FAIL_CONDITION_GUILD = 10717;
+    EErrorType_REALM_IMMIGRATION_FAIL_CONDITION_GUILD_RECEIVED_INVITATION = 10718;
+    EErrorType_REALM_IMMIGRATION_FAIL_CONDITION_GUILD_SENT_JOIN_REQUEST = 10719;
+    EErrorType_REALM_IMMIGRATION_FAIL_CONDITION_MAIL = 10720;
+    EErrorType_REALM_IMMIGRATION_FAIL_CONDITION_CHANGEABLE_REWARD = 10721;
+    EErrorType_REALM_IMMIGRATION_FAIL_CONDITION_TRADE = 10722;
+    EErrorType_REALM_IMMIGRATION_FAIL_CONDITION_UNION_TRADE = 10723;
+    EErrorType_REALM_IMMIGRATION_FAIL_CONDITION_RESERVE_NOT_TOWN = 10724;
+    EErrorType_REALM_IMMIGRATION_NOT_CONDITION_ENOUGH_PC_LEVEL = 10725;
+    EErrorType_REALM_IMMIGRATION_NOT_CONDITION_ENOUGH_OTHER_CHARACTER_SLOT = 10726;
+    EErrorType_REALM_IMMIGRATION_NOT_CONDITION_JOIN_PARTY = 10727;
+    EErrorType_REALM_IMMIGRATION_NOT_CONDITION_REGIST_COMMUNITY = 10728;
+    EErrorType_REALM_IMMIGRATION_NOT_CONDITION_REGIST_CHANGABLE_REWARD = 10729;
+    EErrorType_REALM_IMMIGRATION_CLOSED = 10730;
+    EErrorType_REALM_IMMIGRATION_RESTRICTION_PC_CREATION_TIME = 10731;
+    EErrorType_REALM_IMMIGRATION_CAN_NOT_MOVE_TO_MY_REALM = 10732;
+    EErrorType_REALM_IMMIGRATION_FAIL_RESERVE_NOT_PERMANENT_FIELD = 10733;
+    EErrorType_REALM_IMMIGRATION_IN_BATTLE_ATTITUDE = 10734;
+    EErrorType_REALM_IMMIGRATION_ALREADY_USED_ALL_CAPACITY = 10735;
+    EErrorType_REALM_IMMIGRATION_ARRIVAL_REALM_IS_EMPTY = 10736;
+    EErrorType_REALM_IMMIGRATION_INVALID_RESERVE_REQUEST = 10737;
+    EErrorType_REALM_IMMIGRATION_FAIL_RESERVE_DIFFERENT_PRICE = 10738;
+    EErrorType_REALM_IMMIGRATION_ALREADY_USED_USER_CAPACITY = 10739;
+    EErrorType_REALM_IMMIGRATION_COOLTIME = 10740;
+    EErrorType_REALM_IMMIGRATION_DUPLICATED_RESERVE = 10741;
+    EErrorType_REALM_IMMIGRATION_TRY_AGAIN_LATER = 10742;
+    EErrorType_FAIL_NGS = 20000;
+    EErrorType_FAIL_NGS_LOGIN_CERTIFY = 20001;
+    EErrorType_FAIL_NGS_NOT_INITIALIZED = 20002;
+    EErrorType_TOYSERVER_TOO_MANY_REQUEST = 20100;
+    EErrorType_TOYSERVER_REQUEST_TIMEOUT = 20101;
+    EErrorType_TOYSERVER_RESPONSE_TIMEOUT = 20102;
+    EErrorType_TOYSERVER_VALIDATE_FAIL = 20103;
+    EErrorType_TOYSERVER_EXPIRED_TOKEN = 20104;
+    EErrorType_TOYSERVER_MODIFIED_APPLICATION = 20105;
+    EErrorType_TOYSERVER_INVALID_ERRORCODE = 20106;
+    EErrorType_FAIL_NOT_HAS_ITEM_YET = 20107;
+    EErrorType_FAIL_UNENABLE_FEATUREACTIVATION = 20108;
+    EErrorType_TOY_UNDEFINED_ERROR = 20109;
+    EErrorType_SERVICE_MAINTENANCE = 20110;
+    EErrorType_KAKAO_INVALID_REQUEST = 20200;
+    EErrorType_KAKAO_INVALID_SERVICE_ID = 20201;
+    EErrorType_KAKAO_INVALID_USER = 20202;
+    EErrorType_KAKAO_EXPIRED = 20203;
+    EErrorType_KAKAO_TIMEOUT = 20204;
+    EErrorType_KAKAO_API_FAIL = 20205;
+    EErrorType_KAKAO_INVALID_STATE = 20206;
+    EErrorType_KAKAO_ALREADY_LINK = 20207;
+    EErrorType_KAKAO_CS_TIMEOUT = 20208;
+    EErrorType_KAKAO_INVALID_NPSN = 20209;
+    EErrorType_SSO_DEPRECATED_1 = 20300;
+    EErrorType_SSO_DEPRECATED_2 = 20301;
+    EErrorType_SSO_DEPRECATED_3 = 20302;
+    EErrorType_SSO_DEPRECATED_4 = 20303;
+    EErrorType_SSO_DEPRECATED_5 = 20304;
+    EErrorType_FIND_NPSN_FAIL = 20305;
+    EErrorType_NGSM_ABNORMAL_USER_5000 = 20400;
+    EErrorType_NGSM_NOT_EXIST_TOKEN_5001 = 20401;
+    EErrorType_NGSM_NEED_CLIENT_VERIFY_5002 = 20402;
+    EErrorType_NGSM_WRONG_SERVICE_ID_5100 = 20403;
+    EErrorType_NGSM_BLOCKED_IP_6000 = 20404;
+    EErrorType_NGSM_SERVER_ERROR = 20405;
+    EErrorType_VERSION_DIFFERENT_PROTOCOL = 20500;
+    EErrorType_VERSION_TOO_LOW_APP = 20501;
+    EErrorType_VERSION_TOO_LOW_APP_RESOURCE = 20502;
+    EErrorType_COUPON_NOT_EXIST = 20600;
+    EErrorType_COUPON_SERVER = 20601;
+    EErrorType_COUPON_ALREADY_USED_COUPON_GROUP = 20602;
+    EErrorType_COUPON_ALREADY_USED_COUPON = 20603;
+    EErrorType_COUPON_EXPIRED = 20604;
+    EErrorType_COUPON_ERROR_RETRY = 20605;
+    EErrorType_COUPON_WRONG_ITEM_SETTING = 20606;
+    EErrorType_FAIL_LOGIN_RESTRICTION = 20700;
+    EErrorType_FAIL_TRADING_RESTRICTION = 20701;
+    EErrorType_NOT_ENOUGH_REQUEST_COOLTIME = 20800;
+    EErrorType_BAD_REQUEST = 20801;
+    EErrorType_NOT_INFLUENCER_SPONSOR_IMPLEMENTED = 20802;
+    EErrorType_NOT_REGISTERED_SUPPORTER = 20803;
+    EErrorType_NOT_REGISTERED_CREATOR = 20804;
+    EErrorType_CREATOR_SUPPORT_IMPOSSIBLE = 20805;
+    EErrorType_CAN_NOT_SUPPORT_YOURSELF = 20806;
+    EErrorType_NOT_REGISTERED_SERVICE = 20807;
+    EErrorType_CREATOR_CODE_GENERATE_FAIL_TRY_AGAIN = 20808;
+    EErrorType_NO_CURRENCY_FOUND = 20809;
+    EErrorType_INVALID_CREATOR_TAG = 20810;
+    EErrorType_ALREADY_REGISTERED_CREATOR = 20811;
+    EErrorType_WITHDRAW_CREATOR = 20812;
+    EErrorType_UNKNOWN_ERROR = 20813;
+    EErrorType_TRUSTED_DEVICE_SERVER_ERROR = 20814;
+    EErrorType_TRUSTED_DEVICE_UNKNOWN_ERROR = 20815;
+    EErrorType_TRUSTED_DEVICE_MISSING_PARAMETER = 20816;
+    EErrorType_TRUSTED_DEVICE_INVALID_SERVICE_ID = 20817;
+    EErrorType_TRUSTED_DEVICE_INVALID_AUTH = 20818;
+    EErrorType_TRUSTED_DEVICE_INVALID_ACCOUNT_INFO = 20819;
+    EErrorType_TRUSTED_DEVICE_API_SERVER_CONNECTION_ERROR = 20820;
+    EErrorType_TRUSTED_DEVICE_BACK_OFFICE_ERROR = 20821;
+    EErrorType_TRUSTED_DEVICE_GUEST_ACCOUNT = 20822;
+    EErrorType_TRUSTED_DEVICE_REGIST = 20823;
+    EErrorType_TRUSTED_DEVICE_NOT_REGIST = 20824;
+    EErrorType_TRUSTED_DEVICE_UNREGIST_DEVICE = 20825;
+    EErrorType_TRUSTED_DEVICE_REGIST_FULL = 20826;
+    EErrorType_GWS_UNKNOWN = 30000;
+    EErrorType_GWS_NOT_FOUND_COORDINATION = 30001;
+    EErrorType_GWS_AUTH_KEY_TIME_OUT = 30002;
+    EErrorType_GWS_INVALID_REQUEST = 30003;
+    EErrorType_GWS_FAILED_TO_PUSH_TO_LOGIN_QUEUE = 30004;
+    EErrorType_GWS_FAILED_CHECK_LOGIN_QUEUE = 30005;
+    EErrorType_GWS_LOGIN_QUEUE_DISCONNECTED = 30006;
+    EErrorType_GWS_QUIT_USER_SSO = 30007;
+    EErrorType_CFS_INVALID_SERVICE_DATA = 30100;
+    EErrorType_CFS_UNREGISTED_HOST = 30101;
+    EErrorType_CFS_WRONG_SERVER_TYPE = 30102;
+    EErrorType_CFS_WRONG_LISTEN_INFO = 30103;
+    EErrorType_CFS_DEV_REGIST_RETRY = 30104;
+    EErrorType_CFS_DUPLICATE_HOST = 30105;
+    EErrorType_CFS_WAIT_OTHER_SERVER_RETRY = 30106;
+    EErrorType_CFS_RETRY_SERVER_INFO = 30107;
+    EErrorType_CFS_DEV_INVLID_HOST_NAME = 30108;
+    EErrorType_CFS_WRONG_SETTING = 30109;
+    EErrorType_CS_UNKNOWN = 30200;
+    EErrorType_CS_NOT_READY = 30201;
+    EErrorType_CS_NO_WORLDSERVER = 30202;
+    EErrorType_CS_UNREGISTERED_WORLDSERVER = 30203;
+    EErrorType_CS_ALREADY_EXISTS_WORLDSERVER = 30204;
+    EErrorType_CS_ALREADY_BOOKING = 30205;
+    EErrorType_CS_WRONG_CHARACTER = 30206;
+    EErrorType_CS_CHAT_ALREADY_SUBSCRIBE = 30207;
+    EErrorType_CS_CHAT_INVALID_CHANNEL_ID = 30208;
+    EErrorType_CS_CHAT_INVALID_CHAT_TYPE = 30209;
+    EErrorType_CS_CHAT_SUBSCRIBER_NOT_FOUND = 30210;
+    EErrorType_CS_INVALID_DB_DATA = 30211;
+    EErrorType_CS_PRIVILEGED_USER_NOT_EXISTS = 30212;
+    EErrorType_CS_PRIVILEGED_USER_ALREADY_ADDED = 30213;
+    EErrorType_WS_UNKNOWN = 30300;
+    EErrorType_WS_INVALID_MAP_ID = 30301;
+    EErrorType_WS_UNINITIALIZED_ZONE_BUCKET = 30302;
+    EErrorType_WS_DUPLICATED_ZONE_ID = 30303;
+    EErrorType_WS_FAILED_BOOKING = 30304;
+    EErrorType_WS_INVALID_USER_CHARACTER_SLOT_INDEX = 30305;
+    EErrorType_WS_INVALID_AUTH_KEY = 30306;
+    EErrorType_WS_CREATE_ZONE_FAILED = 30307;
+    EErrorType_WS_TIMEOUT = 30308;
+    EErrorType_WS_CLEAR = 30309;
+    EErrorType_GWS_WAIT_RESULT = 30400;
+    EErrorType_GWS_LOGIN_DUPLICATE = 30401;
+    EErrorType_FAIL_NOT_FOUND_BOOKING_USER = 30402;
+    EErrorType_FAIL_CHANNEL_USER_MAX = 30403;
+    EErrorType_FAIL_NONCHANNEL_USER_MAX = 30404;
+    EErrorType_INVALID_DUPLICATE_REQUEST = 30405;
+    EErrorType_AA_INVALID_SESSION = 30500;
+    EErrorType_AA_UNKNOWN_REALM_ID = 30501;
+    EErrorType_AA_FAILED_CERTIFY = 30502;
+    EErrorType_AA_UNKNOWN_REALM_GROUP_ID = 30503;
+    EErrorType_AA_UNKNOWN_WORLD_ID = 30504;
+    EErrorType_INVALID_CURRENT_ITEM_SIMULATOR = 30600;
+    EErrorType_RESERVED_FOR_EMERGENCY01 = 40000;
+    EErrorType_RESERVED_FOR_EMERGENCY02 = 40001;
+    EErrorType_RESERVED_FOR_EMERGENCY03 = 40002;
+    EErrorType_RESERVED_FOR_EMERGENCY04 = 40003;
+    EErrorType_RESERVED_FOR_EMERGENCY05 = 40004;
+    EErrorType_RESERVED_FOR_EMERGENCY06 = 40005;
+    EErrorType_RESERVED_FOR_EMERGENCY07 = 40006;
+    EErrorType_RESERVED_FOR_EMERGENCY08 = 40007;
+    EErrorType_RESERVED_FOR_EMERGENCY09 = 40008;
+    EErrorType_RESERVED_FOR_EMERGENCY10 = 40009;
+    EErrorType_RESERVED_FOR_EMERGENCY11 = 40010;
+    EErrorType_RESERVED_FOR_EMERGENCY12 = 40011;
+    EErrorType_RESERVED_FOR_EMERGENCY13 = 40012;
+    EErrorType_RESERVED_FOR_EMERGENCY14 = 40013;
+    EErrorType_RESERVED_FOR_EMERGENCY15 = 40014;
+    EErrorType_RESERVED_FOR_EMERGENCY16 = 40015;
+    EErrorType_RESERVED_FOR_EMERGENCY17 = 40016;
+    EErrorType_RESERVED_FOR_EMERGENCY18 = 40017;
+    EErrorType_RESERVED_FOR_EMERGENCY19 = 40018;
+    EErrorType_RESERVED_FOR_EMERGENCY20 = 40019;
+    EErrorType_INVALID = -1;
+}
+
+enum ETimedObjectLocType {
+    ETimedObjectLocType_INSTIGATOR = 0;
+    ETimedObjectLocType_SKILL_TARGET = 1;
+    ETimedObjectLocType_INVALID = -1;
+}
+
+enum EHitLocType {
+    EHitLocType_INSTIGATOR = 0;
+    EHitLocType_SKILL_TARGET = 1;
+    EHitLocType_INVALID = -1;
+}
+
+enum EOccurrenceLocType {
+    EOccurrenceLocType_INSTIGATOR = 0;
+    EOccurrenceLocType_SKILL_TARGET = 1;
+    EOccurrenceLocType_INVALID = -1;
+}
+
+enum EActionEffectType {
+    EActionEffectType_BATTLE_EFFECT = 0;
+    EActionEffectType_TARGETING_PROJECTILE = 1;
+    EActionEffectType_TIMED_OBJECT = 2;
+    EActionEffectType_NPC_SUMMON = 3;
+    EActionEffectType_BLINK = 4;
+    EActionEffectType_MULTI_TARGET_TIMED_OBJECT = 5;
+    EActionEffectType_INVALID = -1;
+}
+
+enum EUILayer {
+    EUILayer_CharacterHud = 0;
+    EUILayer_Scene = 1;
+    EUILayer_Floatings = 2;
+    EUILayer_Toast = 3;
+    EUILayer_Tutorial = 4;
+    EUILayer_Block = 5;
+    EUILayer_OverUiScreenFx = 6;
+    EUILayer_PowerSaveScreen = 7;
+    EUILayer_HighPriorityFloatings = 8;
+    EUILayer_NetProgress = 9;
+    EUILayer_TopUiScreenFx = 10;
+    EUILayer_TopMostFloatings = 11;
+    EUILayer_Test = 12;
+    EUILayer_Max = 13;
+    EUILayer_INVALID = -1;
+}
+
+enum EToastChannelType {
+    EToastChannelType_DEFAULT = 0;
+    EToastChannelType_UNIQUE = 1;
+    EToastChannelType_QUEUE = 2;
+    EToastChannelType_STACK = 3;
+    EToastChannelType_INVALID = -1;
+}
+
+enum EToastBehavior {
+    EToastBehavior_OPEN = 0;
+    EToastBehavior_CLOSE = 1;
+    EToastBehavior_SUSPEND = 2;
+    EToastBehavior_INVALID = -1;
+}
+
+enum EToastChannelClearCondition {
+    EToastChannelClearCondition_None = 0;
+    EToastChannelClearCondition_OnEnterTitle = 1;
+    EToastChannelClearCondition_OnEnterLobby = 2;
+    EToastChannelClearCondition_INVALID = -1;
+}
+
+enum EBossRewardType {
+    EBossRewardType_PARTICIPATION = 0;
+    EBossRewardType_FIRSTGET = 1;
+    EBossRewardType_INVALID = -1;
+}
+
+enum EConditionType {
+    EConditionType_NONE = 0;
+    EConditionType_ON_DAMAGED = 1;
+    EConditionType_ON_SKILL_STARTED_BY_SKILL_ID = 2;
+    EConditionType_ON_SKILL_STARTED_BY_SKILL_GRADE = 3;
+    EConditionType_ON_HIT = 4;
+    EConditionType_ON_SKILL_HIT = 5;
+    EConditionType_ON_ACTIVE_SKILL_HIT = 6;
+    EConditionType_WHILE_INVENTORY_MAX_WEIGHT_OVER = 7;
+    EConditionType_WHILE_HP_DECREASED_UNDER_RATE = 8;
+    EConditionType_WHILE_MP_DECREASED_UNDER_RATE = 9;
+    EConditionType_ON_KILL = 10;
+    EConditionType_ON_CRITICAL_HIT = 11;
+    EConditionType_ON_ITEM_USED = 12;
+    EConditionType_ON_PARRIED = 13;
+    EConditionType_ON_NORMAL_SKILL_HIT = 14;
+    EConditionType_ON_DEBUFF_RESIST = 15;
+    EConditionType_ON_STUN_RESIST = 16;
+    EConditionType_ON_REVIVAL = 17;
+    EConditionType_ON_HIT_BY_EFFECT_GROUP_TYPE = 18;
+    EConditionType_ON_DAMAGED_HP_DECREASED_UNDER_RATE = 19;
+    EConditionType_INVALID = -1;
+}
+
+enum ESubzoneType {
+    ESubzoneType_LV1_FIELD = 0;
+    ESubzoneType_LV2_TOWN = 1;
+    ESubzoneType_LV3_DISTRICT = 2;
+    ESubzoneType_LV3_HUNTING_GROUND = 3;
+    ESubzoneType_LV3_DUNGEON_ENTRANCE = 4;
+    ESubzoneType_INVALID = -1;
+}
+
+enum EPassiveType {
+    EPassiveType_PERMANENT = 0;
+    EPassiveType_ON = 1;
+    EPassiveType_WHILE = 2;
+    EPassiveType_INVALID = -1;
+}
+
+enum ERealmCongestion {
+    ERealmCongestion_OFFLINE = 0;
+    ERealmCongestion_LEVEL1 = 1;
+    ERealmCongestion_LEVEL2 = 2;
+    ERealmCongestion_LEVEL3 = 3;
+    ERealmCongestion_LEVEL_MAX = 4;
+    ERealmCongestion_INVALID = -1;
+}
+
+enum EChannelCongestion {
+    EChannelCongestion_OFFLINE = 0;
+    EChannelCongestion_LEVEL1 = 1;
+    EChannelCongestion_LEVEL2 = 2;
+    EChannelCongestion_LEVEL_MAX = 3;
+    EChannelCongestion_INVALID = -1;
+}
+
+enum EObjectiveIconDisplayType {
+    EObjectiveIconDisplayType_NONE = 0;
+    EObjectiveIconDisplayType_ON_STARTED = 1;
+    EObjectiveIconDisplayType_ON_TARGET_COUNT_INCREASED = 2;
+    EObjectiveIconDisplayType_ON_END = 3;
+    EObjectiveIconDisplayType_INVALID = -1;
+}
+
+enum ESpawnType {
+    ESpawnType_ONCE = 0;
+    ESpawnType_REPEATEDLY = 1;
+    ESpawnType_PERMANENTLY = 2;
+    ESpawnType_INVALID = -1;
+}
+
+enum EPurchaseRestrictionTargetType {
+    EPurchaseRestrictionTargetType_CHARACTER = 0;
+    EPurchaseRestrictionTargetType_ACCOUNT = 1;
+    EPurchaseRestrictionTargetType_INVALID = -1;
+}
+
+enum EResetIntervalType {
+    EResetIntervalType_DAY = 0;
+    EResetIntervalType_WEEK = 1;
+    EResetIntervalType_MONTH = 2;
+    EResetIntervalType_PERMANENT = 3;
+    EResetIntervalType_INVALID = -1;
+}
+
+enum EEquipmentEnhancementResult {
+    EEquipmentEnhancementResult_LEVEL_UP1 = 0;
+    EEquipmentEnhancementResult_LEVEL_HOLD = 1;
+    EEquipmentEnhancementResult_LEVEL_DOWN = 2;
+    EEquipmentEnhancementResult_DESTRUCTION = 3;
+    EEquipmentEnhancementResult_LEVEL_UP2 = 4;
+    EEquipmentEnhancementResult_LEVEL_UP3 = 5;
+    EEquipmentEnhancementResult_INVALID = -1;
+}
+
+enum ESkillStartType {
+    ESkillStartType_TO_TARGET = 0;
+    ESkillStartType_TO_TARGET_OR_IN_PLACE = 1;
+    ESkillStartType_IN_PLACE = 2;
+    ESkillStartType_OPEN_TARGETSELECTOR = 3;
+    ESkillStartType_INVALID = -1;
+}
+
+enum ESkillInvokeTargetType {
+    ESkillInvokeTargetType_NONE = 0;
+    ESkillInvokeTargetType_ALLY = 1;
+    ESkillInvokeTargetType_ENEMY = 2;
+    ESkillInvokeTargetType_INVALID = -1;
+}
+
+enum EGuildJoinType {
+    EGuildJoinType_FREE = 0;
+    EGuildJoinType_APPROVE = 1;
+    EGuildJoinType_PRIVATE = 2;
+    EGuildJoinType_INVALID = -1;
+}
+
+enum EGuildLeaveType {
+    EGuildLeaveType_SELF = 0;
+    EGuildLeaveType_BANISHMENT = 1;
+    EGuildLeaveType_DISBAND = 2;
+    EGuildLeaveType_INVALID = -1;
+}
+
+enum EPositionInGuild {
+    EPositionInGuild_REQUESTER = 0;
+    EPositionInGuild_MEMBER = 1;
+    EPositionInGuild_MANAGER = 2;
+    EPositionInGuild_MASTER = 3;
+    EPositionInGuild_INVALID = -1;
+}
+
+enum EGuildInvitationType {
+    EGuildInvitationType_REQUEST = 0;
+    EGuildInvitationType_INVITATION = 1;
+    EGuildInvitationType_INVALID = -1;
+}
+
+enum EGuildInvitationRemoveType {
+    EGuildInvitationRemoveType_USER = 0;
+    EGuildInvitationRemoveType_MANAGER = 1;
+    EGuildInvitationRemoveType_INVALID = -1;
+}
+
+enum EGuildJoinByType {
+    EGuildJoinByType_NONE = 0;
+    EGuildJoinByType_SELF = 1;
+    EGuildJoinByType_APPROVE = 2;
+    EGuildJoinByType_INVALID = -1;
+}
+
+enum EGuildUnionLeaveReason {
+    EGuildUnionLeaveReason_SELF = 0;
+    EGuildUnionLeaveReason_BANISH = 1;
+    EGuildUnionLeaveReason_DESTROY = 2;
+    EGuildUnionLeaveReason_INVALID = -1;
+}
+
+enum EGuildDungeonExitReason {
+    EGuildDungeonExitReason_SELF = 0;
+    EGuildDungeonExitReason_FAIL = 1;
+    EGuildDungeonExitReason_CLEAR = 2;
+    EGuildDungeonExitReason_INVALID = -1;
+}
+
+enum EGuildAzitExitReason {
+    EGuildAzitExitReason_SELF = 0;
+    EGuildAzitExitReason_TIMEOUT = 1;
+    EGuildAzitExitReason_INVALID = -1;
+}
+
+enum EZoneChannelType {
+    EZoneChannelType_HARD = 0;
+    EZoneChannelType_MAIN = 1;
+    EZoneChannelType_SUB = 2;
+    EZoneChannelType_INVALID = -1;
+}
+
+enum EDailyBossType {
+    EDailyBossType_DAILY_BOSS = 0;
+    EDailyBossType_EVENT_DUNGEON = 1;
+    EDailyBossType_INVALID = -1;
+}
+
+enum EDailyBossDungeonExitReason {
+    EDailyBossDungeonExitReason_SELF = 0;
+    EDailyBossDungeonExitReason_TIMEOUT = 1;
+    EDailyBossDungeonExitReason_INVALID = -1;
+}
+
+enum EChatType {
+    EChatType_NORMAL = 0;
+    EChatType_REGION = 1;
+    EChatType_REALM = 2;
+    EChatType_PARTY = 3;
+    EChatType_GUILD = 4;
+    EChatType_WHISPER = 5;
+    EChatType_GUILDUNION = 6;
+    EChatType_REALMGROUP = 7;
+    EChatType_INVALID = -1;
+}
+
+enum EChatTextType {
+    EChatTextType_NORMAL = 0;
+    EChatTextType_REALM = 1;
+    EChatTextType_PARTY = 2;
+    EChatTextType_GUILD = 3;
+    EChatTextType_WHISPER_SENDER = 4;
+    EChatTextType_WHISPER_RECEIVER = 5;
+    EChatTextType_NOTICE = 6;
+    EChatTextType_INFO = 7;
+    EChatTextType_GUILDNOTICE = 8;
+    EChatTextType_GUILDUNION = 9;
+    EChatTextType_INVALID = -1;
+}
+
+enum EChatFilter {
+    EChatFilter_NORMAL = 0;
+    EChatFilter_REALM = 1;
+    EChatFilter_GUILD = 2;
+    EChatFilter_PARTY = 3;
+    EChatFilter_SYSTEM = 4;
+    EChatFilter_WHISPER = 5;
+    EChatFilter_GUILDUNION = 6;
+    EChatFilter_INVALID = -1;
+}
+
+enum EChatReportReason {
+    EChatReportReason_ABUSIVE_LANGUAGE = 0;
+    EChatReportReason_OBSCENE_CHAT = 1;
+    EChatReportReason_REPEAT_CHAT = 2;
+    EChatReportReason_ADVERTISING = 3;
+    EChatReportReason_INVALID = -1;
+}
+
+enum EPvpType {
+    EPvpType_PEACE = 0;
+    EPvpType_LAWLESSNESS = 1;
+    EPvpType_DISPUTE = 2;
+    EPvpType_MATCH = 3;
+    EPvpType_SIEGE = 4;
+    EPvpType_INVALID = -1;
+}
+
+enum EPropensityType {
+    EPropensityType_LAWFUL = 0;
+    EPropensityType_NEUTRAL = 1;
+    EPropensityType_CHAOTIC = 2;
+    EPropensityType_INVALID = -1;
+}
+
+enum EPvpResult {
+    EPvpResult_KILL = 0;
+    EPvpResult_DEATH = 1;
+    EPvpResult_ASSISTANT = 2;
+    EPvpResult_INVALID = -1;
+}
+
+enum EPvpZeroBaseScoreReason {
+    EPvpZeroBaseScoreReason_NONE = 0;
+    EPvpZeroBaseScoreReason_LOW_LEVEL = 1;
+    EPvpZeroBaseScoreReason_DUPLICATED_PENALTY = 2;
+    EPvpZeroBaseScoreReason_INVALID = -1;
+}
+
+enum EPartyInfoSyncReason {
+    EPartyInfoSyncReason_Join = 0;
+    EPartyInfoSyncReason_Reconnect = 1;
+    EPartyInfoSyncReason_INVALID = -1;
+}
+
+enum EPartyLeaveReason {
+    EPartyLeaveReason_Banish = 0;
+    EPartyLeaveReason_Dismiss = 1;
+    EPartyLeaveReason_Self = 2;
+    EPartyLeaveReason_INVALID = -1;
+}
+
+enum EPartyInvitationRemoveReason {
+    EPartyInvitationRemoveReason_Accept = 0;
+    EPartyInvitationRemoveReason_ManualRefuse = 1;
+    EPartyInvitationRemoveReason_AutoRefuse = 2;
+    EPartyInvitationRemoveReason_Cancel = 3;
+    EPartyInvitationRemoveReason_Timeout = 4;
+    EPartyInvitationRemoveReason_INVALID = -1;
+}
+
+enum EPartyInvitationResponse {
+    EPartyInvitationResponse_Accept = 0;
+    EPartyInvitationResponse_ManualRefuse = 1;
+    EPartyInvitationResponse_AutoRefuse = 2;
+    EPartyInvitationResponse_TimeoutRefuse = 3;
+    EPartyInvitationResponse_INVALID = -1;
+}
+
+enum EPartyDistributionType {
+    EPartyDistributionType_Manual = 0;
+    EPartyDistributionType_Random = 1;
+    EPartyDistributionType_Sequential = 2;
+    EPartyDistributionType_INVALID = -1;
+}
+
+enum EDailyBossState {
+    EDailyBossState_NONE = 0;
+    EDailyBossState_IMPENDING = 1;
+    EDailyBossState_SPAWNED = 2;
+    EDailyBossState_INVALID = -1;
+}
+
+enum EDailyBossResult {
+    EDailyBossResult_SUCCESS = 0;
+    EDailyBossResult_TIME_OUT = 1;
+    EDailyBossResult_INVALID = -1;
+}
+
+enum ESubzoneIconType {
+    ESubzoneIconType_HUNTING_GROUND = 0;
+    ESubzoneIconType_TOWN_SMALL = 1;
+    ESubzoneIconType_TOWN_MEDIUM = 2;
+    ESubzoneIconType_TOWN_LARGE = 3;
+    ESubzoneIconType_DUNGEON = 4;
+    ESubzoneIconType_INVALID = -1;
+}
+
+enum ESubzoneIconVisibleType {
+    ESubzoneIconVisibleType_INVISIBLE = 0;
+    ESubzoneIconVisibleType_NAME = 1;
+    ESubzoneIconVisibleType_ICON = 2;
+    ESubzoneIconVisibleType_INVALID = -1;
+}
+
+enum ERootMotionToTargetCollisionRule {
+    ERootMotionToTargetCollisionRule_DO_NOT_CHECK_COLLISION = 0;
+    ERootMotionToTargetCollisionRule_CHECK_COLLISION = 1;
+    ERootMotionToTargetCollisionRule_CANCEL_SKILL_WHEN_COLLIDE = 2;
+    ERootMotionToTargetCollisionRule_INVALID = -1;
+}
+
+enum EObjectSizeType {
+    EObjectSizeType_Small = 0;
+    EObjectSizeType_Middle = 1;
+    EObjectSizeType_Big = 2;
+    EObjectSizeType_Huge = 3;
+    EObjectSizeType_INVALID = -1;
+}
+
+enum EAchievementState {
+    EAchievementState_NONE = 0;
+    EAchievementState_ACHIEVED = 1;
+    EAchievementState_REWARDED = 2;
+    EAchievementState_INVALID = -1;
+}
+
+enum EAchievementCategory {
+    EAchievementCategory_ADVENTURE = 0;
+    EAchievementCategory_NURTURE = 1;
+    EAchievementCategory_LIVING = 2;
+    EAchievementCategory_COOPERATION = 3;
+    EAchievementCategory_INVALID = -1;
+}
+
+enum EAchievementGrade {
+    EAchievementGrade_GRADE1 = 0;
+    EAchievementGrade_GRADE2 = 1;
+    EAchievementGrade_GRADE3 = 2;
+    EAchievementGrade_GRADE4 = 3;
+    EAchievementGrade_GRADE5 = 4;
+    EAchievementGrade_INVALID = -1;
+}
+
+enum EMissionType {
+    EMissionType_DAILY = 0;
+    EMissionType_WEEKLY = 1;
+    EMissionType_MONTHLY = 2;
+    EMissionType_GUILD = 3;
+    EMissionType_SEASON = 4;
+    EMissionType_INVALID = -1;
+}
+
+enum EPcObjectiveConditionType {
+    EPcObjectiveConditionType_MONSTER_KILL_COUNT = 0;
+    EPcObjectiveConditionType_BOSS_CONTRIBUTION_COUNT = 1;
+    EPcObjectiveConditionType_CRAFT_COUNT = 2;
+    EPcObjectiveConditionType_DEATH_COUNT = 3;
+    EPcObjectiveConditionType_DECOMPOSED_COUNT = 4;
+    EPcObjectiveConditionType_EQUIPMENT_ENHANCE_TRY_COUNT = 5;
+    EPcObjectiveConditionType_EQUIPMENT_ENHANCE_FAILURE_COUNT = 6;
+    EPcObjectiveConditionType_PC_LEVEL = 7;
+    EPcObjectiveConditionType_CLASS_GACHA = 8;
+    EPcObjectiveConditionType_PET_GACHA = 9;
+    EPcObjectiveConditionType_CLASS_MERGE = 10;
+    EPcObjectiveConditionType_PET_MERGE = 11;
+    EPcObjectiveConditionType_DAILY_SCROLL_QUEST_COMPLETE_COUNT = 12;
+    EPcObjectiveConditionType_RULESELECTOR_VOTE_COUNT = 13;
+    EPcObjectiveConditionType_PLAYER_KILL = 14;
+    EPcObjectiveConditionType_CRAFT_FAIL = 15;
+    EPcObjectiveConditionType_TREASURE_GET = 16;
+    EPcObjectiveConditionType_GUILD_JOIN_COUNT = 17;
+    EPcObjectiveConditionType_GUILD_ATTENDANCE_COUNT = 18;
+    EPcObjectiveConditionType_GUILD_DONATE_COUNT = 19;
+    EPcObjectiveConditionType_QUEST_COMPLETE_COUNT = 20;
+    EPcObjectiveConditionType_CURRENCY_ACQUIRE_COUNT = 21;
+    EPcObjectiveConditionType_ITEM_ACQUIRE_COUNT = 22;
+    EPcObjectiveConditionType_EQUIPMENT_ACQUIRE_COUNT = 23;
+    EPcObjectiveConditionType_CURRENCY_USE_COUNT = 24;
+    EPcObjectiveConditionType_USED_ITEM_COUNT = 25;
+    EPcObjectiveConditionType_EQUIPMENT_ENCHANT_TRY_COUNT = 26;
+    EPcObjectiveConditionType_EVENT_EQUIPMENT_ENHANCE_SUCCESS = 27;
+    EPcObjectiveConditionType_INVALID = -1;
+}
+
+enum EPcObjectiveConditionContentType {
+    EPcObjectiveConditionContentType_ACHIEVEMENT = 0;
+    EPcObjectiveConditionContentType_EVENT_MISSION = 1;
+    EPcObjectiveConditionContentType_SEASON_PASS_MISSION = 2;
+    EPcObjectiveConditionContentType_INVALID = -1;
+}
+
+enum EWarpReason {
+    EWarpReason_USE_USABLE_ITEM = 0;
+    EWarpReason_TELEPORT_TO_SUBZONE = 1;
+    EWarpReason_TELEPORT_TO_QUEST_SPOT = 2;
+    EWarpReason_TELEPORT_TO_BOOKMARK = 3;
+    EWarpReason_SELECT_CHANNEL = 4;
+    EWarpReason_ENTER_DAILYBOSS_DUNGEON = 5;
+    EWarpReason_EXIT_DAILYBOSS_DUNGEON = 6;
+    EWarpReason_ENTER_FIELD_DUNGEON = 7;
+    EWarpReason_EXIT_FIELD_DUNGEON = 8;
+    EWarpReason_ENTER_GUILD_DUNGEON = 9;
+    EWarpReason_EXIT_GUILD_DUNGEON = 10;
+    EWarpReason_TRACK_MURDERER = 11;
+    EWarpReason_MOVE_TO_PORTAL = 12;
+    EWarpReason_REVIVAL = 13;
+    EWarpReason_CHEAT = 14;
+    EWarpReason_ESCAPE = 15;
+    EWarpReason_ENTER_INTERSERVER_LOBBY = 16;
+    EWarpReason_EXIT_INTERSERVER_LOBBY = 17;
+    EWarpReason_ENTER_INTERSERVER_DUNGEON = 18;
+    EWarpReason_EXIT_INTERSERVER_DUNGEON = 19;
+    EWarpReason_TELEPORT_TO_SIEGE = 20;
+    EWarpReason_TELEPORT_TO_SIEGE_THRONE = 21;
+    EWarpReason_ENTER_GUILD_AZIT = 22;
+    EWarpReason_EXIT_GUILD_AZIT = 23;
+    EWarpReason_INVALID = -1;
+}
+
+enum ECheatWarpReason {
+    ECheatWarpReason_TP_MAP = 0;
+    ECheatWarpReason_TP_SUBZONE = 1;
+    ECheatWarpReason_TP_FORCE_TO_TARGET_DEBUG = 2;
+    ECheatWarpReason_TP = 3;
+    ECheatWarpReason_INVALID = -1;
+}
+
+enum EZoneEnterMethod {
+    EZoneEnterMethod_Normal = 0;
+    EZoneEnterMethod_Direct = 1;
+    EZoneEnterMethod_INVALID = -1;
+}
+
+enum EFeatureActivationTarget {
+    EFeatureActivationTarget_CHARACTER = 0;
+    EFeatureActivationTarget_ACCOUNT = 1;
+    EFeatureActivationTarget_INVALID = -1;
+}
+
+enum ERecoveryType {
+    ERecoveryType_HP = 0;
+    ERecoveryType_MP = 1;
+    ERecoveryType_INVALID = -1;
+}
+
+enum ERewardLimitPeriod {
+    ERewardLimitPeriod_MONTHLY = 0;
+    ERewardLimitPeriod_WEEKLY = 1;
+    ERewardLimitPeriod_DAILY = 2;
+    ERewardLimitPeriod_INVALID = -1;
+}
+
+enum EOnTimeEventType {
+    EOnTimeEventType_DAILY = 0;
+    EOnTimeEventType_ONCE = 1;
+    EOnTimeEventType_SUNDAY = 2;
+    EOnTimeEventType_MONDAY = 3;
+    EOnTimeEventType_TUESDAY = 4;
+    EOnTimeEventType_WEDNESDAY = 5;
+    EOnTimeEventType_THURSDAY = 6;
+    EOnTimeEventType_FRIDAY = 7;
+    EOnTimeEventType_SATURDAY = 8;
+    EOnTimeEventType_INVALID = -1;
+}
+
+enum EOnTimeEventRewardType {
+    EOnTimeEventRewardType_REALM = 0;
+    EOnTimeEventRewardType_CHARACTER = 1;
+    EOnTimeEventRewardType_INVALID = -1;
+}
+
+enum ERankingType {
+    ERankingType_PVE = 0;
+    ERankingType_PVP = 1;
+    ERankingType_INVALID = -1;
+}
+
+enum EContentActivationType {
+    EContentActivationType_NONE = 0;
+    EContentActivationType_HOT_TIME = 101;
+    EContentActivationType_REALM_IMMIGRATION = 102;
+    EContentActivationType_TRADING = 201;
+    EContentActivationType_CHAR_GIFT = 202;
+    EContentActivationType_CLASS_MERGE = 203;
+    EContentActivationType_PET_MERGE = 204;
+    EContentActivationType_WAREHOUSE = 205;
+    EContentActivationType_EVENT = 206;
+    EContentActivationType_FIELD_DUNGEON_D1 = 301;
+    EContentActivationType_FIELD_DUNGEON_D2 = 302;
+    EContentActivationType_FIELD_DUNGEON_D3 = 303;
+    EContentActivationType_FIELD_DUNGEON_ED1 = 351;
+    EContentActivationType_FIELD_DUNGEON_ED2 = 352;
+    EContentActivationType_FIELD_DUNGEON_ED3 = 353;
+    EContentActivationType_CASH_SHOP = 401;
+    EContentActivationType_RECV_MAIL = 501;
+    EContentActivationType_INVALID = -1;
+}
+
+enum EFieldDungeonEnterMethod {
+    EFieldDungeonEnterMethod_Npc = 0;
+    EFieldDungeonEnterMethod_Direct = 1;
+    EFieldDungeonEnterMethod_Portal = 2;
+    EFieldDungeonEnterMethod_ReturnToLobby = 3;
+    EFieldDungeonEnterMethod_INVALID = -1;
+}
+
+enum EFieldDungeonInfoUpdateReason {
+    EFieldDungeonInfoUpdateReason_Start = 0;
+    EFieldDungeonInfoUpdateReason_Stop = 1;
+    EFieldDungeonInfoUpdateReason_Sync = 2;
+    EFieldDungeonInfoUpdateReason_Recharge = 3;
+    EFieldDungeonInfoUpdateReason_INVALID = -1;
+}
+
+enum EFieldDungeonExitReason {
+    EFieldDungeonExitReason_Self = 0;
+    EFieldDungeonExitReason_Timeout = 1;
+    EFieldDungeonExitReason_Got = 2;
+    EFieldDungeonExitReason_INVALID = -1;
+}
+
+enum ETradingItemState {
+    ETradingItemState_REGISTERED = 0;
+    ETradingItemState_DISPLAYED = 1;
+    ETradingItemState_SOLD = 2;
+    ETradingItemState_EXPIRATED = 3;
+    ETradingItemState_CANCELED = 4;
+    ETradingItemState_REFUSED = 5;
+    ETradingItemState_INVALID = -1;
+}
+
+enum ETradingListSortType {
+    ETradingListSortType_PRICE_PER_COUNT_ASC = 0;
+    ETradingListSortType_PRICE_ASC = 1;
+    ETradingListSortType_EXPIRATION_ASC = 2;
+    ETradingListSortType_PRICE_PER_COUNT_DESC = 3;
+    ETradingListSortType_PRICE_DESC = 4;
+    ETradingListSortType_EXPIRATION_DESC = 5;
+    ETradingListSortType_INVALID = -1;
+}
+
+enum ETradingHistoryType {
+    ETradingHistoryType_TradingBuy = 0;
+    ETradingHistoryType_TradingSell = 1;
+    ETradingHistoryType_PrivateTradingBuy = 2;
+    ETradingHistoryType_PrivateTradingSell = 3;
+    ETradingHistoryType_INVALID = -1;
+}
+
+enum ETradingType {
+    ETradingType_Trading = 0;
+    ETradingType_PrivateTrading = 1;
+    ETradingType_INVALID = -1;
+}
+
+enum EConfigType {
+    EConfigType_USER = 0;
+    EConfigType_CHAT = 1;
+    EConfigType_INVALID = -1;
+}
+
+enum EShopCategoryType {
+    EShopCategoryType_CASH_SHOP = 0;
+    EShopCategoryType_INVALID = -1;
+}
+
+enum ECashShopDisplayType {
+    ECashShopDisplayType_MIX = 0;
+    ECashShopDisplayType_HALF = 1;
+    ECashShopDisplayType_BANNER = 2;
+    ECashShopDisplayType_INVALID = -1;
+}
+
+enum ECashShopCatalogDisplayType {
+    ECashShopCatalogDisplayType_FULL = 0;
+    ECashShopCatalogDisplayType_HALF = 1;
+    ECashShopCatalogDisplayType_SIMPLE = 2;
+    ECashShopCatalogDisplayType_INVALID = -1;
+}
+
+enum ECashShopTabType {
+    ECashShopTabType_DEFAULT = 0;
+    ECashShopTabType_PROMOTION = 1;
+    ECashShopTabType_PACKAGE = 2;
+    ECashShopTabType_HOTDEAL = 3;
+    ECashShopTabType_INVALID = -1;
+}
+
+enum EAttendanceType {
+    EAttendanceType_NEW_USER = 0;
+    EAttendanceType_GENERAL_USER = 1;
+    EAttendanceType_RETURN_USER = 2;
+    EAttendanceType_INVALID = -1;
+}
+
+enum EEventType {
+    EEventType_ATTENDANCE = 0;
+    EEventType_EVENT_ATTENDANCE = 1;
+    EEventType_EVENT_MISSION = 2;
+    EEventType_EVENT_LEVEL_REWARD = 3;
+    EEventType_EVENT_LOGIN_BONUS = 4;
+    EEventType_EVENT_DROP = 5;
+    EEventType_COMMON = 6;
+    EEventType_INVALID = -1;
+}
+
+enum EEffectOverlapType {
+    EEffectOverlapType_OVERWRITE = 0;
+    EEffectOverlapType_APPEND_DURATION = 1;
+    EEffectOverlapType_ALLOW_OVERLAP = 2;
+    EEffectOverlapType_APPEND_DURATION_ONLY_SELF = 3;
+    EEffectOverlapType_NONE_OVERWRITE = 4;
+    EEffectOverlapType_INVALID = -1;
+}
+
+enum ESkillActuationWidgetAnimType {
+    ESkillActuationWidgetAnimType_NONE = 0;
+    ESkillActuationWidgetAnimType_NORMAL = 1;
+    ESkillActuationWidgetAnimType_UNIQUE = 2;
+    ESkillActuationWidgetAnimType_INVALID = -1;
+}
+
+enum EFriendType {
+    EFriendType_FRIEND = 0;
+    EFriendType_INVITER = 1;
+    EFriendType_INVITEE = 2;
+    EFriendType_INVALID = -1;
+}
+
+enum ECustomQuickSlotCompatibility {
+    ECustomQuickSlotCompatibility_NONE = 0;
+    ECustomQuickSlotCompatibility_REGISTERABLE_CUSTOMSLOT = 1;
+    ECustomQuickSlotCompatibility_REGISTERABLE_FIXEDSLOT = 2;
+    ECustomQuickSlotCompatibility_INVALID = -1;
+}
+
+enum EItemAutoUseAbleType {
+    EItemAutoUseAbleType_NONE = 0;
+    EItemAutoUseAbleType_AUTO_TO_EFFECT = 1;
+    EItemAutoUseAbleType_AUTO_TO_REGEN_HP_MP = 2;
+    EItemAutoUseAbleType_AUTO_TO_VACUITY = 3;
+    EItemAutoUseAbleType_INVALID = -1;
+}
+
+enum ESkillAutoUseAbleType {
+    ESkillAutoUseAbleType_NONE = 0;
+    ESkillAutoUseAbleType_AUTO_TO_COOLTIEMPERIOD = 1;
+    ESkillAutoUseAbleType_AUTO_ONLY_NOTPERIOD = 2;
+    ESkillAutoUseAbleType_INVALID = -1;
+}
+
+enum EPushType {
+    EPushType_MAIL = 0;
+    EPushType_TRADE_SOLD_OUT = 1;
+    EPushType_CAN_BID_FOR_SIEGE_OF_WORLD = 2;
+    EPushType_INVALID = -1;
+}
+
+enum ELoginRestrictionState {
+    ELoginRestrictionState_NONE = 0;
+    ELoginRestrictionState_USE_ILLEGAL_PROGRAM = 1;
+    ELoginRestrictionState_ABUSE_MARKET = 2;
+    ELoginRestrictionState_ABUSE_GAME_SYSTEM = 3;
+    ELoginRestrictionState_ABNORMAL_PLAY = 4;
+    ELoginRestrictionState_VIOLATE_POLICY = 5;
+    ELoginRestrictionState_CHAT_REPOT = 6;
+    ELoginRestrictionState_INAPPROPRIATE_CHAT = 7;
+    ELoginRestrictionState_CHAT_REPORT_AI = 8;
+    ELoginRestrictionState_OPERATION = 100;
+    ELoginRestrictionState_INVALID_STATE = 101;
+    ELoginRestrictionState_TEMPORARY = 250;
+    ELoginRestrictionState_INVALID = -1;
+}
+
+enum ETradingRestrictionState {
+    ETradingRestrictionState_NONE = 0;
+    ETradingRestrictionState_USE_ILLEGAL_PROGRAM = 1;
+    ETradingRestrictionState_ABUSE_MARKET = 2;
+    ETradingRestrictionState_ABUSE_GAME_SYSTEM = 3;
+    ETradingRestrictionState_ABNORMAL_PLAY = 4;
+    ETradingRestrictionState_VIOLATE_POLICY = 5;
+    ETradingRestrictionState_INVALID = -1;
+}
+
+enum EMailType {
+    EMailType_User = 0;
+    EMailType_Character = 1;
+    EMailType_CharacterText = 2;
+    EMailType_GuildText = 3;
+    EMailType_INVALID = -1;
+}
+
+enum EMailStateType {
+    EMailStateType_NONE = 0;
+    EMailStateType_READ = 1;
+    EMailStateType_DELETED = 2;
+    EMailStateType_RESTORED = 10;
+    EMailStateType_RECALL = 12;
+    EMailStateType_EXPIRATION = 99;
+    EMailStateType_INVALID = -1;
+}
+
+enum EMailRecipientType {
+    EMailRecipientType_ACCOUNT = 0;
+    EMailRecipientType_CHARACTER = 1;
+    EMailRecipientType_INVALID = -1;
+}
+
+enum ECashGoodsExternalIdType {
+    ECashGoodsExternalIdType_TEEN = 0;
+    ECashGoodsExternalIdType_ADULT = 1;
+    ECashGoodsExternalIdType_INVALID = -1;
+}
+
+enum EKickType {
+    EKickType_DUPLICATED_LOGIN = 0;
+    EKickType_BY_OPERATION = 1;
+    EKickType_PC_CONNECT_CLOSED = 2;
+    EKickType_INVALID_CLIENT_REQUEST = 3;
+    EKickType_NAME_CHANGE = 4;
+    EKickType_IDLE_TIMEOUT = 5;
+    EKickType_OFFLINEHUNT_START = 6;
+    EKickType_CHARACTER_GIFT_SUCCEED = 7;
+    EKickType_CHARACTER_GIFT_FAILED = 8;
+    EKickType_CHARACTER_GIFT_TIMEOUT = 9;
+    EKickType_NGS_NOTIFY_CALLBACK = 10;
+    EKickType_REALM_IMMIGRATION_RESERVED = 11;
+    EKickType_BY_RESTORATION_EVENT = 12;
+    EKickType_BY_SENTINEL = 13;
+    EKickType_DB_FAILED_ERROR = 100;
+    EKickType_DB_FAILED_USER_NOT_FOUND = 101;
+    EKickType_INCONSISTENT_DB_MEMORY_SYNC = 102;
+    EKickType_NGS_CERTIFICATION_FAILED = 103;
+    EKickType_INVALID_PC_STATE = 104;
+    EKickType_INVALID_USER_STATE = 105;
+    EKickType_SYSTEM_LOGIC_FAILED = 106;
+    EKickType_BOOKING_TIMEOUT_WS = 107;
+    EKickType_SHOP_MODE_FEATURE_ACTIVATION_FAIL = 108;
+    EKickType_INVALID = -1;
+}
+
+enum EGuildDungeonState {
+    EGuildDungeonState_NOT_OPEN = 0;
+    EGuildDungeonState_OPEN = 1;
+    EGuildDungeonState_INVALID = -1;
+}
+
+enum ERestrictionReason {
+    ERestrictionReason_NONE = 0;
+    ERestrictionReason_USE_ILLEGAL_PROGRAM = 1;
+    ERestrictionReason_ABUSE_MARKET = 2;
+    ERestrictionReason_ABUSE_GAME_SYSTEM = 3;
+    ERestrictionReason_ABNORMAL_PLAY = 4;
+    ERestrictionReason_VIOLATE_POLICY = 5;
+    ERestrictionReason_CHAT_REPOT = 6;
+    ERestrictionReason_INAPPROPRIATE_CHAT = 7;
+    ERestrictionReason_CHAT_REPORT_AI = 8;
+    ERestrictionReason_REALM_IMMIGRATION = 9;
+    ERestrictionReason_TEMPORARY = 250;
+    ERestrictionReason_INVALID = -1;
+}
+
+enum ELobbyCharacterState {
+    ELobbyCharacterState_ACTIVE = 0;
+    ELobbyCharacterState_INACTIVE = 1;
+    ELobbyCharacterState_WAIT_FOR_DELETION = 2;
+    ELobbyCharacterState_INVALID = -1;
+}
+
+enum EPcNamePlateDisplayType {
+    EPcNamePlateDisplayType_FULL = 0;
+    EPcNamePlateDisplayType_SIMPLE = 1;
+    EPcNamePlateDisplayType_INVISIBLE = 2;
+    EPcNamePlateDisplayType_INVALID = -1;
+}
+
+enum ERollingTipMessageType {
+    ERollingTipMessageType_TIP = 0;
+    ERollingTipMessageType_INFO = 1;
+    ERollingTipMessageType_INVALID = -1;
+}
+
+enum EContributionManageType {
+    EContributionManageType_NORMAL = 0;
+    EContributionManageType_DAILY_BOSS = 1;
+    EContributionManageType_GUILD_DUNGEON_BOSS = 2;
+    EContributionManageType_SPECIAL_NAMED = 3;
+    EContributionManageType_INVALID = -1;
+}
+
+enum EEventTargetUserType {
+    EEventTargetUserType_NEW_USER = 0;
+    EEventTargetUserType_RETURN_USER = 1;
+    EEventTargetUserType_GENERAL_USER = 2;
+    EEventTargetUserType_ALL_USER = 3;
+    EEventTargetUserType_INVALID = -1;
+}
+
+enum EItemCollectionGrade {
+    EItemCollectionGrade_Grade1 = 0;
+    EItemCollectionGrade_Grade2 = 1;
+    EItemCollectionGrade_Grade3 = 2;
+    EItemCollectionGrade_Special = 3;
+    EItemCollectionGrade_INVALID = -1;
+}
+
+enum EEnhancementType {
+    EEnhancementType_NORMAL = 0;
+    EEnhancementType_BLESSED = 1;
+    EEnhancementType_CURSED = 2;
+    EEnhancementType_INVALID = -1;
+}
+
+enum EEnchantmentType {
+    EEnchantmentType_NORMAL = 0;
+    EEnchantmentType_SPECIAL = 1;
+    EEnchantmentType_INVALID = -1;
+}
+
+enum ECharacterRangeType {
+    ECharacterRangeType_NORMAL = 0;
+    ECharacterRangeType_PC_RANGER = 1;
+    ECharacterRangeType_PC_MELEE = 2;
+    ECharacterRangeType_INVALID = -1;
+}
+
+enum EAttackType {
+    EAttackType_NONE = 0;
+    EAttackType_ATTACK_MELEE = 1;
+    EAttackType_ATTACK_RANGE = 2;
+    EAttackType_ATTACK_MAGIC = 3;
+    EAttackType_INVALID = -1;
+}
+
+enum EGuildCurrencyType {
+    EGuildCurrencyType_COOPERATION_COIN = 0;
+    EGuildCurrencyType_INVALID = -1;
+}
+
+enum EUniversalLeague {
+    EUniversalLeague_PRIMARY = 0;
+    EUniversalLeague_SECONDARY1 = 1;
+    EUniversalLeague_SECONDARY2 = 2;
+    EUniversalLeague_SECONDARY3 = 3;
+    EUniversalLeague_INVALID = -1;
+}
+
+enum EUniversalContentTeam {
+    EUniversalContentTeam_A = 0;
+    EUniversalContentTeam_B = 1;
+    EUniversalContentTeam_C = 2;
+    EUniversalContentTeam_D = 3;
+    EUniversalContentTeam_E = 4;
+    EUniversalContentTeam_INVALID = -1;
+}
+
+enum EUniversalContentScheduleState {
+    EUniversalContentScheduleState_START = 0;
+    EUniversalContentScheduleState_DRAFT_START = 1;
+    EUniversalContentScheduleState_DRAFT_END = 2;
+    EUniversalContentScheduleState_BATTLE = 3;
+    EUniversalContentScheduleState_END = 4;
+    EUniversalContentScheduleState_INVALID = -1;
+}
+
+enum EUniversalContentBattleScheduleState {
+    EUniversalContentBattleScheduleState_NONE = 0;
+    EUniversalContentBattleScheduleState_START = 1;
+    EUniversalContentBattleScheduleState_END = 2;
+    EUniversalContentBattleScheduleState_INVALID = -1;
+}
+
+enum EUniversalContentDraftEntryState {
+    EUniversalContentDraftEntryState_UNREGISTERED = 0;
+    EUniversalContentDraftEntryState_REGISTERED = 1;
+    EUniversalContentDraftEntryState_PICKED = 2;
+    EUniversalContentDraftEntryState_NOT_PICKED = 3;
+    EUniversalContentDraftEntryState_INVALID = -1;
+}
+
+enum EBuffUIType {
+    EBuffUIType_BUFF = 0;
+    EBuffUIType_DEBUFF = 1;
+    EBuffUIType_INVALID = -1;
+}
+
+enum EHitCalculationType {
+    EHitCalculationType_DEBUFF = 0;
+    EHitCalculationType_STUN = 1;
+    EHitCalculationType_INVALID = -1;
+}
+
+enum EResetPeriodType {
+    EResetPeriodType_Daily = 0;
+    EResetPeriodType_Weekly = 1;
+    EResetPeriodType_Monthly = 2;
+    EResetPeriodType_INVALID = -1;
+}
+
+enum EWeeklyResetDay {
+    EWeeklyResetDay_SUNDAY = 0;
+    EWeeklyResetDay_MONDAY = 1;
+    EWeeklyResetDay_TUESDAY = 2;
+    EWeeklyResetDay_WEDNESDAY = 3;
+    EWeeklyResetDay_THURSDAY = 4;
+    EWeeklyResetDay_FRIDAY = 5;
+    EWeeklyResetDay_SATURDAY = 6;
+    EWeeklyResetDay_INVALID = -1;
+}
+
+enum EExpGoldGetType {
+    EExpGoldGetType_GET_RATE = 0;
+    EExpGoldGetType_GET_PARTICIP = 1;
+    EExpGoldGetType_INVALID = -1;
+}
+
+enum EVacuityMode {
+    EVacuityMode_NORMAL = 0;
+    EVacuityMode_VACUITY = 1;
+    EVacuityMode_INVALID = -1;
+}
+
+enum ESiegeTeamType {
+    ESiegeTeamType_NEUTRAL_TEAM = 0;
+    ESiegeTeamType_OFFENSE_TEAM = 1;
+    ESiegeTeamType_DEFENSE_TEAM = 2;
+    ESiegeTeamType_INVALID = -1;
+}
+
+enum ESiegeStep {
+    ESiegeStep_NONE = 0;
+    ESiegeStep_BIDDING_STEP = 1;
+    ESiegeStep_READY_STEP = 2;
+    ESiegeStep_ENTER_STEP = 3;
+    ESiegeStep_BATTLE_STEP = 4;
+    ESiegeStep_EXIT_STEP = 5;
+    ESiegeStep_IDLE_STEP = 6;
+    ESiegeStep_INVALID = -1;
+}
+
+enum ESiegeBattlePhase {
+    ESiegeBattlePhase_NOT_STARTED = 0;
+    ESiegeBattlePhase_START_BATTLE = 1;
+    ESiegeBattlePhase_DESTROY_SIEGEGATE = 2;
+    ESiegeBattlePhase_DESTROY_GUARDIANSTONE = 3;
+    ESiegeBattlePhase_KILL_BOSS = 4;
+    ESiegeBattlePhase_INVALID = -1;
+}
+
+enum EFactionType {
+    EFactionType_PLAYER = 0;
+    EFactionType_NEUTRAL = 1;
+    EFactionType_PUBLIC_ENEMY = 2;
+    EFactionType_MONSTER = 3;
+    EFactionType_GUARD = 4;
+    EFactionType_INVALID = -1;
+}
+
+enum EEventSpawnerGroupStartConditionType {
+    EEventSpawnerGroupStartConditionType_UNCONDITIONAL = 0;
+    EEventSpawnerGroupStartConditionType_ON_SCHEDULE = 1;
+    EEventSpawnerGroupStartConditionType_WAIT_ANOTHER_GROUP = 2;
+    EEventSpawnerGroupStartConditionType_INVALID = -1;
+}
+
+enum ESkillAcquisitionType {
+    ESkillAcquisitionType_SKILL = 0;
+    ESkillAcquisitionType_SKILL_BOOK = 1;
+    ESkillAcquisitionType_CHARACTER_CLASS = 2;
+    ESkillAcquisitionType_FOR_NPC = 3;
+    ESkillAcquisitionType_PET = 4;
+    ESkillAcquisitionType_INVALID = -1;
+}
+
+enum EBoomDeathType {
+    EBoomDeathType_None = 0;
+    EBoomDeathType_Boom_Normal = 1;
+    EBoomDeathType_Boom_Armor = 2;
+    EBoomDeathType_Boom_Bone = 3;
+    EBoomDeathType_Boom_Rock = 4;
+    EBoomDeathType_Boom_Spirit = 5;
+    EBoomDeathType_Boom_Devil = 6;
+    EBoomDeathType_INVALID = -1;
+}
+
+enum ESpecialDamageFxType {
+    ESpecialDamageFxType_None = 0;
+    ESpecialDamageFxType_SpecialDamageFx_BloodLine = 1;
+    ESpecialDamageFxType_SpecialDamageFx_Rock = 2;
+    ESpecialDamageFxType_INVALID = -1;
+}
+
+enum ERuneType {
+    ERuneType_NORMAL = 0;
+    ERuneType_SAVE = 1;
+    ERuneType_INVALID = -1;
+}
+
+enum ERuneLevelupResult {
+    ERuneLevelupResult_LEVEL_UP = 0;
+    ERuneLevelupResult_FAIL = 1;
+    ERuneLevelupResult_INVALID = -1;
+}
+
+enum ERemoveEffectType {
+    ERemoveEffectType_BUFF = 0;
+    ERemoveEffectType_DEBUFF = 1;
+    ERemoveEffectType_ALL = 2;
+    ERemoveEffectType_INVALID = -1;
+}
+
+enum ECoreAltarState {
+    ECoreAltarState_LEVEL_0 = 0;
+    ECoreAltarState_LEVEL_1 = 1;
+    ECoreAltarState_LEVEL_2 = 2;
+    ECoreAltarState_COMPLETED = 3;
+    ECoreAltarState_INVALID = -1;
+}
+
+enum ShieldCalculationType {
+    ShieldCalculationType_ABSOLUTE = 0;
+    ShieldCalculationType_RELATIVE_MAX_HP = 1;
+    ShieldCalculationType_RELATIVE_MAX_MP = 2;
+    ShieldCalculationType_INVALID = -1;
+}
+
+enum EMannerMode {
+    EMannerMode_USE = 0;
+    EMannerMode_EXCEPT_PARTY_GUILD = 1;
+    EMannerMode_DO_NOT_USE = 2;
+    EMannerMode_INVALID = -1;
+}
+
+enum EffectGroupType {
+    EffectGroupType_STUN = 0;
+    EffectGroupType_FREEZE = 1;
+    EffectGroupType_CONFUSE = 2;
+    EffectGroupType_BLIND = 3;
+    EffectGroupType_TAUNT = 4;
+    EffectGroupType_CONFUSE_DAMAGE = 5;
+    EffectGroupType_ELECTRIC_SHOCK = 6;
+    EffectGroupType_OBSCURATION = 7;
+    EffectGroupType_DECELERATE = 8;
+    EffectGroupType_REACTION = 9;
+    EffectGroupType_STONE = 10;
+    EffectGroupType_SLEEP = 11;
+    EffectGroupType_BURN = 12;
+    EffectGroupType_POISON = 13;
+    EffectGroupType_HOLD = 14;
+    EffectGroupType_DODGE_FOCUS = 15;
+    EffectGroupType_INVALID = -1;
+}
+
+enum EClientConfigType {
+    EClientConfigType_AccountStorageConfig = 0;
+    EClientConfigType_AccountCraftConfig = 1;
+    EClientConfigType_AccountGameConfig = 2;
+    EClientConfigType_CharacterDecomposionConfig = 3;
+    EClientConfigType_CharacterNpcShopConfig = 4;
+    EClientConfigType_CharacterItemCollectionConfig = 5;
+    EClientConfigType_CharacterGameConfig = 6;
+    EClientConfigType_CharacterBattleConfig = 7;
+    EClientConfigType_CharacterScanConfig = 8;
+    EClientConfigType_CharacterTradingSaveConfig = 9;
+    EClientConfigType_INVALID = -1;
+}
+
+enum FlashMoveType {
+    FlashMoveType_BLINK = 0;
+    FlashMoveType_PUSH = 1;
+    FlashMoveType_PULL = 2;
+    FlashMoveType_INVALID = -1;
+}
+
+enum DestinationCalculationType {
+    DestinationCalculationType_CASTER = 0;
+    DestinationCalculationType_TARGET = 1;
+    DestinationCalculationType_INVALID = -1;
+}
+
+enum EGuildQuestCategoryType {
+    EGuildQuestCategoryType_ADVENTURE = 0;
+    EGuildQuestCategoryType_RESOURCE = 1;
+    EGuildQuestCategoryType_GROWTH = 2;
+    EGuildQuestCategoryType_INVALID = -1;
+}
+
+enum EDamageCalculationType {
+    EDamageCalculationType_NORMAL = 0;
+    EDamageCalculationType_ABSOLUTE_HP = 1;
+    EDamageCalculationType_MAX_HP_BASED = 2;
+    EDamageCalculationType_ABSOLUTE_MP = 3;
+    EDamageCalculationType_MAX_MP_BASED = 4;
+    EDamageCalculationType_INVALID = -1;
+}
+
+enum ECraftLimitType {
+    ECraftLimitType_UNLIMITED = 0;
+    ECraftLimitType_WORLD_LIMIT = 1;
+    ECraftLimitType_ACCOUNT_WORLD_LIMIT = 2;
+    ECraftLimitType_INVALID = -1;
+}
+
+enum ECraftResult {
+    ECraftResult_FAIL = 0;
+    ECraftResult_SUCCESS = 1;
+    ECraftResult_GREAT_SUCCESS = 2;
+    ECraftResult_INVALID = -1;
+}
+
+enum EGatheringGradeType {
+    EGatheringGradeType_GradeA = 0;
+    EGatheringGradeType_GradeB = 1;
+    EGatheringGradeType_GradeC = 2;
+    EGatheringGradeType_GradeD = 3;
+    EGatheringGradeType_GradeE = 4;
+    EGatheringGradeType_GradeF = 5;
+    EGatheringGradeType_GradeG = 6;
+    EGatheringGradeType_INVALID = -1;
+}
+
+enum ESkillEnhancementResult {
+    ESkillEnhancementResult_LEVEL_UP = 0;
+    ESkillEnhancementResult_LEVEL_HOLD = 1;
+    ESkillEnhancementResult_LEVEL_DOWN = 2;
+    ESkillEnhancementResult_INVALID = -1;
+}
+
+enum EQuestStatus {
+    EQuestStatus_Accept = 0;
+    EQuestStatus_Complete = 1;
+    EQuestStatus_INVALID = -1;
+}
+
+enum ESiegeSlotOwnershipType {
+    ESiegeSlotOwnershipType_SIEGE_DEFENSE = 0;
+    ESiegeSlotOwnershipType_SIEGE = 1;
+    ESiegeSlotOwnershipType_GUILD = 2;
+    ESiegeSlotOwnershipType_INVALID = -1;
+}
+
+enum ESiegeTowerState {
+    ESiegeTowerState_INACTIVE = 0;
+    ESiegeTowerState_ACTIVE = 1;
+    ESiegeTowerState_COMPLETED = 2;
+    ESiegeTowerState_INVALID = -1;
+}
+
+enum EPortalType {
+    EPortalType_NORMAL = 0;
+    EPortalType_SIEGE = 1;
+    EPortalType_INVALID = -1;
+}
+
+enum ERuleSelectorRuleType {
+    ERuleSelectorRuleType_Revival = 0;
+    ERuleSelectorRuleType_Brutal = 1;
+    ERuleSelectorRuleType_Channel = 2;
+    ERuleSelectorRuleType_INVALID = -1;
+}
+
+enum ERuleSelectorVoteType {
+    ERuleSelectorVoteType_None = 0;
+    ERuleSelectorVoteType_Vote1 = 1;
+    ERuleSelectorVoteType_Vote2 = 2;
+    ERuleSelectorVoteType_INVALID = -1;
+}
+
+enum EClientObjectType {
+    EClientObjectType_Portal = 0;
+    EClientObjectType_RuleSelector = 1;
+    EClientObjectType_SiegePortal = 2;
+    EClientObjectType_SiegeTower = 3;
+    EClientObjectType_DecoAnimal = 4;
+    EClientObjectType_SiegeCastleShield = 5;
+    EClientObjectType_INVALID = -1;
+}
+
+enum EBidEvent {
+    EBidEvent_BID_SUCCESS = 0;
+    EBidEvent_BID_ELIMINATED = 1;
+    EBidEvent_INVALID = -1;
+}
+
+enum EOfflineHuntState {
+    EOfflineHuntState_Start = 0;
+    EOfflineHuntState_End = 1;
+    EOfflineHuntState_Calculated = 2;
+    EOfflineHuntState_Rewarded = 3;
+    EOfflineHuntState_INVALID = -1;
+}
+
+enum EDropItemOptionType {
+    EDropItemOptionType_RECOVERY_ITEM = 0;
+    EDropItemOptionType_EFFECT_ITEM = 1;
+    EDropItemOptionType_ENHANCE_ITEM = 2;
+    EDropItemOptionType_MATERIAL_ITEM = 3;
+    EDropItemOptionType_DUNGEON_RECHARGE_ITEM = 4;
+    EDropItemOptionType_INVALID = -1;
+}
+
+enum EMetaDataUpdateTarget {
+    EMetaDataUpdateTarget_METATYPE = 0;
+    EMetaDataUpdateTarget_ITEM = 1;
+    EMetaDataUpdateTarget_ITEMWITHSUBTYPE = 2;
+    EMetaDataUpdateTarget_INVALID = -1;
+}
+
+enum EMassiveMailState {
+    EMassiveMailState_NORMAL = 0;
+    EMassiveMailState_ABORT = 1;
+    EMassiveMailState_INVALID = -1;
+}
+
+enum ETutorialUIAnchor {
+    ETutorialUIAnchor_SCREEN = 0;
+    ETutorialUIAnchor_WIDGET = 1;
+    ETutorialUIAnchor_INVALID = -1;
+}
+
+enum ETutorialUIAnchorPoint {
+    ETutorialUIAnchorPoint_TOP = 0;
+    ETutorialUIAnchorPoint_BOTTOM = 1;
+    ETutorialUIAnchorPoint_LEFT = 2;
+    ETutorialUIAnchorPoint_RIGHT = 3;
+    ETutorialUIAnchorPoint_MID = 4;
+    ETutorialUIAnchorPoint_TOP_LEFT = 5;
+    ETutorialUIAnchorPoint_TOP_RIGHT = 6;
+    ETutorialUIAnchorPoint_BOTTOM_LEFT = 7;
+    ETutorialUIAnchorPoint_BOTTOM_RIGHT = 8;
+    ETutorialUIAnchorPoint_INVALID = -1;
+}
+
+enum EGameCreditUIType {
+    EGameCreditUIType_Big = 0;
+    EGameCreditUIType_Small = 1;
+    EGameCreditUIType_Huge = 2;
+    EGameCreditUIType_INVALID = -1;
+}
+
+enum EGuildAzitRequestType {
+    EGuildAzitRequestType_RENTAL = 0;
+    EGuildAzitRequestType_CHARGE = 1;
+    EGuildAzitRequestType_INVALID = -1;
+}
+
+enum EAchievementDisplayType {
+    EAchievementDisplayType_TOP = 0;
+    EAchievementDisplayType_BOTTOM = 1;
+    EAchievementDisplayType_INVALID = -1;
+}
+
+enum ECreatorStatusType {
+    ECreatorStatusType_WAITING = 0;
+    ECreatorStatusType_REJECT = 1;
+    ECreatorStatusType_WITHDRAW = 2;
+    ECreatorStatusType_NORMAL = 3;
+    ECreatorStatusType_CREATOR_PAUSE = 4;
+    ECreatorStatusType_ADMIN_PAUSE = 5;
+    ECreatorStatusType_MEMBER_API_PAUSE = 6;
+    ECreatorStatusType_ABNORMAL = 7;
+    ECreatorStatusType_INVALID = -1;
+}

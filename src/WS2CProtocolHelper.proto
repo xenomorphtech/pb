@@ -1,0 +1,990 @@
+syntax = "proto3";
+
+package WS2CProtocolHelper;
+
+import "Shared.proto";
+import "Extension.proto";
+
+option csharp_namespace = "NetworkMessage.ProtocolHelper";
+
+message ExpDiff {
+    int32 base_level = 1;
+    int64 value = 2;
+}
+
+message QuestInfo {
+    int32 quest_id = 1;
+    int64 instance_id = 2;
+    Shared.EQuestState state = 3;
+    int32 step_id = 4;
+    int32 step_process_count = 5;
+    repeated int32 reward_candidates = 6;
+}
+
+message ScrollQuestInfo {
+    QuestInfo base_quest_info = 1;
+    int32 remain_exchange_count = 2;
+}
+
+message SkillCoolTime {
+    int32 skill_pack_template_id = 1;
+    int32 remain_time = 2;
+    int32 remain_dash_cool_time = 3;
+}
+
+message SkillGroupCoolTime {
+    int32 group_cool_time_id = 1;
+    int32 remain_time = 2;
+}
+
+message DebugCombatAiDecision {
+    string ai_name = 1;
+    int32 phase = 2;
+    string current_node_name = 3;
+    bool prev_decision_result = 4;
+}
+
+message DebugObjectScore {
+    int64 object_id = 1;
+    int64 score = 2;
+}
+
+message LobbyCharacterInfo {
+    string display_name = 1;
+    int64 db_id = 2;
+    int32 character_class_template_id = 3;
+    int32 level = 4;
+    int32 map_id = 5;
+    int64 weapon_template_id = 6;
+    int64 weapon_enhancement_level = 7;
+    int64 logout_time = 8;
+    int64 deletion_time = 9;
+    int64 creation_time = 10;
+    Shared.ELobbyCharacterState state = 11;
+    bool is_offline_hunt_end = 12;
+    Shared.EPcState pc_state = 13;
+}
+
+message EquipSlotInfo {
+    Shared.EEquipmentSlot slot_type = 1;
+    int64 equipment_db_id = 2;
+}
+
+message EquipSlotInfoOther {
+    Shared.EEquipmentSlot slot_type = 1;
+    int64 template_id = 2;
+    int32 enhancement_level = 3;
+}
+
+message UsedEffectInstanceInfo {
+    Shared.EEffectInstantType type_ = 1;
+    int64 value = 2;
+}
+
+message SkillPackInfo {
+    int32 skill_pack_template_id = 1;
+    int32 skill_template_id = 2;
+    bool enable_auto_use = 3;
+    bool enable_auto_use_period = 4;
+    int32 auto_use_period = 5;
+}
+
+message NewSkillPackInfo {
+    int32 skill_pack_template_id = 1;
+}
+
+message EffectState {
+    int64 caster_id = 1;
+    int64 target_id = 2;
+    int32 template_id = 3;
+    int64 remain_time = 4;
+    Shared.EffectCauserType effect_causer_type = 5;
+    Shared.NetVector target_pos = 6;
+    Shared.NetVector target_dest_pos = 7;
+    Shared.NetVector effect_spot_pos = 8;
+    float effect_spot_yaw = 9;
+    int64 elapsed = 10;
+    float move_yaw = 11;
+}
+
+message TimedObjectState {
+    int64 object_id = 1;
+    int64 caster_id = 2;
+    int64 template_id = 3;
+    int64 elpased = 4;
+    int64 victim_object_id = 5;
+}
+
+message MailInfo {
+    int64 id = 1;
+    Shared.EMailType type_ = 2;
+    Shared.EMailReasonType reason = 3;
+    string title = 4;
+    string message = 5;
+    string sender = 6;
+    int64 creation_date = 7;
+    int64 expiration_date = 8;
+    int32 reason_i32param1 = 9;
+    int32 reason_i32param2 = 10;
+    Shared.ItemBaseInfo item_base_info = 11;
+    Shared.EMailStateType state = 12;
+    bool is_lock = 13;
+    bool is_important = 14;
+}
+
+message MailReceiptInfo {
+    int64 id = 1;
+    Shared.EMailType type_ = 2;
+    Shared.EMailReasonType reason = 3;
+    string title = 4;
+    string message = 5;
+    string sender = 6;
+    int64 creation_date = 7;
+    int64 receipt_date = 8;
+    int64 expiration_date = 9;
+    int32 reason_i32param1 = 10;
+    int32 reason_i32param2 = 11;
+    Shared.ItemBaseInfo item_base_info = 12;
+    Shared.EMailStateType state = 13;
+    bool is_lock = 14;
+    bool is_important = 15;
+}
+
+message MailInfoList {
+    int32 mail_total_count = 1;
+    repeated MailInfo mail_list = 2;
+}
+
+message MailReceiptInfoList {
+    int32 mail_total_count = 1;
+    repeated MailReceiptInfo mail_list = 2;
+}
+
+message ServerDependentDataInfo {
+    Shared.EServerDependentDataType type_ = 1;
+    bytes hash = 2;
+    bytes data = 3;
+}
+
+message ClientImagePath {
+    string packaged = 1;
+    string downloadable = 2;
+}
+
+message NpcGoods {
+    int32 id = 1;
+    string string_id = 2;
+    Shared.EItemType item_type = 3;
+    int32 item_template_id = 4;
+    int32 item_count = 5;
+    PriceInfo price_info = 6;
+    PurchaseRestriction purchase_restriction = 7;
+    bool can_apply_buy_price_down_stat = 8;
+    ShopSchedule schedule = 9;
+}
+
+message BuyItemInfo {
+    int32 id = 1;
+    int32 count = 2;
+}
+
+message SellItemInfo {
+    int64 db_id = 1;
+    int32 count = 2;
+}
+
+message NpcShopCatalog {
+    string string_id = 1;
+    repeated NpcGoods goods = 2;
+}
+
+message NpcShopServerDependentData {
+    repeated NpcShopCatalog catalog_list = 1;
+}
+
+message CashShopCashPriceInfo {
+    Shared.ECashCurrencyType type_ = 1;
+    float price = 2;
+}
+
+message CashShopCashExternalId {
+    string teen = 1;
+    string adult = 2;
+}
+
+message PurchaseCountRestriction {
+    int32 max_count = 1;
+    Shared.EResetIntervalType reset_interval_type = 2;
+    Shared.EPurchaseRestrictionTargetType target_type = 3;
+}
+
+message PurchaseRestriction {
+    int32 pc_level = 1;
+    int32 guild_level = 2;
+    PurchaseCountRestriction count = 3;
+}
+
+message ShopSchedule {
+    int64 start_time = 1;
+    int64 end_time = 2;
+}
+
+message CashShopItemInfo {
+    Shared.EItemType item_type = 1;
+    int32 item_template_id = 2;
+    int32 item_count = 3;
+    string title = 4;
+    string image = 5;
+    int32 slot = 6;
+}
+
+message CashShopGeneralGoods {
+    int32 id = 1;
+    string string_id = 2;
+    ClientImagePath image = 3;
+    Shared.EGoodsDisplayFlagType display_flag = 4;
+    Shared.ECashShopGoodsSelectType select_type = 5;
+    repeated CashShopItemInfo item_info_list = 6;
+    PriceInfo price_info = 8;
+    int32 mileage = 9;
+    ShopSchedule schedule = 10;
+    PurchaseRestriction purchase_restriction = 11;
+    string title = 12;
+    bool show_detail_info = 13;
+}
+
+message PriceInfo {
+    Shared.EItemType type_ = 1;
+    int32 template_id = 2;
+    int32 count = 3;
+}
+
+message CashShopCashGoods {
+    int32 id = 1;
+    string string_id = 2;
+    ClientImagePath image = 3;
+    Shared.EGoodsDisplayFlagType display_flag = 4;
+    Shared.ECashShopGoodsSelectType select_type = 5;
+    repeated CashShopItemInfo item_info_list = 6;
+    CashShopCashPriceInfo apple_price = 8;
+    CashShopCashPriceInfo google_price = 9;
+    int32 mileage = 10;
+    ShopSchedule schedule = 11;
+    PurchaseRestriction purchase_restriction = 12;
+    string title = 13;
+    bool show_detail_info = 14;
+    CashShopCashExternalId external_id = 15;
+}
+
+message CashShopCatalog {
+    Shared.ECashShopGoodsType goods_type = 1;
+    string goods_string_id = 2;
+    ClientImagePath image = 3;
+    Shared.ECashShopCatalogDisplayType display_type = 4;
+    int32 display_order = 5;
+}
+
+message CashShopSubCategory {
+    int32 id = 1;
+    string string_id = 2;
+    int32 order = 3;
+    string title = 4;
+    Shared.ECashShopTabType tab_type = 5;
+    Shared.ECashShopDisplayType display_type = 6;
+    string top_menu = 7;
+    ShopSchedule schedule = 8;
+    repeated CashShopCatalog catalog_list = 9;
+    Shared.EAttendanceType user_type = 10;
+}
+
+message CashShopMainCategory {
+    int32 id = 1;
+    string banner_image = 2;
+    string icon = 3;
+    string title = 4;
+    int32 order = 5;
+    repeated CashShopSubCategory sub_category_list = 6;
+}
+
+message CashShopServerDependentData {
+    repeated CashShopMainCategory category_list = 1;
+    repeated CashShopCashGoods cash_goods_list = 2;
+    repeated CashShopGeneralGoods general_goods_list = 3;
+    repeated string banished_cash_goods_list = 4;
+}
+
+message CashShopGoodsPurchaseRestrictionInfo {
+    Shared.ECashShopGoodsType goods_type = 1;
+    int32 goods_id = 2;
+    int32 count = 3;
+    int64 last_purchase_date = 4;
+}
+
+message NpcShopGoodsPurchaseRestrictionInfo {
+    int32 goods_id = 1;
+    int32 count = 2;
+    int64 last_purchase_date = 3;
+}
+
+message SiegeShopGoodsPurchaseRestrictionInfo {
+    int32 goods_id = 1;
+    int32 count = 2;
+    int64 last_purchase_date = 3;
+}
+
+message StatInfo {
+    Shared.EGameStatType type_ = 1;
+    int64 value = 2;
+}
+
+message CharacterInfo {
+    int64 max_hp = 1;
+    int64 hp = 2;
+    int64 max_mp = 3;
+    int64 mp = 4;
+    int32 subzone_id = 5;
+    StatPointInfo stat_point_info = 6;
+}
+
+message CharacterState {
+    oneof SubType {
+        EffectState effectState = 2;
+    }
+}
+
+message ContributionNode {
+    string display_name = 1;
+    int64 damage = 2;
+    int64 guild_id = 3;
+    int32 realm_id = 4;
+}
+
+message RewardItemInfo {
+    Shared.EItemType item_type = 1;
+    int32 item_template_id = 2;
+    int32 count = 3;
+    int32 reward_template_id = 4;
+}
+
+message BossRewardPcInfo {
+    string display_name = 1;
+    int32 character_class_template_id = 2;
+    int32 level = 3;
+    int32 rank = 4;
+    int64 contribution = 5;
+    repeated RewardItemInfo rewards = 6;
+    string guild_name = 7;
+    int32 realm_id = 8;
+}
+
+message InventoryStatusInfo {
+    int32 filled_slot_count = 1;
+    int32 inventory_size = 2;
+    int64 weight = 3;
+    int64 percent100weight = 4;
+}
+
+message InboxGoodsInfo {
+    int64 id = 1;
+    int32 cash_goods_template_id = 2;
+    int64 buy_date = 3;
+    Shared.ItemBaseInfo goods = 4;
+    int64 mileage = 5;
+}
+
+message InboxGoodsReceivedHitoryInfo {
+    int64 id = 1;
+    int64 received_time = 2;
+    int32 goods_template_id = 3;
+}
+
+message GuildMemberInfo {
+    int64 id = 1;
+    string name = 2;
+    int32 character_class_template_id = 3;
+    int32 level = 4;
+    Shared.EPositionInGuild position = 5;
+    string introduction = 6;
+    int64 total_contribution_point = 7;
+    int64 weekly_contribution_point = 8;
+    int64 last_contribution_date = 9;
+    bool online = 10;
+    int64 join_date = 11;
+    int64 logout_date = 12;
+    repeated GuildDonationInfo donations = 13;
+    int64 last_attendance_date = 14;
+    int64 last_attendance_reward_date = 15;
+}
+
+message GuildDonationInfo {
+    int32 id = 1;
+    int32 count = 2;
+    int64 last_donation_date = 3;
+}
+
+message PvpInfo {
+    int32 propensity_value = 1;
+}
+
+message ChangePropensityValue {
+    int32 propensity_value = 1;
+}
+
+message PvpHistoryInfo {
+    int32 history_id = 1;
+    int64 occurrence_time = 2;
+    PvpCharacterInfo victim_info = 3;
+    PvpCharacterInfo murderer_info = 4;
+    repeated PvpCharacterInfo assistant_info = 5;
+    int32 remain_reaction_count = 6;
+    int64 lost_exp = 7;
+    repeated Shared.LostItemLinks lost_item_list = 8;
+}
+
+message PvpCharacterInfo {
+    int32 template_id = 1;
+    string character_name = 2;
+    int64 accumulated_damage = 3;
+    string guild_name = 4;
+    int32 guild_emblem = 5;
+}
+
+message PartyMember {
+    string character_name = 1;
+    int32 character_template_id = 2;
+    int32 level = 3;
+    int64 hp = 4;
+    int64 max_hp = 5;
+    int32 map_id = 6;
+    int32 channel_id = 7;
+    Shared.NetVector position = 8;
+    bool connected = 9;
+    bool is_chief = 10;
+    int64 mp = 11;
+    int64 max_mp = 12;
+    int32 number = 13;
+    repeated int32 effect_list = 14;
+}
+
+message PartyInvitationData {
+    string character_name = 1;
+    int32 expire_remain_ms = 2;
+    int32 class_template_id = 4;
+}
+
+message ItemTemplateAndDbIdPair {
+    int32 template_id = 1;
+    int64 db_id = 2;
+    Shared.EStorageType storage_type = 3;
+}
+
+message ItemTypeAndTemplateIdPair {
+    Shared.EItemType type_ = 1;
+    int32 template_id = 2;
+}
+
+message CoolTimeInfo {
+    oneof SubType {
+        ItemCoolTimeSelf itemCoolTimeSelf = 2;
+        CoolTimeGroupInfo coolTimeGroup = 3;
+    }
+}
+
+message ItemCoolTimeSelf {
+    Shared.EItemType item_type = 1;
+    int32 item_template_id = 2;
+    int32 remain_time = 3;
+}
+
+message CoolTimeGroupInfo {
+    int32 template_id = 1;
+    int32 remain_time = 2;
+}
+
+message RankingRankInfo {
+    Shared.ERankingType type_ = 1;
+    int32 rank = 2;
+    int32 prev_rank = 3;
+}
+
+message PcRankingInfo {
+    repeated RankingRankInfo rank_infos = 1;
+}
+
+message TeleportBookmark {
+    int32 page = 1;
+    int32 slot = 2;
+    string name = 3;
+    int32 map_id = 4;
+    Shared.NetVector pos = 5;
+}
+
+message ModifyTeleportBookmark {
+    int32 page = 1;
+    int32 slot = 2;
+    string name = 3;
+}
+
+message ChangeSlotTeleportBookmark {
+    int32 from_page = 1;
+    int32 from_slot = 2;
+    int32 to_page = 3;
+    int32 to_slot = 4;
+}
+
+message AchievementInfo {
+    Shared.EAchievementState state = 1;
+    int32 template_id = 2;
+    int64 value = 3;
+}
+
+message FieldDungeonInfo {
+    int32 dungeon_group_id = 1;
+    int64 elapsed_time = 2;
+    int64 recharged_time = 3;
+    int32 recharging_count = 4;
+    int64 last_update_time = 5;
+}
+
+message TradingLevelFilter {
+    int32 min_level = 1;
+    int32 max_level = 2;
+}
+
+message TradingEquipmentFilter {
+    TradingLevelFilter level = 1;
+}
+
+message TradingFilter {
+    Shared.EItemGradeType min_grade = 1;
+    Shared.EItemGradeType max_grade = 2;
+    TradingEquipmentFilter equipment_filter = 3;
+}
+
+message TradingAllCategoryRequest {
+    TradingFilter filter = 1;
+    int32 page_cursor = 2;
+}
+
+message TradingCategoryRequest {
+    int32 category_template_id = 1;
+    TradingFilter filter = 2;
+    int32 page_cursor = 3;
+    Shared.ETradingListSortType sort_type = 4;
+}
+
+message TradingEquipmentSummaryRequest {
+    int32 item_template_id = 1;
+    int32 page_cursor = 3;
+    TradingEquipmentFilter filter = 4;
+}
+
+message TradingEquipmentDetailRequest {
+    int32 item_template_id = 1;
+    int32 item_level = 2;
+    int32 page_cursor = 3;
+    Shared.ETradingListSortType sort_type = 4;
+}
+
+message TradingItemDetailRequest {
+    int32 item_template_id = 1;
+    int32 page_cursor = 2;
+    Shared.ETradingListSortType sort_type = 3;
+}
+
+message TradingItemSummaryRequest {
+    repeated int32 item_template_id_list = 1;
+    TradingEquipmentFilter filter = 3;
+}
+
+message TradingItemSummary {
+    Shared.EItemType item_type = 1;
+    int32 item_template_id = 2;
+    int32 count = 3;
+    int64 scaled_min_price = 4;
+}
+
+message TradingEquipmentSummary {
+    Shared.EItemType item_type = 1;
+    int32 item_template_id = 2;
+    int32 level = 3;
+    int32 count = 4;
+    int64 min_price = 5;
+}
+
+message TradingItemDetail {
+    int64 trading_id = 1;
+    Shared.ItemBaseInfo item = 2;
+    int64 price = 3;
+    int64 expiration_time = 4;
+    string seller_name = 5;
+}
+
+message TradingItemSummaryResponse {
+    repeated TradingItemSummary list = 1;
+    int32 page_cursor = 2;
+}
+
+message TradingEquipmentSummaryResponse {
+    repeated TradingEquipmentSummary list = 1;
+    int32 page_cursor = 2;
+}
+
+message TradingItemDetailResponse {
+    repeated TradingItemDetail list = 1;
+    int32 page_cursor = 2;
+}
+
+message MyTradingItemInfo {
+    Shared.ETradingType type_ = 1;
+    int64 trading_id = 2;
+    Shared.ItemBaseInfo item = 3;
+    int64 price = 4;
+    int64 tax_price = 5;
+    Shared.ETradingItemState state = 6;
+    int64 expiration_time = 7;
+    int64 sold_time = 8;
+    string buyer_name = 9;
+}
+
+message MyTradingHistoryInfo {
+    int64 regist_time = 1;
+    Shared.ETradingHistoryType history_type = 2;
+    Shared.ItemBaseInfo item = 3;
+    int64 price = 4;
+    int64 tax_price = 5;
+    string target_name = 6;
+}
+
+message TradingItemPriceInfo {
+    Shared.EItemType item_type = 1;
+    int32 item_template_id = 2;
+    int64 min_scaled_price = 3;
+    int64 max_scaled_price = 4;
+    int64 avg_scaled_price = 5;
+    int64 sold_count = 6;
+    int64 time_code = 7;
+    int32 enhancement_level = 8;
+}
+
+message ActionState {
+    oneof SubType {
+        NpcSpawnAction npcSpawnAction = 2;
+    }
+}
+
+message NpcSpawnAction {
+    int32 elapsed = 1;
+    bool finished = 2;
+}
+
+message ChatBlockInfo {
+    string name = 1;
+    int64 create_time = 2;
+}
+
+message EventCatalogTarget {
+    Shared.EEventType type_ = 1;
+    int32 group_id = 2;
+}
+
+message Button {
+    string text = 1;
+    string command = 2;
+}
+
+message EventCatalogTemplateData {
+    int32 id = 1;
+    int64 start_time = 2;
+    int64 end_time = 3;
+    string title = 4;
+    int32 order = 5;
+    EventCatalogTarget target = 6;
+    string packaged_image = 7;
+    string downloadable_image = 8;
+    Shared.EEventTargetUserType target_user_type = 9;
+    string widget_path = 10;
+    repeated string descriptions = 11;
+    repeated Button buttons = 12;
+    string tab = 13;
+}
+
+message EventRewardInfo {
+    Shared.EItemType type_ = 1;
+    int32 template_id = 2;
+    int64 count = 3;
+}
+
+message EventDayAndRewardInfo {
+    int32 day = 1;
+    EventRewardInfo reward = 2;
+}
+
+message AttendanceTemplateData {
+    int32 group_id = 1;
+    repeated EventDayAndRewardInfo info_list = 2;
+    EventRewardInfo daily_reward = 3;
+}
+
+message EventPcLevelAndRewardInfo {
+    int32 level = 1;
+    EventRewardInfo reward = 2;
+}
+
+message LevelRewardTemplateData {
+    int32 group_id = 1;
+    repeated EventPcLevelAndRewardInfo info_list = 2;
+}
+
+message LoginBonusTemplateData {
+    int32 group_id = 1;
+    EventRewardInfo reward = 2;
+}
+
+message EventDropTemplateData {
+    int32 group_id = 1;
+    int32 template_id = 2;
+    int32 map_id = 3;
+    EventRewardInfo reward = 4;
+}
+
+message EventServerDependentData {
+    repeated EventCatalogTemplateData catalog_template_data_list = 1;
+    repeated AttendanceTemplateData attendance_template_data_list = 2;
+    repeated LevelRewardTemplateData level_reward_template_data_list = 3;
+    repeated EventPcMissionInfo mission_template_data_list = 4;
+    repeated LoginBonusTemplateData login_bonus_template_data_list = 5;
+    repeated EventDropTemplateData event_drop_template_data_list = 6;
+}
+
+message AttendanceInfo {
+    int32 catalog_id = 1;
+    int32 day = 2;
+    int64 next_reset_time = 3;
+}
+
+message LevelRewardInfo {
+    int32 catalog_id = 1;
+    int32 last_rewarded_level = 2;
+}
+
+message LoginBonusInfo {
+    int32 catalog_id = 1;
+    bool is_rewarded = 2;
+}
+
+message ContentActivationInfo {
+    int32 feature_activation_id = 1;
+    bool is_activation = 2;
+}
+
+message FriendInfo {
+    int64 id = 1;
+    string name = 2;
+    int32 template_id = 3;
+    int32 level = 4;
+    Shared.EFriendType type_ = 5;
+    int64 last_logout_time = 6;
+    int64 request_end_time = 7;
+    int64 accept_time = 8;
+}
+
+message ServerTime {
+    int64 server_time_milliseconds = 1;
+    int32 server_time_zone_offset_hour = 2;
+}
+
+message CharacterDisplayInfo {
+    int32 npc_template_id = 1;
+    int64 pc_object_id = 2;
+    string pc_display_name = 3;
+    string pc_guild_name = 4;
+}
+
+message PcDeathPenaltyInfo {
+    int64 lost_item_last_expiration_time = 1;
+    int32 used_free_count_for_remove_debuff = 2;
+    int64 free_count_reset_time = 3;
+    int64 last_death_penalty_time = 4;
+    int32 used_free_exp_recovery_count = 5;
+    int64 free_exp_recovery_count_reset_time = 6;
+}
+
+message SkillActionInfo {
+    int32 skill_id = 1;
+    bool is_auto_attack = 2;
+    Shared.NetVector caster_pos = 3;
+    Shared.NetVector caster_velocity = 4;
+    int64 target_object_id = 5;
+    Shared.NetVector target_pos = 6;
+    Shared.NetVector target_velocity = 7;
+}
+
+message ItemCollectionInfo {
+    int32 collection_template_id = 1;
+    repeated int32 collection_item_template_ids = 2;
+}
+
+message GuildDungeonActiveInfo {
+    int32 template_id = 1;
+    int32 current_level = 2;
+    Shared.EGuildDungeonState state = 3;
+    int64 created_time = 4;
+}
+
+message MergingEqualGradeCountInfo {
+    Shared.EItemType item_type = 1;
+    Shared.EItemGradeType item_grade = 2;
+    int32 equal_grade_count = 3;
+}
+
+message StatPointInfo {
+    int32 applied_point = 1;
+    int32 remain_point = 2;
+    repeated StatInfo stats = 3;
+}
+
+message EquipmentEnhancementResult {
+    Shared.EEquipmentEnhancementResult enhancement_result = 1;
+    int64 equipment_db_id = 2;
+    bool is_mail_result = 3;
+    repeated RewardItemInfo destruction_compensations = 4;
+}
+
+message CandidatedQuestListInfo {
+    int32 count = 1;
+    repeated int32 quest_id_list = 2;
+}
+
+message VacuityInfo {
+    int32 point = 1;
+    Shared.EVacuityMode mode = 2;
+    int32 vacuity_growth_level = 3;
+}
+
+message PeriodItemInfo {
+    int32 template_id = 1;
+    Shared.EItemType type_ = 2;
+    int64 count = 3;
+}
+
+message Preset {
+    int32 preset_index = 1;
+    int32 character_class_template_id = 2;
+    int32 pet_template_id = 3;
+    repeated int64 equipment_ids = 4;
+    StatPointInfo stat_point_info = 5;
+    bytes quick_slot_user_config = 6;
+}
+
+message SkillPackUserConfig {
+    int32 skill_pack_template_id = 1;
+    bool enable_auto_use = 2;
+    bool enable_auto_use_period = 3;
+    int32 auto_use_period = 4;
+}
+
+message RuneInfo {
+    int32 rune_group_template_id = 1;
+    int32 level = 2;
+}
+
+message RuneBonusInfo {
+    int32 rune_bonus_template_id = 1;
+}
+
+message PcLevelUpMissionInfo {
+    int32 template_id = 1;
+    bool is_special_reward = 2;
+    EPcLevelUpMissionStates state = 3;
+}
+
+message MissionInfo {
+    Shared.EAchievementState state = 1;
+    int32 template_id = 2;
+    int64 value = 3;
+}
+
+message MissionTotalInfo {
+    Shared.EMissionType type_ = 1;
+    int32 rewarded_count = 2;
+    repeated MissionInfo mission_infos = 3;
+    int32 last_bonus_reward_index = 4;
+    int64 next_reset_time = 5;
+}
+
+message EventPcMissionDetail {
+    int32 template_id = 1;
+    int32 order = 2;
+    string mission_text = 3;
+    int64 count = 4;
+    int32 level = 5;
+    EventRewardInfo reward = 6;
+    bool check_once = 7;
+}
+
+message EventPcMissionInfo {
+    int32 group_id = 1;
+    repeated EventPcMissionDetail detail_list = 3;
+}
+
+message EventMissionInfo {
+    int32 catalog_id = 1;
+    Shared.EAchievementState state = 2;
+    int32 template_id = 3;
+    int32 value = 4;
+}
+
+message GuildQuestDailyRewardCountInfo {
+    int64 next_reset_time = 1;
+    int32 count = 2;
+}
+
+message CoreAltarInfo {
+    int32 core_altar_id = 1;
+    repeated CoreAltarEffectInfo effect_list = 2;
+    Shared.ECoreAltarState state = 3;
+    int32 remain_time_sec = 4;
+}
+
+message CoreAltarEffectInfo {
+    int32 effect_passive_id = 1;
+    int32 count = 2;
+}
+
+message SiegeTowerDetailInfo {
+    int32 siege_tower_id = 1;
+    int32 process_count = 2;
+    Shared.ESiegeTowerState state = 3;
+    bool is_completed_rewarded = 4;
+}
+
+message SiegeTowerInfo {
+    int32 siege_tower_id = 1;
+    Shared.ESiegeTowerState state = 3;
+}
+
+message SeasonPassInfo {
+    int32 season_number = 1;
+    int64 point = 2;
+    bool premium_open = 3;
+    int32 free_reward_step = 4;
+    int32 premium_reward_step = 5;
+}
+
+message SeasonPassMissionInfo {
+    int32 template_id = 1;
+    int32 value = 2;
+}
+
+message InfluencerChannelInfo {
+    string name = 1;
+    string url = 2;
+}
+
+enum EPcLevelUpMissionStates {
+    EPcLevelUpMissionStates_NOT_ACHIEVED = 0;
+    EPcLevelUpMissionStates_GOAL_ACHIEVED = 1;
+    EPcLevelUpMissionStates_REWARD_RECEIVED = 2;
+    EPcLevelUpMissionStates_INVALID = -1;
+}

@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package GWS2CProtocolHelper;
+
+import "Shared.proto";
+import "Extension.proto";
+
+option csharp_namespace = "NetworkMessage.ProtocolHelper";
+
+message RealmInfo {
+    int32 id = 1;
+    string name = 2;
+    Shared.ERealmCongestion congestion = 3;
+    bool recommend = 4;
+    bool restrict_new_account = 5;
+}
+
+message RealmGroupInfo {
+    string name = 1;
+    repeated RealmInfo infos = 2;
+    bool new_group = 3;
+    int32 order = 4;
+    int32 id = 5;
+}
+
+message RealmCharacterInfo {
+    int32 realm_id = 1;
+    string realm_name = 2;
+    Shared.ERealmCongestion congestion = 3;
+    int32 character_class_template_id = 4;
+    string character_name = 5;
+    int32 level = 6;
+    int64 character_id = 7;
+    int64 last_logout_time = 8;
+    Shared.EPcState pc_state = 9;
+}

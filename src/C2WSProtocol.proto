@@ -1,0 +1,1286 @@
+syntax = "proto3";
+
+package C2WSProtocol;
+
+import "Shared.proto";
+import "WS2CProtocolHelper.proto";
+import "Extension.proto";
+
+option csharp_namespace = "NetworkMessage.C2WSProtocol";
+
+message LogOutReq {
+    
+}
+
+message ReconnectReq {
+    int64 account_db_id = 1;
+    int64 session_key = 2;
+}
+
+message AccountLinkReq {
+    int64 nexon_sn = 1;
+}
+
+message EnterToLobbyReq {
+    int64 auth_key = 1;
+    int64 accout_db_id = 3;
+}
+
+message EnterWorldReq {
+    int64 auth_key = 1;
+    int64 accout_db_id = 3;
+}
+
+message BackToLobbyReq {
+    
+}
+
+message SelectCharacterReq {
+    int64 character_db_id = 1;
+}
+
+message EnterShopModeReq {
+    int64 auth_key = 1;
+    int64 accout_db_id = 2;
+}
+
+message QueryReconnectZoneReq {
+    
+}
+
+message LoadClientConfigReq {
+    repeated Shared.EClientConfigType type_list = 1;
+}
+
+message SaveClientConfigReq {
+    Shared.ClientConfigInfo config_info = 1;
+}
+
+message ReconnectZoneFinishedReq {
+    
+}
+
+message MoveReq {
+    Shared.NetVector position = 1;
+    Shared.NetVector velocity = 2;
+}
+
+message StartSkillReq {
+    int32 skill_id = 1;
+    Shared.NetVector position = 2;
+    float yaw = 3;
+    int64 skill_target_id = 4;
+    int64 overlapped_object_id = 5;
+    bool is_auto_attack = 6;
+}
+
+message BuilderCommandReq {
+    string command = 1;
+}
+
+message CancelSkillByMoveReq {
+    
+}
+
+message InteractionReq {
+    int64 object_id = 1;
+    Shared.NetVector position = 2;
+}
+
+message CancelInteractReq {
+    
+}
+
+message LootingReq {
+    int64 object_id = 1;
+    Shared.NetVector position = 2;
+}
+
+message ChangeZoneFinishedReq {
+    int32 loaded_map_id = 1;
+}
+
+message InZoneWarpFinishedReq {
+    
+}
+
+message DebugPingReq {
+    
+}
+
+message ExpandInventorySizeReq {
+    int32 cur_inventory_size = 1;
+    int32 increment_size = 2;
+}
+
+message EquipReq {
+    int64 equipment_id = 1;
+    Shared.EEquipmentSlot slot_type = 2;
+}
+
+message UnequipReq {
+    Shared.EEquipmentSlot slot_type = 1;
+}
+
+message UseUsableItemReq {
+    int32 template_id = 1;
+}
+
+message UseNonStackableUsableItemReq {
+    int64 db_id = 1;
+}
+
+message BookmarkItemReq {
+    int64 dbid = 1;
+    bool bookmark = 2;
+    bool is_storage_item = 3;
+}
+
+message UseItemBoxReq {
+    int32 template_id = 1;
+    int64 amount = 2;
+}
+
+message UseSelectionBoxReq {
+    int32 template_id = 1;
+    int64 amount = 2;
+    int32 selected_id = 3;
+}
+
+message EnhanceEquipmentReq {
+    int64 equipment_db_id = 1;
+    bool use_assist_material = 2;
+    int32 use_material_template_id = 3;
+}
+
+message EnhanceEquipmentManyReq {
+    repeated int64 equipment_db_ids = 1;
+    int32 material_template_id = 2;
+}
+
+message EnchantEquipmentReq {
+    int64 equipment_db_id = 1;
+    int64 material_db_id = 2;
+}
+
+message DeleteItemReq {
+    int64 dbid = 1;
+    int32 amount = 2;
+}
+
+message ReceiveMailAttachmentReq {
+    int64 mail_id = 1;
+    Shared.EMailType type_ = 2;
+}
+
+message ReceiveAllMailAttachmentReq {
+    Shared.EMailType type_ = 1;
+}
+
+message SendMailTextReq {
+    Shared.EMailType type_ = 1;
+    string name = 2;
+    string title = 3;
+    string message = 4;
+}
+
+message ReadMailTextReq {
+    int64 mail_id = 1;
+    Shared.EMailType type_ = 2;
+}
+
+message LockMailTextReq {
+    int64 mail_id = 1;
+    Shared.EMailType type_ = 2;
+    bool is_lock = 3;
+}
+
+message DeleteMailTextReq {
+    int64 mail_id = 1;
+    Shared.EMailType type_ = 2;
+}
+
+message DeleteAllMailTextReq {
+    repeated int64 mail_id_list = 1;
+    Shared.EMailType type_ = 2;
+}
+
+message MailTextSendCountReq {
+    
+}
+
+message VerifyServerDependentDataReq {
+    Shared.EServerDependentDataType type_ = 1;
+    bytes hash = 2;
+}
+
+message ServerDependentDataReq {
+    Shared.EServerDependentDataType type_ = 1;
+}
+
+message CashShopGoodsPurchaseRestrictionInfoReq {
+    
+}
+
+message NpcShopGoodsPurchaseRestrictionInfoReq {
+    
+}
+
+message SiegeShopGoodsPurchaseRestrictionInfoReq {
+    
+}
+
+message PurchaseNpcShopGoodsReq {
+    int32 npc_id = 1;
+    repeated WS2CProtocolHelper.BuyItemInfo buy_item_info_list = 2;
+    int32 total_tax_rate = 4;
+}
+
+message PurchaseCashShopGeneralGoodsReq {
+    bytes hash = 1;
+    int32 goods_id = 2;
+    int32 quantity = 3;
+    int32 slot = 4;
+}
+
+message PurchaseCashShopCashGoodsReq {
+    bytes hash = 1;
+    int32 goods_id = 2;
+    Shared.EPlatformStoreType store = 3;
+    Shared.ECashGoodsExternalIdType external_id_type = 4;
+    int32 slot = 5;
+}
+
+message CheckConditionCashGoodsReq {
+    bytes hash = 1;
+    int32 goods_id = 2;
+}
+
+message PurchaseCashGoodsVerifyReq {
+    string external_id = 1;
+    string stamp_token = 2;
+    string payload = 3;
+    bool is_empty_payload = 4;
+    float real_cash = 5;
+    int32 market = 6;
+    string country_code = 7;
+}
+
+message InboxGoodsInfoListReq {
+    
+}
+
+message SellItemReq {
+    int32 npc_id = 1;
+    repeated WS2CProtocolHelper.SellItemInfo sell_item_info_list = 2;
+}
+
+message ReadyAccountStorageReq {
+    
+}
+
+message DepositAccountStorageReq {
+    repeated Shared.ItemDbIdAndCountPair item_list = 1;
+}
+
+message WithdrawAccountStorageReq {
+    repeated Shared.ItemDbIdAndCountPair item_list = 1;
+}
+
+message ExpandAccountStorageReq {
+    int32 expand_slot_count = 1;
+}
+
+message ReceiveInboxGoodsReq {
+    int64 id = 1;
+}
+
+message ReceiveInboxAllGoodsReq {
+    repeated int64 goods_id_list = 1;
+}
+
+message MergingPetReq {
+    repeated Shared.MergingMaterial material_list = 1;
+}
+
+message MergingCharacterClassReq {
+    repeated Shared.MergingMaterial material_list = 1;
+}
+
+message ReceiveMergingGuaranteedRewardReq {
+    Shared.EItemType item_type = 1;
+    Shared.EItemGradeType item_grade = 2;
+}
+
+message ReserveDeletePcReq {
+    int64 db_id = 1;
+}
+
+message CancelReserveDeletePcReq {
+    int64 db_id = 1;
+}
+
+message ActivePcReq {
+    int64 db_id = 1;
+}
+
+message CreatePcReq {
+    int32 character_class_template_id = 1;
+    string display_name = 2;
+}
+
+message JoinGuildReq {
+    int64 guild_id = 1;
+}
+
+message CancelJoinGuildReq {
+    int64 invitation_id = 1;
+}
+
+message AcceptGuildInvitationReq {
+    int64 invitation_id = 1;
+}
+
+message CancelInveteGuildMemberReq {
+    int64 invitation_id = 1;
+}
+
+message GuildRecommendListReq {
+    
+}
+
+message SearchGuildReq {
+    string guild_name = 1;
+}
+
+message CreateGuildReq {
+    string guild_name = 1;
+    int32 emblem = 2;
+    Shared.EGuildJoinType join_type = 3;
+}
+
+message UpdateGuildJoinTypeReq {
+    Shared.EGuildJoinType type_ = 1;
+}
+
+message UpdateGuildNoticeReq {
+    string notice = 1;
+}
+
+message UpdateGuildIntroductionReq {
+    string introduction = 1;
+}
+
+message UpdateGuildMemberIntroductionReq {
+    string introduction = 1;
+}
+
+message LeaveGuildReq {
+    
+}
+
+message DisbandGuildReq {
+    
+}
+
+message BanishmentGuildMemberReq {
+    int64 target_pc_id = 1;
+}
+
+message ChangeGuildMemberPositionReq {
+    int64 target_pc_id = 1;
+    Shared.EPositionInGuild position = 2;
+}
+
+message EntrustGuildMasterReq {
+    int64 target_pc_id = 1;
+}
+
+message DonateGuildReq {
+    int32 donate_id = 1;
+}
+
+message InviteGuildMemberReq {
+    string target_pc_name = 1;
+}
+
+message ApproveJoinGuildReq {
+    int64 invitation_id = 1;
+}
+
+message RejectJoinGuildReq {
+    int64 invitation_id = 1;
+}
+
+message ApproveAllJoinGuildReq {
+    
+}
+
+message RejectAllJoinGuildReq {
+    
+}
+
+message ChangeGuildEmblemReq {
+    int32 emblem = 1;
+}
+
+message GuildAttendanceReq {
+    
+}
+
+message GuildAttendanceRewardReq {
+    
+}
+
+message GuildAddEnemyReq {
+    string guild_name = 1;
+}
+
+message GuildRemoveEnemyReq {
+    int64 guild_id = 1;
+}
+
+message GuildRefreshEnemyListReq {
+    
+}
+
+message GuildUnionCreateReq {
+    
+}
+
+message GuildUnionDestroyReq {
+    
+}
+
+message GuildUnionInviteReq {
+    string guild_name = 1;
+}
+
+message GuildUnionCancelInvitationReq {
+    int64 guild_id = 1;
+}
+
+message GuildUnionAcceptInvitationReq {
+    int64 union_id = 1;
+}
+
+message GuildUnionRejectInvitationReq {
+    int64 union_id = 1;
+}
+
+message GuildUnionBanishReq {
+    int64 guild_id = 1;
+}
+
+message GuildUnionLeaveReq {
+    
+}
+
+message GuildUnionUpdateNoticeReq {
+    string message = 1;
+}
+
+message GuildUnionDelegateReq {
+    int64 guild_id = 1;
+}
+
+message GuildDungeonCreateReq {
+    int32 dungeon_id = 1;
+    int32 level = 2;
+}
+
+message GuildDungeonChargingReq {
+    
+}
+
+message PvpInfoReq {
+    
+}
+
+message PvpHistoryReq {
+    
+}
+
+message TrackMurdererReq {
+    int32 history_id = 1;
+}
+
+message DerideVictimReq {
+    int32 history_id = 1;
+}
+
+message TrackBrutalReq {
+    int64 target_pc_id = 1;
+}
+
+message BrutalListReq {
+    
+}
+
+message TalkToNpcReq {
+    int32 npc_id = 1;
+    Shared.EQuestType type_ = 2;
+    int32 quest_id = 3;
+}
+
+message CompleteUIInteractionReq {
+    int32 quest_id = 1;
+}
+
+message EnterQuestAreaReq {
+    Shared.EQuestType type_ = 1;
+    int32 quest_id = 2;
+    int32 step_id = 3;
+}
+
+message AcceptMainQuestReq {
+    int32 quest_id = 1;
+}
+
+message RewardMainQuestReq {
+    int32 quest_id = 1;
+    int32 selected_id = 2;
+}
+
+message AcceptTutorialQuestReq {
+    int32 quest_id = 1;
+}
+
+message RewardTutorialQuestReq {
+    int32 quest_id = 1;
+}
+
+message AcceptDailyQuestReq {
+    int32 quest_id = 1;
+    int64 instance_id = 2;
+}
+
+message RewardDailyQuestReq {
+    int32 quest_id = 1;
+    int64 instance_id = 2;
+}
+
+message GiveUpDailyQuestReq {
+    int32 quest_id = 1;
+    int64 instance_id = 2;
+}
+
+message PublishDailyQuestListReq {
+    int32 npc_id = 1;
+}
+
+message ExChangeDailyQuestListReq {
+    int32 npc_id = 1;
+}
+
+message RewardScrollQuestReq {
+    int32 quest_id = 1;
+    int64 instance_id = 2;
+}
+
+message GiveUpScrollQuestReq {
+    int32 quest_id = 1;
+    int64 instance_id = 2;
+}
+
+message ExChangeScrollQuestReq {
+    int64 instance_id = 1;
+}
+
+message PartyCreateReq {
+    Shared.EPartyDistributionType party_distribution_type = 1;
+    int32 max_member_count = 2;
+}
+
+message PartyCreateAndInviteReq {
+    string character_name = 1;
+}
+
+message PartyDismissReq {
+    
+}
+
+message ChangePartyOptionReq {
+    int32 max_member_count = 1;
+    Shared.EPartyDistributionType party_distribution_type = 2;
+}
+
+message PartyInviteReq {
+    string character_name = 1;
+}
+
+message PartyAcceptInvitationReq {
+    int64 party_id = 1;
+    Shared.EPartyInvitationResponse response = 2;
+}
+
+message PartyCancelInvitationReq {
+    string character_name = 1;
+}
+
+message PartyLeaveReq {
+    
+}
+
+message PartyDelegateReq {
+    string character_name = 1;
+}
+
+message PartyBanishReq {
+    string character_name = 1;
+}
+
+message ShareTargetWithPartyReq {
+    int64 object_id = 1;
+    bool is_share_target = 2;
+}
+
+message ShareScanListWithPartyReq {
+    repeated Shared.ScanResult scan_result_list = 1;
+}
+
+message CraftRecipeReq {
+    int32 craft_recipe_template_id = 1;
+    int32 count = 2;
+    repeated Shared.SelectedMaterial inventory_bucket = 3;
+    repeated Shared.SelectedMaterial warehouse_bucket = 4;
+}
+
+message CraftRenewReq {
+    
+}
+
+message PetActivateReq {
+    int32 pet_template_id = 1;
+}
+
+message PetDeactivateReq {
+    
+}
+
+message ChangeCharacterClassReq {
+    int32 character_class_template_id = 1;
+}
+
+message ChangePresetReq {
+    int32 preset_index = 1;
+}
+
+message SaveSkillPackUserConfigReq {
+    repeated WS2CProtocolHelper.SkillPackUserConfig skill_pack_user_configs = 1;
+}
+
+message SaveQuickSlotUserConfigReq {
+    bytes config = 1;
+}
+
+message ChangeMannerModeReq {
+    Shared.EMannerMode manner_mode_index = 1;
+}
+
+message ChannelListReq {
+    
+}
+
+message ChatUnreadReq {
+    repeated Shared.ChatReadInfo infos = 1;
+}
+
+message ChatReq {
+    Shared.EChatType type_ = 1;
+    Shared.ChatMessage message = 2;
+    Shared.ChatReceiverHint receiver_hint = 3;
+}
+
+message ChatGuildPrevMessageListReq {
+    int32 top_message_id = 1;
+}
+
+message ChatBlockAddReq {
+    string name = 1;
+}
+
+message ChatBlockRemoveReq {
+    string name = 1;
+}
+
+message SocialMotionReq {
+    int32 template_id = 1;
+}
+
+message CancelSocialMotionReq {
+    
+}
+
+message DecomposeItemReq {
+    int64 item_dbid = 1;
+}
+
+message DecomposeItemManyReq {
+    repeated int64 item_dbids = 1;
+}
+
+message RankingBoardReq {
+    Shared.ERankingType type_ = 1;
+    bool prev = 2;
+}
+
+message RankingGuildBoardReq {
+    
+}
+
+message MyRankingGuildReq {
+    
+}
+
+message AddTeleportBookmarkReq {
+    WS2CProtocolHelper.ModifyTeleportBookmark data = 1;
+}
+
+message AddTeleportBookmarkWithLocationReq {
+    WS2CProtocolHelper.ModifyTeleportBookmark modify_data = 1;
+    int32 map_id = 2;
+    Shared.NetVector position = 3;
+}
+
+message EditTeleportBookmarkReq {
+    repeated WS2CProtocolHelper.ModifyTeleportBookmark datas = 1;
+}
+
+message RenameTeleportBookmarkReq {
+    repeated WS2CProtocolHelper.ModifyTeleportBookmark datas = 1;
+}
+
+message ChangeSlotTeleportBookmarkReq {
+    repeated WS2CProtocolHelper.ChangeSlotTeleportBookmark datas = 1;
+}
+
+message DeleteTeleportBookmarkReq {
+    repeated WS2CProtocolHelper.ModifyTeleportBookmark datas = 1;
+}
+
+message ShareLocationWithOthersReq {
+    Shared.LocationLink location_link = 1;
+    Shared.EShareLocationType share_type = 2;
+}
+
+message RandomBossActiveListReq {
+    
+}
+
+message FieldDungeonStatusListReq {
+    
+}
+
+message AchievementRewardReq {
+    Shared.EAchievementCategory category = 1;
+    repeated int32 template_ids = 2;
+}
+
+message AchievementRewardAllReq {
+    
+}
+
+message TradingStateReq {
+    
+}
+
+message OneOfTradingListReq {
+    oneof SubType {
+        WS2CProtocolHelper.TradingAllCategoryRequest allCategory = 2;
+        WS2CProtocolHelper.TradingCategoryRequest category = 3;
+        WS2CProtocolHelper.TradingEquipmentSummaryRequest equipmentSummary = 4;
+        WS2CProtocolHelper.TradingEquipmentDetailRequest equipmentDetail = 5;
+        WS2CProtocolHelper.TradingItemSummaryRequest itemSummary = 6;
+        WS2CProtocolHelper.TradingItemDetailRequest itemDetail = 7;
+    }
+}
+
+message TradingItemRegistReq {
+    Shared.ETradingType type_ = 1;
+    int32 item_template_id = 2;
+    int64 item_db_id = 3;
+    int64 count = 4;
+    int64 price = 5;
+    int64 expected_fees = 6;
+    string buyer_name = 7;
+}
+
+message TradingItemBuyReq {
+    Shared.ETradingType type_ = 1;
+    int64 trading_id = 2;
+}
+
+message MyTradingInfoReq {
+    
+}
+
+message TradingSoldItemRewardReq {
+    repeated int64 trading_id_list = 1;
+    repeated int64 private_trading_id_list = 2;
+    int64 expected_reward = 3;
+}
+
+message TradingCancelReq {
+    Shared.ETradingType type_ = 1;
+    int64 trading_id = 2;
+}
+
+message TradingItemPriceInfoReq {
+    int32 item_template_id = 1;
+    int32 enhancement_level = 2;
+}
+
+message PrivateTradingListReq {
+    
+}
+
+message PrivateTradingBuyerCheckReq {
+    string buyer_name = 1;
+}
+
+message PrivateTradingRefuseReq {
+    int64 trading_id = 1;
+}
+
+message AttendReq {
+    bytes hash = 1;
+    int32 catalog_id = 2;
+}
+
+message LevelRewardReq {
+    bytes hash = 1;
+    int32 catalog_id = 2;
+    int32 level = 3;
+}
+
+message LoginBonusRewardReq {
+    bytes hash = 1;
+    int32 catalog_id = 2;
+}
+
+message BillingRestoreReq {
+    string product_id = 1;
+    string stamp_token = 2;
+}
+
+message RegisterMobileCouponReq {
+    string coupon = 1;
+    string np_token = 2;
+}
+
+message RegisterPcCouponReq {
+    string coupon = 1;
+}
+
+message SetFieldDropEquipmentGradeRestrictReq {
+    Shared.EItemGradeType grade = 1;
+}
+
+message SetAnonymousItemBroadcastReq {
+    bool is_anonymous_item_broadcast = 1;
+}
+
+message FriendInvitationReq {
+    string invitee_name = 1;
+}
+
+message CancelFriendInvitationReq {
+    int64 invitee_id = 1;
+}
+
+message RefuseFriendInvitationReq {
+    int64 inviter_id = 1;
+}
+
+message AcceptInvitationReq {
+    int64 inviter_id = 1;
+}
+
+message DeleteFriendReq {
+    int64 friend_id = 1;
+}
+
+message AddVigilanceReq {
+    string vigilance_pc_name = 1;
+    int32 realm_id = 2;
+}
+
+message AddAmityReq {
+    string amity_pc_name = 1;
+    int32 realm_id = 2;
+}
+
+message RemoveVigilanceReq {
+    string vigilance_pc_name = 1;
+}
+
+message RemoveAmityReq {
+    string amity_pc_name = 1;
+}
+
+message EscapeReq {
+    
+}
+
+message ChatReportPcReq {
+    int32 reported_pc_realm_id = 1;
+    Shared.ChatReportInfo info = 2;
+}
+
+message RemoveAllExpiredItemReq {
+    
+}
+
+message RecoverLostExpReq {
+    repeated int64 db_id_list = 1;
+    WS2CProtocolHelper.PriceInfo total_cost = 2;
+}
+
+message RecoverLostItemReq {
+    repeated int64 db_id_list = 1;
+    WS2CProtocolHelper.PriceInfo total_cost = 2;
+}
+
+message LostInfoListReq {
+    
+}
+
+message HeartbeatNoti {
+    
+}
+
+message HeartbeatPauseReq {
+    
+}
+
+message HeartbeatResumeReq {
+    
+}
+
+message RegisterItemCollectionReq {
+    int32 collection_template_id = 1;
+    int32 collection_item_template_id = 2;
+    int64 item_db_id = 3;
+}
+
+message RewardChangeReq {
+    int64 slot_id = 1;
+    Shared.EItemType item_type = 2;
+}
+
+message ConfirmChangeableRewardReq {
+    int64 slot_id = 1;
+    Shared.EItemType item_type = 2;
+}
+
+message ReceiveAllAutoConfirmedChangeableRewardReq {
+    Shared.EItemType item_type = 1;
+}
+
+message GuildBuffLevelUpReq {
+    int32 template_id = 1;
+}
+
+message GuildBuffBuyReq {
+    int32 template_id = 1;
+    int32 buy_count = 2;
+}
+
+message WarpReq {
+    Shared.EWarpReason reason = 1;
+    Shared.WarpReqParam warp_req_param = 2;
+}
+
+message ActivateSiegeObstacleReq {
+    int64 object_id = 1;
+    Shared.NetVector position = 2;
+    bool activate = 3;
+}
+
+message OperateSiegeSlotReq {
+    int64 object_id = 1;
+    Shared.NetVector position = 2;
+    bool activate = 3;
+}
+
+message ChangePcNameReq {
+    string new_pc_name = 1;
+    int32 material_template_id = 2;
+}
+
+message RemoveTauntEffectReq {
+    int64 caster_id = 1;
+}
+
+message SkillEnhancementReq {
+    int32 skill_pack_template_id = 1;
+    repeated Shared.SelectedMaterial inventory_bucket = 2;
+    repeated Shared.SelectedMaterial warehouse_bucket = 3;
+}
+
+message ChangeAreaSkillAttackPcReq {
+    bool area_skill_attack_pc = 1;
+}
+
+message RevivalReq {
+    bool in_place = 1;
+}
+
+message RealmImmigrationSeasonInfoReq {
+    
+}
+
+message RealmImmigrationSeasonInfoReloadReq {
+    
+}
+
+message RealmImmigrationOtherRealmInfoReq {
+    int32 season = 1;
+    int32 realm_id = 2;
+}
+
+message RealmImmigrationReserveReq {
+    int32 season = 1;
+    int32 expected_price = 2;
+    int32 arrival_realm_id = 3;
+}
+
+message RealmImmigrationReserveGuildReq {
+    int32 season = 1;
+    int32 expected_price = 2;
+    int32 arrival_realm_id = 3;
+}
+
+message SpecialSeasonLookupReq {
+    
+}
+
+message CharacterGiftCheckReq {
+    
+}
+
+message CharacterGiftPackReq {
+    string password = 1;
+}
+
+message CharacterGiftCancelReq {
+    int64 packed_pc_id = 1;
+}
+
+message CharacterGiftReceiveReq {
+    string code = 1;
+    string password = 2;
+}
+
+message CharacterGiftRetrieveMyCodeReq {
+    int64 pc_id = 1;
+}
+
+message CharacterGiftVerifyCodeReq {
+    string code = 1;
+    string password = 2;
+}
+
+message CharacterGiftRegisterNewPcNameReq {
+    int64 pc_db_id = 1;
+    string new_pc_name = 2;
+}
+
+message ApplyStatPointReq {
+    WS2CProtocolHelper.StatPointInfo info = 1;
+}
+
+message ResetStatPointReq {
+    
+}
+
+message ChangeVacuityModeReq {
+    Shared.EVacuityMode mode = 1;
+}
+
+message VacuityLevelUpReq {
+    int32 level = 1;
+}
+
+message RuneLevelUpReq {
+    int32 rune_group_id = 1;
+    int32 level = 2;
+}
+
+message RuneBonusActivateReq {
+    int32 rune_bonus_id = 1;
+}
+
+message RuneBonusResetReq {
+    
+}
+
+message CoreAltarInfoReq {
+    int64 core_altar_object_id = 1;
+}
+
+message CoreAltarActivateReq {
+    int64 core_altar_object_id = 1;
+    int32 item_count = 2;
+    int32 effect_passive_id = 3;
+}
+
+message WorldMapCoreAltarInfoReq {
+    int32 map_resource_id = 1;
+}
+
+message SiegeTowerInfoReq {
+    
+}
+
+message SiegeTowerBuildReq {
+    int32 siege_tower_id = 1;
+}
+
+message SiegeTowerCompletedRewardReq {
+    int32 siege_tower_id = 1;
+}
+
+message RuleSelectorVoteInfoReq {
+    
+}
+
+message RuleSelectorVoteReq {
+    Shared.ERuleSelectorRuleType rule_type = 1;
+    Shared.ERuleSelectorVoteType vote_type = 2;
+}
+
+message SiegeBidInfoReq {
+    
+}
+
+message SiegeBidReq {
+    int32 siege_id = 1;
+    int32 inventory_bucket_amount = 2;
+    int32 warehouse_bucket_amount = 3;
+}
+
+message SiegeInfoReq {
+    int32 siege_id = 1;
+}
+
+message SiegeInfoAllReq {
+    
+}
+
+message ChangeSiegeTaxRateReq {
+    int32 siege_id = 1;
+    int32 tax_rate = 2;
+}
+
+message SiegeSceneInfoAllReq {
+    
+}
+
+message SiegeDistributeSceneInfoReq {
+    int32 siege_id = 1;
+}
+
+message DistributeSiegeRewardReq {
+    int32 siege_id = 1;
+    repeated Shared.SiegeRewardDistribution siege_reward_list = 2;
+}
+
+message TotalSiegeTaxRateReq {
+    
+}
+
+message PurchaseSiegeShopGoodsReq {
+    int32 siege_field_template_id = 1;
+    int32 goods_template_id = 2;
+    int32 quantity = 3;
+    int32 slot = 4;
+}
+
+message GiveUpPreOccupationCharacterReq {
+    
+}
+
+message OfflineHuntInfoReq {
+    
+}
+
+message OfflineHuntStartReq {
+    int32 offline_hunt_id = 1;
+}
+
+message SeasonPassRewardReq {
+    bool premium = 1;
+    bool one_step_reward = 2;
+}
+
+message SeasonPassRewardUnlockReq {
+    
+}
+
+message NgsVerifyNoti {
+    bytes data = 1;
+    int32 size = 2;
+}
+
+message KakaoLinkReq {
+    string access_token = 1;
+}
+
+message KakaoUnlinkReq {
+    
+}
+
+message GuildAzitRentalReq {
+    Shared.EGuildAzitRequestType type_ = 1;
+}
+
+message InfluencerInfoReq {
+    
+}
+
+message RewardMissionReq {
+    Shared.EMissionType type_ = 1;
+    repeated int32 template_ids = 2;
+    int32 bonus_index = 3;
+}
+
+message EventMissionRewardReq {
+    bytes hash = 1;
+    int32 catalog_id = 2;
+    int32 template_id = 3;
+}
+
+message GuildQuestInfoReq {
+    
+}
+
+message GuildQuestAcceptReq {
+    int32 template_id = 1;
+}
+
+message GuildQuestCancleReq {
+    int32 template_id = 1;
+}
+
+message GuildQuestCompleteReq {
+    int32 template_id = 1;
+}
+
+message GuildQuestRewardReq {
+    int32 template_id = 1;
+}
+
+message RemoveDeathPenaltyDebuffReq {
+    int64 expected_cost_gold = 1;
+}
+
+message RetrieveLostItemReq {
+    repeated int64 db_id_list = 1;
+    int64 expected_cost_gold = 2;
+}
+
+message LostItemLinksListReq {
+    
+}

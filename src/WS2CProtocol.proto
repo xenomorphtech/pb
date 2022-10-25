@@ -1,0 +1,2918 @@
+syntax = "proto3";
+
+package WS2CProtocol;
+
+import "Shared.proto";
+import "WS2CProtocolHelper.proto";
+import "Extension.proto";
+
+option csharp_namespace = "NetworkMessage.WS2CProtocol";
+
+message LogOutRes {
+    Shared.EErrorType result = 1;
+}
+
+message ReconnectRes {
+    Shared.EErrorType result = 1;
+    Shared.EUserSessionStates user_session_state = 2;
+    int64 session_key = 3;
+    WS2CProtocolHelper.ServerTime server_time = 4;
+}
+
+message AccountLinkRes {
+    Shared.EErrorType result = 1;
+}
+
+message EnterToLobbyRes {
+    Shared.EErrorType result = 1;
+    int64 default_pc_db_id = 2;
+    int32 user_slot = 3;
+    repeated WS2CProtocolHelper.LobbyCharacterInfo lobby_character_info = 4;
+    int64 session_key = 5;
+    repeated Shared.ClientConfigInfo account_config_hash_list = 6;
+    WS2CProtocolHelper.ServerTime server_time = 7;
+    Shared.LoginRestrictionInfo login_restriction_info = 8;
+    int32 realm_id = 9;
+    string server_name = 10;
+    string server_revision = 11;
+}
+
+message EnterWorldRes {
+    Shared.EErrorType result = 1;
+    int64 object_id = 2;
+    int32 template_id = 3;
+    int64 chracter_db_id = 4;
+    int64 session_key = 5;
+    WS2CProtocolHelper.ServerTime server_time = 7;
+    Shared.LoginRestrictionInfo login_restriction_info = 8;
+    string server_name = 9;
+    string server_revision = 10;
+}
+
+message EnterShopModeRes {
+    Shared.EErrorType result = 1;
+    int64 character_level = 2;
+    int64 session_key = 3;
+    WS2CProtocolHelper.ServerTime server_time = 4;
+    Shared.LoginRestrictionInfo login_restriction_info = 5;
+    repeated WS2CProtocolHelper.InboxGoodsInfo inbox_goods_list = 6;
+}
+
+message UserPrivilegeNoti {
+    Shared.UserPrivilege privilege = 1;
+}
+
+message MoveWorldServerNoti {
+    int64 auth_key = 1;
+    string ip_address = 2;
+    int32 port = 3;
+}
+
+message BackToLobbyRes {
+    Shared.EErrorType result = 1;
+    int64 default_pc_db_id = 2;
+    int32 user_slot = 3;
+    repeated WS2CProtocolHelper.LobbyCharacterInfo lobby_character_info = 4;
+}
+
+message SelectCharacterRes {
+    Shared.EErrorType result = 1;
+    int64 object_id = 2;
+    int32 template_id = 3;
+    int64 chracter_db_id = 4;
+    bool move_world_server = 5;
+}
+
+message QueryReconnectZoneRes {
+    int32 map_id = 1;
+    float direction = 2;
+    Shared.NetVector position = 3;
+}
+
+message ReserveDeletePcRes {
+    Shared.EErrorType result = 1;
+    int32 user_slot = 2;
+    repeated WS2CProtocolHelper.LobbyCharacterInfo lobby_character_info = 3;
+    int64 default_pc_db_id = 4;
+}
+
+message CancelReserveDeletePcRes {
+    Shared.EErrorType result = 1;
+    int32 user_slot = 2;
+    repeated WS2CProtocolHelper.LobbyCharacterInfo lobby_character_info = 3;
+    int64 default_pc_db_id = 4;
+}
+
+message ActivePcRes {
+    Shared.EErrorType result = 1;
+    int32 user_slot = 2;
+    repeated WS2CProtocolHelper.LobbyCharacterInfo lobby_character_info = 3;
+    int64 default_pc_db_id = 4;
+}
+
+message CreatePcRes {
+    Shared.EErrorType result = 1;
+    int64 default_pc_db_id = 2;
+    int32 user_slot = 3;
+    repeated WS2CProtocolHelper.LobbyCharacterInfo lobby_character_info = 4;
+}
+
+message LobbyInfoNoti {
+    int64 default_pc_db_id = 1;
+    int32 user_slot = 2;
+    repeated WS2CProtocolHelper.LobbyCharacterInfo lobby_character_info = 3;
+}
+
+message MoveRes {
+    int64 object_id = 1;
+    Shared.NetVector position = 2;
+    Shared.NetVector velocity = 3;
+}
+
+message MoveWithHitTimeRes {
+    int64 object_id = 1;
+    Shared.NetVector position = 2;
+    Shared.NetVector velocity = 3;
+    int32 hit_time = 4;
+}
+
+message MoveStopRes {
+    int64 object_id = 1;
+    Shared.NetVector position = 2;
+}
+
+message ForcedStopNoti {
+    Shared.NetVector position = 1;
+}
+
+message SetDirectionNoti {
+    int64 object_id = 1;
+    float yaw = 2;
+}
+
+message LeaveZoneNoti {
+    int64 object_id = 1;
+    bool apply_leave_effect = 2;
+}
+
+message StartSkillNoti {
+    int64 object_id = 1;
+    repeated Shared.SkillActionEffectDecision skill_results = 2;
+    int32 skill_id = 3;
+    Shared.NetVector position = 4;
+    float yaw = 5;
+    int32 skill_elapsed = 6;
+    int32 attack_delay_duration = 7;
+    int32 skill_duration = 8;
+    int64 main_target_object_id = 9;
+    Shared.BlinkResult blink_result = 10;
+    int32 cooltime = 11;
+}
+
+message DamagedNoti {
+    int64 attacker_id = 1;
+    int64 target_id = 2;
+    int32 hit_type_bit_flag = 3;
+    int64 damage = 4;
+    int32 battle_effect_id = 5;
+    Shared.NetVector origin_pos = 6;
+}
+
+message DamagedImmuneNoti {
+    int64 attacker_id = 1;
+    int64 target_id = 2;
+}
+
+message ViolenceModeNoti {
+    int64 object_id = 1;
+    int64 end_time = 2;
+}
+
+message RecoveryNoti {
+    int64 caster_id = 1;
+    int64 target_id = 2;
+    int64 amount = 3;
+    int32 battle_effect_template_id = 4;
+}
+
+message ChangeZoneNoti {
+    int32 map_id = 1;
+    float direction = 2;
+    Shared.NetVector position = 3;
+    int32 channel_id = 4;
+}
+
+message TeleportNoti {
+    int64 object_id = 1;
+    Shared.NetVector position = 2;
+    float yaw = 3;
+    bool by_revival = 4;
+}
+
+message CharacterInfoNoti {
+    int64 object_id = 1;
+    WS2CProtocolHelper.CharacterInfo character_info = 2;
+}
+
+message CharacterDieNoti {
+    int64 object_id = 1;
+}
+
+message CharacterReviveNoti {
+    int64 object_id = 1;
+    bool from_dead_place = 2;
+}
+
+message StopSkillNoti {
+    int64 object_id = 1;
+}
+
+message BuilderCommandRes {
+    string msg = 1;
+}
+
+message DebugDrawLineNoti {
+    Shared.NetVector start = 1;
+    Shared.NetVector end = 2;
+    uint32 color = 3;
+    uint32 duration = 4;
+}
+
+message DebugDrawSphereNoti {
+    Shared.NetVector center = 1;
+    float radius = 2;
+    uint32 color = 3;
+    uint32 duration = 4;
+}
+
+message DebugDrawBoxNoti {
+    Shared.NetVector center = 1;
+    Shared.NetVector half_extent = 2;
+    uint32 color = 3;
+    uint32 duration = 4;
+}
+
+message DrawMultiTargetTimedObjectRange {
+    Shared.NetVector center = 1;
+    Shared.NetVector half_extent = 2;
+    float radius = 3;
+    float yaw = 4;
+    uint32 color = 5;
+    uint32 duration = 6;
+}
+
+message CharacterLevelExpNoti {
+    int64 object_id = 1;
+    int32 level = 2;
+    int64 exp = 3;
+    int64 max_exp = 4;
+    WS2CProtocolHelper.ExpDiff exp_diff = 5;
+    int32 high_level = 6;
+}
+
+message CancelSkillByMoveNoti {
+    int64 object_id = 1;
+    int32 skill_id = 2;
+}
+
+message SpawnInteractiveObjectNoti {
+    int64 object_id = 1;
+    int32 template_id = 2;
+    Shared.NetVector spawn_pos = 3;
+    float yaw = 4;
+    int32 remain_count = 5;
+    bool brand_new = 6;
+}
+
+message ChangeInteractiveObjectCountNoti {
+    int64 object_id = 1;
+    int32 count = 2;
+}
+
+message DespawnInteractiveObjectNoti {
+    int64 object_id = 1;
+    bool destroyed = 2;
+}
+
+message StartInteractionNoti {
+    Shared.EErrorType result = 1;
+    int64 object_id = 2;
+    int64 target_id = 3;
+    Shared.NetVector target_position = 4;
+    int32 template_id = 5;
+    int64 elapsed = 6;
+    
+    oneof SubType {
+        Shared.GuildMemberBriefInfo guildInfo = 7;
+    }
+}
+
+message EndInteractionNoti {
+    Shared.EErrorType result = 1;
+    int64 object_id = 2;
+}
+
+message SpawnCoreAltarObjectNoti {
+    int64 object_id = 1;
+    int32 template_id = 2;
+    Shared.NetVector spawn_pos = 3;
+    float yaw = 4;
+    Shared.ECoreAltarState state = 6;
+    int32 activated_effect_passive_id = 7;
+}
+
+message ChangeCoreAltarObjectStateNoti {
+    int64 object_id = 1;
+    int32 core_altar_id = 2;
+    Shared.ECoreAltarState state = 3;
+    int32 activated_effect_passive_id = 4;
+}
+
+message DespawnCoreAltarObjectNoti {
+    int64 object_id = 1;
+}
+
+message SkillCooltimeListNoti {
+    repeated WS2CProtocolHelper.SkillCoolTime cool_times = 1;
+    repeated WS2CProtocolHelper.SkillGroupCoolTime group_cool_times = 2;
+}
+
+message DebugNpcInfoNoti {
+    int64 object_id = 1;
+    string ai_state_name = 2;
+    string ai_task_name = 3;
+    WS2CProtocolHelper.DebugCombatAiDecision combat_ai_decision = 4;
+    repeated WS2CProtocolHelper.DebugObjectScore aggro_data = 5;
+    repeated WS2CProtocolHelper.DebugObjectScore contribution_data = 6;
+}
+
+message DebugPongRes {
+    int32 connection_count = 1;
+}
+
+message AccountStorageInfoNoti {
+    bool is_initial = 1;
+    int32 storage_size = 2;
+    map<int64, Shared.ItemInfo> items = 3;
+    repeated int64 removed_items = 4;
+    int32 filled_slot_count = 5;
+}
+
+message AccountStorageUseRes {
+    Shared.EErrorType result = 1;
+}
+
+message ExpandAccountStorageRes {
+    Shared.EErrorType result = 1;
+}
+
+message ExpandInventorySizeRes {
+    Shared.EErrorType result = 1;
+}
+
+message UseUsableItemRes {
+    Shared.EErrorType result = 1;
+    int64 db_id = 2;
+}
+
+message UseItemBoxRes {
+    Shared.EErrorType result = 1;
+    int32 used_box_template_id = 2;
+    repeated Shared.ItemBaseInfo created_item_list = 3;
+    int64 requested_use_amount = 4;
+    int64 used_amount = 5;
+}
+
+message UseSelectionBoxRes {
+    Shared.EErrorType result = 1;
+    repeated Shared.ItemBaseInfo created_item_list = 2;
+    int64 requested_use_amount = 3;
+    int64 used_amount = 4;
+}
+
+message UsableItemUsedNoti {
+    int64 pc_object_id = 1;
+    int32 item_template_id = 2;
+}
+
+message CoolTimeNoti {
+    WS2CProtocolHelper.CoolTimeInfo cooltime_info = 1;
+}
+
+message EquippingStatusInfoNoti {
+    repeated WS2CProtocolHelper.EquipSlotInfo equip_slots = 1;
+}
+
+message EquippingStatusInfoOtherNoti {
+    int64 object_id = 1;
+    repeated WS2CProtocolHelper.EquipSlotInfoOther equip_slots = 2;
+}
+
+message SpawnDropItemObjectNoti {
+    int64 object_id = 1;
+    Shared.EItemType item_type = 2;
+    int32 template_id = 3;
+    Shared.NetVector spawn_pos = 4;
+    float yaw = 5;
+    int32 count = 6;
+    int64 priority_pc = 7;
+    int64 expire_time = 8;
+}
+
+message DespawnDropItemObjectNoti {
+    int64 object_id = 1;
+}
+
+message LootingRes {
+    Shared.EErrorType result = 1;
+    int64 object_id = 2;
+}
+
+message RewardNoti {
+    WS2CProtocolHelper.ExpDiff exp_diff = 1;
+    repeated Shared.ItemBaseInfo item_list = 2;
+    int64 bonus_exp = 3;
+    int64 bonus_gold = 4;
+    int64 npc_object_id = 5;
+}
+
+message StartSkillRes {
+    Shared.EErrorType result = 1;
+    WS2CProtocolHelper.SkillActionInfo info = 2;
+}
+
+message ReservedSkillNoti {
+    Shared.EErrorType result = 1;
+    int32 skill_id = 2;
+    bool is_auto_attack = 3;
+}
+
+message CancelReservedSkillNoti {
+    int32 skill_id = 1;
+}
+
+message DebugRewardGroupSimulationRes {
+    string message = 1;
+}
+
+message SpawnTimedObjectNoti {
+    WS2CProtocolHelper.TimedObjectState timed_object = 1;
+    Shared.NetVector position = 2;
+    float yaw = 3;
+}
+
+message DespawnTimedObjectNoti {
+    int64 object_id = 1;
+    int64 elapsed = 2;
+}
+
+message NpcTargetUpdateNoti {
+    int64 npc_id = 1;
+    int64 target_id = 2;
+}
+
+message NpcReturnedStartPosNoti {
+    int64 object_id = 1;
+    float yaw = 2;
+}
+
+message DebugViewPosNoti {
+    int64 object_id = 1;
+    Shared.NetVector pos = 2;
+    float yaw = 3;
+}
+
+message DebugBattleEffectNoti {
+    int32 battle_effect_id = 1;
+    Shared.NetVector pos = 2;
+    float yaw = 3;
+}
+
+message LearnNewSkillPackNoti {
+    repeated WS2CProtocolHelper.NewSkillPackInfo learned_skill_pack_list = 1;
+}
+
+message SpawnDestroyableObjectNoti {
+    int64 object_id = 1;
+    int32 template_id = 2;
+    Shared.NetVector spawn_pos = 3;
+    float yaw = 4;
+    int32 remain_hit_count = 5;
+    bool brand_new = 6;
+}
+
+message DespawnDestroyableObjectNoti {
+    int64 object_id = 1;
+    bool destroyed = 2;
+}
+
+message DestroyableObjectStateNoti {
+    int64 target_id = 1;
+    int64 attacker_id = 2;
+    int32 battle_effect_id = 3;
+    int32 remain_hit_count = 4;
+}
+
+message SpawnObstacleObjectNoti {
+    int64 object_id = 1;
+    int32 template_id = 2;
+    Shared.NetVector spawn_pos = 3;
+    float yaw = 4;
+}
+
+message DespawnObstacleObjectNoti {
+    int64 object_id = 1;
+}
+
+message AttachEffectNoti {
+    int64 target_id = 1;
+    int64 caster_id = 2;
+    WS2CProtocolHelper.EffectState effect = 3;
+}
+
+message DetachEffectNoti {
+    int64 target_id = 1;
+    int64 caster_id = 2;
+    int32 effect_template_id = 3;
+}
+
+message EquipRes {
+    Shared.EErrorType result = 1;
+    int64 equipment_id = 2;
+}
+
+message UnequipRes {
+    Shared.EErrorType result = 1;
+    Shared.EEquipmentSlot slot_type = 2;
+}
+
+message BookmarkItemRes {
+    Shared.EErrorType result = 1;
+    int64 dbid = 2;
+    bool bookmark_state = 3;
+    bool is_storage_item = 4;
+}
+
+message EnhanceEquipmentRes {
+    Shared.EErrorType result = 1;
+    Shared.EEquipmentEnhancementResult enhancement_result = 2;
+    int64 equipment_db_id = 3;
+    int32 old_level = 4;
+    bool is_mail_result = 5;
+    repeated Shared.ItemBaseInfo destruction_compensation = 6;
+    int32 used_material_template_id = 7;
+    repeated WS2CProtocolHelper.RewardItemInfo destruction_compensations = 8;
+}
+
+message EnhanceEquipmentManyRes {
+    Shared.EErrorType result = 1;
+    int32 old_level = 2;
+    int32 used_material_template_id = 3;
+    int64 spent_gold = 4;
+    repeated WS2CProtocolHelper.EquipmentEnhancementResult equipment_enhancement_results = 5;
+}
+
+message EquippedWeaponEnhancedNoti {
+    int64 object_id = 1;
+    int32 weapon_enhancement_level = 2;
+}
+
+message EnchantEquipmentRes {
+    Shared.EErrorType result = 1;
+    Shared.ItemInfo equipment_info = 2;
+}
+
+message DeleteItemRes {
+    int64 dbid = 1;
+    int32 amount = 2;
+    Shared.EErrorType result = 3;
+}
+
+message MailListNoti {
+    WS2CProtocolHelper.MailInfoList user_mail_list = 1;
+    WS2CProtocolHelper.MailInfoList character_mail_list = 2;
+    WS2CProtocolHelper.MailReceiptInfoList receipt_mail_list = 3;
+}
+
+message MailTextListNoti {
+    WS2CProtocolHelper.MailInfoList character_mail_text_list = 1;
+    WS2CProtocolHelper.MailInfoList guild_mail_text_list = 2;
+}
+
+message NewMailNoti {
+    Shared.EMailType type_ = 1;
+    bool oldest = 2;
+    int32 mail_total_count = 3;
+    WS2CProtocolHelper.MailInfo mail = 4;
+}
+
+message NewMailListNoti {
+    repeated WS2CProtocolHelper.MailInfo mail_list = 1;
+}
+
+message ReceiveMailAttachmentRes {
+    Shared.EErrorType result = 1;
+    int64 mail_id = 2;
+}
+
+message ReceiveAllMailAttachmentRes {
+    Shared.EErrorType result = 1;
+    Shared.EMailType type_ = 2;
+    repeated int64 receive_mail_ids = 3;
+    WS2CProtocolHelper.MailInfoList mail_list = 4;
+}
+
+message SendMailTextRes {
+    Shared.EErrorType result = 1;
+    int32 mail_text_send_count = 2;
+}
+
+message ReadMailTextRes {
+    Shared.EErrorType result = 1;
+    int64 mail_id = 2;
+    Shared.EMailType type_ = 3;
+}
+
+message LockMailTextRes {
+    Shared.EErrorType result = 1;
+    int64 mail_id = 2;
+    Shared.EMailType type_ = 3;
+    bool is_lock = 4;
+}
+
+message DeleteMailTextRes {
+    Shared.EErrorType result = 1;
+    int64 mail_id = 2;
+    Shared.EMailType type_ = 3;
+}
+
+message DeleteAllMailTextRes {
+    Shared.EErrorType result = 1;
+    repeated int64 mail_id_list = 2;
+    Shared.EMailType type_ = 3;
+}
+
+message MailTextSendCountRes {
+    int32 mail_text_send_count = 1;
+}
+
+message VerifyServerDependentDataRes {
+    Shared.EServerDependentDataType type_ = 1;
+    Shared.EErrorType result = 2;
+}
+
+message ServerDependentDataRes {
+    WS2CProtocolHelper.ServerDependentDataInfo data = 1;
+}
+
+message PurchaseNpcShopGoodsRes {
+    Shared.EErrorType result = 1;
+    int32 goods_id = 2;
+    repeated Shared.ItemBaseInfo item_list = 3;
+    int32 total_siege_tax_rate = 4;
+}
+
+message PurchaseCashShopGeneralGoodsRes {
+    Shared.EErrorType result = 1;
+    int32 goods_id = 2;
+    int32 slot = 3;
+    int32 mileage = 4;
+    repeated Shared.ItemBaseInfo item_list = 5;
+}
+
+message PurchaseCashShopCashGoodsRes {
+    Shared.EErrorType result = 1;
+    int32 goods_id = 2;
+    WS2CProtocolHelper.InboxGoodsInfo inbox_goods = 3;
+    string external_id = 4;
+    string payload = 5;
+}
+
+message CheckConditionCashGoodsRes {
+    Shared.EErrorType result = 1;
+    int32 goods_id = 2;
+    string external_id = 3;
+    repeated Shared.KeyValueData payload = 4;
+}
+
+message PurchaseCashGoodsVerifyRes {
+    Shared.EErrorType result = 1;
+    int32 goods_id = 2;
+    WS2CProtocolHelper.InboxGoodsInfo inbox_goods = 3;
+    int32 target_realm_id = 4;
+}
+
+message PurchaseCashGoodsInShopModeNoti {
+    int32 goods_id = 1;
+    WS2CProtocolHelper.InboxGoodsInfo inbox_goods = 2;
+    WS2CProtocolHelper.CashShopGoodsPurchaseRestrictionInfo purchase_restriction = 3;
+}
+
+message InboxGoodsInfoListRes {
+    repeated WS2CProtocolHelper.InboxGoodsInfo inbox_goods_list = 1;
+    repeated WS2CProtocolHelper.InboxGoodsReceivedHitoryInfo inbox_goods_received_hitory_list = 2;
+}
+
+message CashShopGoodsPurchaseRestrictionUpdateNoti {
+    WS2CProtocolHelper.CashShopGoodsPurchaseRestrictionInfo purchase_restriction = 1;
+}
+
+message NpcShopGoodsPurchaseRestrictionUpdateNoti {
+    WS2CProtocolHelper.NpcShopGoodsPurchaseRestrictionInfo purchase_restriction = 1;
+}
+
+message SellItemRes {
+    Shared.EErrorType result = 1;
+    int64 acquisition_gold = 2;
+}
+
+message ShowSpeechBalloonNoti {
+    int64 target_id = 1;
+    int32 speech_balloon_template_id = 2;
+}
+
+message ShowEventDialogNoti {
+    int32 dialog_template_id = 1;
+}
+
+message FactionChangedNoti {
+    int64 target_id = 1;
+    int32 faction_template_id = 2;
+}
+
+message MotionChangedNoti {
+    int64 target_id = 1;
+    int32 social_montage_template_id = 2;
+}
+
+message HpUpdateNoti {
+    int64 object_id = 1;
+    int64 hp = 2;
+    int64 regen_value = 3;
+}
+
+message MyHpUpdateNoti {
+    int64 hp = 1;
+}
+
+message MyVacuityPointUpdateNoti {
+    int64 point = 1;
+}
+
+message MaxHpUpdateNoti {
+    int64 object_id = 1;
+    int64 max_hp = 2;
+}
+
+message MpUpdateNoti {
+    int64 object_id = 1;
+    int64 mp = 2;
+}
+
+message MaxMpUpdateNoti {
+    int64 object_id = 1;
+    int64 max_mp = 2;
+}
+
+message IsBattleAttitudeUpdateNoti {
+    int64 object_id = 1;
+    bool is_battle_attitude = 2;
+}
+
+message NpcEnterZoneNoti {
+    int64 object_id = 1;
+    Shared.NetVector position = 2;
+    float yaw = 3;
+    int32 char_script_idx = 4;
+    int64 max_hp = 5;
+    int64 hp = 6;
+    Shared.NetVector velocity = 7;
+    bool brand_new = 8;
+    repeated WS2CProtocolHelper.CharacterState state_list = 9;
+    bool is_character_dead = 10;
+    bool is_battle_attitude = 11;
+    int32 social_montage_template_id = 12;
+    WS2CProtocolHelper.NpcSpawnAction spawn_action = 13;
+    bool cast_shadow = 14;
+    int64 current_phase = 15;
+}
+
+message NpcChangePhaseNoti {
+    int64 object_id = 1;
+    int32 phase = 2;
+}
+
+message NpcSpawnActionBeginNoti {
+    int64 object_id = 1;
+    int32 elapsed = 2;
+}
+
+message CharacterApperanceChangedNoti {
+    int64 object_id = 1;
+    int32 character_apperance_change_template_id = 2;
+}
+
+message EnvironmentChangedNoti {
+    int32 environment_change_template_id = 1;
+}
+
+message HeatUpdateNoti {
+    int64 object_id = 1;
+    int64 heat = 2;
+}
+
+message StatusEffectResistNoti {
+    int64 object_id = 1;
+    int64 caster_id = 2;
+    Shared.EStatusEffect resisted_status_effect = 3;
+}
+
+message PcEnterWorldNoti {
+    repeated Shared.ItemInfo items = 1;
+    WS2CProtocolHelper.InventoryStatusInfo inventory_status = 2;
+    bool is_exist_goods_in_cash_goods_in_box = 3;
+    WS2CProtocolHelper.PvpInfo pvp_info = 4;
+    int32 last_pet_template_id = 5;
+    WS2CProtocolHelper.QuestInfo main_quest = 7;
+    repeated WS2CProtocolHelper.QuestInfo tutorial_quest_list = 8;
+    repeated WS2CProtocolHelper.TeleportBookmark teleport_bookmark_list = 9;
+    repeated Shared.ChangeableRewardInfo changeable_reward_list = 10;
+    repeated WS2CProtocolHelper.FieldDungeonInfo field_dungeon_infos = 11;
+    repeated WS2CProtocolHelper.AchievementInfo achievements = 12;
+    repeated WS2CProtocolHelper.MissionTotalInfo mission_total_infos = 13;
+    bool is_exist_sold_item = 14;
+    WS2CProtocolHelper.AttendanceInfo attendance = 16;
+    repeated WS2CProtocolHelper.ContentActivationInfo content_activation_infos = 17;
+    repeated WS2CProtocolHelper.AttendanceInfo attendance_infos = 19;
+    repeated WS2CProtocolHelper.LevelRewardInfo level_reward_infos = 20;
+    repeated WS2CProtocolHelper.EventMissionInfo mission_infos = 21;
+    repeated WS2CProtocolHelper.LoginBonusInfo login_bonus_infos = 22;
+    Shared.EEventTargetUserType event_user_type = 23;
+    int64 time_to_general_user = 24;
+    bool anonymous_item_broadcast = 26;
+    repeated WS2CProtocolHelper.ChatBlockInfo chat_block_infos = 27;
+    int64 lost_item_last_expiration_time = 28;
+    WS2CProtocolHelper.PcDeathPenaltyInfo death_penalty_info = 29;
+    Shared.GuildMemberBriefInfo guild_info = 30;
+    repeated WS2CProtocolHelper.ItemCollectionInfo item_collection_infos = 31;
+    int32 realm_id = 32;
+    repeated Shared.HotTimeInfo hot_time_schedules = 34;
+    Shared.PcGuildQuestInfo guild_quest_info = 35;
+    Shared.EItemGradeType field_drop_equipment_grade_restrict = 36;
+    repeated WS2CProtocolHelper.MergingEqualGradeCountInfo merging_equal_grade_count_infos = 37;
+    repeated WS2CProtocolHelper.Preset presets = 38;
+    int32 base_character_class_template_id = 39;
+    bytes quick_slot_user_config = 40;
+    repeated WS2CProtocolHelper.QuestInfo daily_quest_list = 41;
+    repeated WS2CProtocolHelper.ScrollQuestInfo scroll_quest_list = 42;
+    int32 available_preset_count = 43;
+    int32 current_preset_index = 44;
+    repeated Shared.ClientConfigInfo character_config_hash_list = 45;
+    repeated Shared.CraftRestrictionInfo craft_restriction_infos = 46;
+    repeated Shared.RuleSelectorActiveRuleInfo rule_selector_active_rule_list = 47;
+    AccountStorageInfoNoti account_storage_info_noti = 48;
+    WS2CProtocolHelper.SeasonPassInfo season_pass_info = 49;
+    repeated WS2CProtocolHelper.SeasonPassMissionInfo season_pass_mission_info_list = 50;
+}
+
+message PcEnterZoneNoti {
+    int64 object_id = 1;
+    string display_name = 2;
+    Shared.NetVector position = 3;
+    float yaw = 4;
+    int32 char_script_idx = 5;
+    int64 move_speed_rate = 6;
+    int32 sub_zone_id = 7;
+    Shared.NetVector velocity = 8;
+    repeated WS2CProtocolHelper.CharacterState state_list = 9;
+    bool is_character_dead = 10;
+    bool is_battle_attitude = 11;
+    Shared.EPropensityType propensity_type = 12;
+    int64 violence_mode_remain_time = 13;
+    int64 attacker_mark_remain_time = 14;
+    int64 murderer_mark_remain_time = 15;
+    Shared.GuildMemberBriefInfo guild_info = 16;
+    int32 realm_id = 17;
+    bool privileged_user = 18;
+    bool apply_enter_effect = 19;
+    int32 pet_id = 20;
+    Shared.EMannerMode manner_mode_index = 21;
+    int32 weapon_template_id = 22;
+    int32 weapon_enhancement_level = 23;
+    Shared.EVacuityMode vacuity_mode = 24;
+    int32 vacuity_level = 25;
+}
+
+message MyPcEnterZoneNoti {
+    int64 object_id = 1;
+    string display_name = 2;
+    int32 level = 3;
+    Shared.NetVector position = 4;
+    float yaw = 5;
+    int32 char_script_idx = 6;
+    int32 stat_id = 7;
+    bool active_siege_exist = 8;
+    WS2CProtocolHelper.CharacterInfo pc_info = 9;
+    int64 max_exp = 10;
+    int64 exp = 11;
+    repeated WS2CProtocolHelper.EquipSlotInfo equip_slots = 12;
+    repeated WS2CProtocolHelper.CoolTimeInfo cooltimes = 13;
+    repeated WS2CProtocolHelper.SkillCoolTime skill_cool_times = 14;
+    repeated WS2CProtocolHelper.SkillPackInfo skill_pack_list = 15;
+    repeated WS2CProtocolHelper.CharacterState state_list = 16;
+    bool is_character_dead = 17;
+    bool is_battle_attitude = 18;
+    int32 high_level = 19;
+    Shared.GuildMemberBriefInfo guild_info = 20;
+    repeated int32 account_feature_activations = 21;
+    int32 channel_id = 22;
+    int32 realm_id = 23;
+    WS2CProtocolHelper.PcRankingInfo ranking_info = 24;
+    bool privileged_user = 25;
+    repeated WS2CProtocolHelper.SkillGroupCoolTime skill_group_cool_times = 26;
+    WS2CProtocolHelper.VacuityInfo vacuity_info = 27;
+    repeated WS2CProtocolHelper.RuneInfo rune_list = 28;
+    repeated WS2CProtocolHelper.RuneBonusInfo rune_bonus_list = 29;
+    bool area_skill_attack_pc = 30;
+    int32 mail_text_send_count = 31;
+    int64 siege_opened_time = 32;
+    int32 total_siege_tax_rate = 33;
+}
+
+message SubzoneChangedNoti {
+    int64 object_id = 1;
+    int32 subzone_id = 2;
+}
+
+message CashShopGoodsPurchaseRestrictionInfoRes {
+    repeated WS2CProtocolHelper.CashShopGoodsPurchaseRestrictionInfo cash_shop_goods_purchase_restriction_list = 1;
+}
+
+message NpcShopGoodsPurchaseRestrictionInfoRes {
+    repeated WS2CProtocolHelper.NpcShopGoodsPurchaseRestrictionInfo npc_shop_goods_purchase_restriction_list = 1;
+}
+
+message SiegeShopGoodsPurchaseRestrictionInfoRes {
+    repeated WS2CProtocolHelper.SiegeShopGoodsPurchaseRestrictionInfo siege_shop_goods_purchase_restriction_list = 1;
+}
+
+message SiegeShopGoodsPurchaseRestrictionUpdateNoti {
+    WS2CProtocolHelper.SiegeShopGoodsPurchaseRestrictionInfo purchase_restriction = 1;
+}
+
+message PcChangeGuildNoti {
+    int64 object_id = 1;
+    int64 guild_id = 2;
+    string guild_name = 3;
+    int32 guild_emblem = 4;
+    int64 union_id = 5;
+}
+
+message PcGuildEmblemChangeNoti {
+    int64 object_id = 1;
+    int32 guild_emblem = 2;
+}
+
+message BossRewardNoti {
+    int32 npc_template_id = 1;
+    repeated WS2CProtocolHelper.BossRewardPcInfo pc_rewards = 2;
+    int32 my_rank = 3;
+    repeated WS2CProtocolHelper.RewardItemInfo my_rank_reward = 4;
+    repeated WS2CProtocolHelper.RewardItemInfo my_participation_reward = 5;
+    Shared.EErrorType result = 6;
+    int32 guild_exp = 7;
+    int32 bonus_guild_exp = 8;
+    repeated WS2CProtocolHelper.RewardItemInfo occupier_realm_reward = 9;
+}
+
+message WarpRes {
+    Shared.EErrorType result = 1;
+    Shared.EWarpReason warp_reason = 2;
+    bool change_zone = 3;
+    int32 dest_map_id = 4;
+    Shared.WarpResParam warp_res_param = 5;
+}
+
+message InZoneWarpFinishedRes {
+    
+}
+
+message ChangedItemNoti {
+    repeated Shared.ItemInfo infos = 1;
+    repeated int64 removed_db_ids = 2;
+    repeated WS2CProtocolHelper.ItemTypeAndTemplateIdPair removed_template_ids = 3;
+}
+
+message InventoryStatusNoti {
+    WS2CProtocolHelper.InventoryStatusInfo info = 1;
+}
+
+message ReceiveInboxGoodsRes {
+    Shared.EErrorType result = 1;
+    int64 id = 2;
+    repeated Shared.ItemBaseInfo acquisition_list = 3;
+}
+
+message ReceiveInboxAllGoodsRes {
+    Shared.EErrorType result = 1;
+    repeated Shared.ItemBaseInfo acquisition_list = 2;
+    repeated WS2CProtocolHelper.InboxGoodsInfo remain_list = 3;
+    repeated WS2CProtocolHelper.InboxGoodsReceivedHitoryInfo receivedlist = 4;
+}
+
+message LoadClientConfigRes {
+    Shared.EErrorType result = 1;
+    repeated Shared.ClientConfigInfo config_info_list = 2;
+}
+
+message ChangeMannerModeNoti {
+    int64 object_id = 1;
+    Shared.EMannerMode manner_mode_index = 2;
+}
+
+message GuildFullDataNoti {
+    Shared.GuildBasisInfo info = 1;
+    repeated WS2CProtocolHelper.GuildMemberInfo member_list = 2;
+    repeated Shared.GuildInvitationInfo invitations = 3;
+    Shared.EGuildJoinByType join_by = 4;
+    int64 my_last_attendance_date = 5;
+    int64 my_last_attendance_reward_date = 6;
+    int64 next_enemy_refresh_time = 7;
+    repeated Shared.GuildEnemyInfo enemy_list = 8;
+    int32 rank = 9;
+    Shared.GuildDungeonStateInfo dungeon_state_info = 10;
+    repeated Shared.GuildDungeonInfo dungeons = 11;
+    WS2CProtocolHelper.GuildDungeonActiveInfo dungeon_active_info = 12;
+    WS2CProtocolHelper.GuildQuestDailyRewardCountInfo quest_daily_reward_info = 13;
+    repeated int32 guild_buff_list = 14;
+    Shared.GuildUnionInfo union_info = 15;
+    repeated Shared.GuildUnionRecvInvitationInfo union_invitation_list = 16;
+    int64 azit_expire_time = 17;
+}
+
+message GuildUnenteredUserNoti {
+    repeated Shared.GuildMemberInvitationInfo invitation_list = 2;
+}
+
+message GuildMemberJoinNoti {
+    WS2CProtocolHelper.GuildMemberInfo member = 1;
+}
+
+message GuildMemberLeaveNoti {
+    int64 member_id = 1;
+    Shared.EGuildLeaveType leave_type = 2;
+}
+
+message GuildOutNoti {
+    string guild_name = 1;
+    Shared.EGuildLeaveType leave_type = 2;
+    string actor_name = 3;
+}
+
+message GuildMemberNewInvitationNoti {
+    Shared.GuildMemberInvitationInfo invitation = 1;
+}
+
+message GuildMemberRemoveInvitationNoti {
+    int64 invitation_id = 1;
+    Shared.EGuildInvitationRemoveType remove_type = 2;
+}
+
+message GuildNewInviteeNoti {
+    Shared.GuildInvitationInfo invitation = 1;
+}
+
+message GuildRemoveInviteeNoti {
+    int64 invitation_id = 1;
+    Shared.EGuildInvitationRemoveType remove_type = 2;
+}
+
+message GuildIntroductionUpdateNoti {
+    string introduction = 1;
+}
+
+message GuildNoticeUpdateNoti {
+    string notice = 1;
+}
+
+message GuildJoinTypeUpdateNoti {
+    Shared.EGuildJoinType join_type = 1;
+}
+
+message GuildMemberIntroductionUpdateNoti {
+    int64 member_id = 1;
+    string introduction = 2;
+}
+
+message GuildMemberPositionUpdateNoti {
+    int64 member_id = 1;
+    Shared.EPositionInGuild position = 2;
+}
+
+message GuildMemberLevelUpdateNoti {
+    int64 member_id = 1;
+    int32 level = 2;
+}
+
+message GuildMemberPcNameUpdateNoti {
+    int64 member_id = 1;
+    string pc_name = 2;
+}
+
+message GuildMemberOnlineUpdateNoti {
+    int64 member_id = 1;
+    int64 logout_date = 2;
+    bool online = 3;
+}
+
+message GuildMemberDonationUpdateNoti {
+    int64 member_id = 1;
+    WS2CProtocolHelper.GuildDonationInfo donation_info = 2;
+}
+
+message GuildMemberContributionUpdateNoti {
+    int64 member_id = 1;
+    int64 total_contribution_point = 2;
+    int64 weekly_contribution_point = 3;
+    int64 last_contribution_date = 4;
+}
+
+message GuildJoinRequesterOnlineUpdateNoti {
+    int64 requester_id = 1;
+    int64 logout_date = 2;
+    bool online = 3;
+}
+
+message GuildLevelExpNoti {
+    int32 level = 1;
+    int64 exp = 2;
+}
+
+message JoinGuildRes {
+    Shared.EErrorType result = 1;
+}
+
+message CancelJoinGuildRes {
+    Shared.EErrorType result = 1;
+    int64 invitation_id = 2;
+}
+
+message AcceptGuildInvitationRes {
+    Shared.EErrorType result = 1;
+}
+
+message CancelInviteGuildMemberRes {
+    Shared.EErrorType result = 1;
+    int64 invitation_id = 2;
+}
+
+message GuildRecommendListRes {
+    Shared.EErrorType result = 1;
+    repeated Shared.GuildSummaryInfo latests = 2;
+    repeated Shared.GuildSummaryInfo recommends = 3;
+    repeated Shared.GuildSummaryInfo guild_list = 4;
+}
+
+message SearchGuildRes {
+    Shared.EErrorType result = 1;
+    repeated Shared.GuildSummaryInfo guild_list = 2;
+}
+
+message CreateGuildRes {
+    Shared.EErrorType result = 1;
+}
+
+message UpdateGuildJoinTypeRes {
+    Shared.EErrorType result = 1;
+    Shared.EGuildJoinType type_ = 2;
+}
+
+message UpdateGuildNoticeRes {
+    Shared.EErrorType result = 1;
+}
+
+message UpdateGuildIntroductionRes {
+    Shared.EErrorType result = 1;
+}
+
+message UpdateGuildMemberIntroductionRes {
+    Shared.EErrorType result = 1;
+}
+
+message LeaveGuildRes {
+    Shared.EErrorType result = 1;
+}
+
+message DisbandGuildRes {
+    Shared.EErrorType result = 1;
+}
+
+message BanishmentGuildMemberRes {
+    Shared.EErrorType result = 1;
+    int64 target_pc_id = 2;
+}
+
+message ChangeGuildMemberPositionRes {
+    Shared.EErrorType result = 1;
+    int64 target_pc_id = 2;
+    Shared.EPositionInGuild position = 3;
+}
+
+message EntrustGuildMasterRes {
+    Shared.EErrorType result = 1;
+}
+
+message GuildEntrustMasterNoti {
+    int64 old_master_pc_id = 1;
+    int64 new_master_pc_id = 2;
+}
+
+message DonateGuildRes {
+    Shared.EErrorType result = 1;
+    int32 donation_template_id = 2;
+}
+
+message InviteGuildMemberRes {
+    Shared.EErrorType result = 1;
+    string target_pc_name = 2;
+}
+
+message ApproveJoinGuildRes {
+    Shared.EErrorType result = 1;
+    int64 invitation_id = 2;
+}
+
+message RejectJoinGuildRes {
+    Shared.EErrorType result = 1;
+    int64 invitation_id = 2;
+}
+
+message ApproveAllJoinGuildRes {
+    Shared.EErrorType result = 1;
+}
+
+message RejectAllJoinGuildRes {
+    Shared.EErrorType result = 1;
+}
+
+message ChangeGuildEmblemRes {
+    Shared.EErrorType result = 1;
+}
+
+message GuildAttendanceRes {
+    Shared.EErrorType result = 1;
+    int32 attendants_count = 2;
+    int64 my_last_attendance_date = 3;
+}
+
+message GuildAttendanceRewardRes {
+    Shared.EErrorType result = 1;
+    int32 attendance_template_id = 2;
+    int64 my_last_attendance_reward_date = 3;
+}
+
+message GuildAttendanceUpdateNoti {
+    Shared.GuildAttendanceInfo attendance_info = 1;
+}
+
+message GuildAddEnemyRes {
+    Shared.EErrorType result = 1;
+}
+
+message GuildRemoveEnemyRes {
+    Shared.EErrorType result = 1;
+}
+
+message GuildRefreshEnemyListRes {
+    Shared.EErrorType result = 1;
+    int64 next_refresh_time = 2;
+    repeated Shared.GuildEnemyInfo enemy_list = 3;
+}
+
+message GuildAddEnemyNoti {
+    Shared.GuildEnemyInfo guild_info = 1;
+}
+
+message GuildRemoveEnemyNoti {
+    int64 enemy_guild_id = 1;
+}
+
+message GuildUnionCreateRes {
+    Shared.EErrorType result = 1;
+}
+
+message GuildUnionDestroyRes {
+    Shared.EErrorType result = 1;
+}
+
+message GuildUnionInviteRes {
+    Shared.EErrorType result = 1;
+}
+
+message GuildUnionCancelInvitationRes {
+    Shared.EErrorType result = 1;
+}
+
+message GuildJoinGuildUnionNoti {
+    Shared.GuildUnionInfo info = 2;
+    bool by_creation = 3;
+}
+
+message GuildLeaveGuildUnionNoti {
+    Shared.EGuildUnionLeaveReason reason = 1;
+}
+
+message GuildUnionAcceptInvitationRes {
+    Shared.EErrorType result = 1;
+}
+
+message GuildUnionRejectInvitationRes {
+    Shared.EErrorType result = 1;
+}
+
+message GuildUnionBanishRes {
+    Shared.EErrorType result = 1;
+}
+
+message GuildUnionLeaveRes {
+    Shared.EErrorType result = 1;
+}
+
+message GuildUnionUpdateNoticeRes {
+    Shared.EErrorType result = 1;
+}
+
+message GuildUnionUpdateNoticeNoti {
+    string message = 1;
+}
+
+message GuildUnionDelegateRes {
+    Shared.EErrorType result = 1;
+}
+
+message GuildUnionDelegateNoti {
+    int64 leader_guild_id = 1;
+}
+
+message GuildUnionAddMemberNoti {
+    Shared.GuildUnionMemberInfo member_info = 1;
+}
+
+message GuildUnionRemoveMemberNoti {
+    int64 guild_id = 1;
+    Shared.EGuildUnionLeaveReason reason = 2;
+}
+
+message GuildUnionUpdateMemberNoti_ {
+    Shared.GuildUnionMemberInfo info = 1;
+}
+
+message GuildUnionAddInvitationNoti {
+    Shared.GuildUnionSendInvitationInfo info = 1;
+}
+
+message GuildUnionRemoveInvitationNoti {
+    int64 guild_id = 1;
+}
+
+message GuildUnionUpdateInvitationNoti {
+    Shared.GuildUnionSendInvitationInfo info = 1;
+}
+
+message GuildAddGuildUnionInvitationNoti {
+    Shared.GuildUnionRecvInvitationInfo info = 1;
+}
+
+message GuildRemoveGuildUnionInvitationNoti {
+    int64 union_id = 1;
+}
+
+message GuildUpdateGuildUnionInvitationNoti {
+    Shared.GuildUnionRecvInvitationInfo info = 1;
+}
+
+message GuildDungeonCreateRes {
+    Shared.EErrorType result = 1;
+}
+
+message GuildDungeonChargingRes {
+    Shared.EErrorType result = 1;
+}
+
+message GuildDungeonChargingNoti {
+    string pc_name = 1;
+    Shared.GuildDungeonStateInfo state_info = 2;
+}
+
+message GuildDungeonCreateNoti {
+    Shared.GuildDungeonStateInfo state_info = 1;
+    WS2CProtocolHelper.GuildDungeonActiveInfo active_info = 2;
+}
+
+message GuildDungeonClearNoti {
+    Shared.GuildDungeonInfo dungeon_info = 1;
+    Shared.GuildDungeonStateInfo state_info = 2;
+}
+
+message GuildDungeonCloseNoti {
+    Shared.GuildDungeonStateInfo state_info = 1;
+}
+
+message GuildDungeonEnterNoti {
+    int32 user_count = 1;
+}
+
+message GuildDungeonLeaveNoti {
+    
+}
+
+message GuildAzitRentalRes {
+    Shared.EErrorType result = 1;
+}
+
+message GuildAzitRentalNoti {
+    int64 expire_time = 1;
+}
+
+message QuestStepRateConditionFailedNoti {
+    int32 quest_step_id = 1;
+}
+
+message AcceptMainQuestRes {
+    Shared.EErrorType result = 1;
+    WS2CProtocolHelper.QuestInfo quest_info = 2;
+}
+
+message UpdatedMainQuestNoti {
+    WS2CProtocolHelper.QuestInfo quest_info = 1;
+}
+
+message RewardMainQuestRes {
+    Shared.EErrorType result = 1;
+    WS2CProtocolHelper.QuestInfo quest_info = 2;
+    WS2CProtocolHelper.ExpDiff exp_diff = 3;
+}
+
+message AcceptTutorialQuestRes {
+    Shared.EErrorType result = 1;
+    WS2CProtocolHelper.QuestInfo quest_info = 2;
+}
+
+message UpdatedTutorialQuestNoti {
+    WS2CProtocolHelper.QuestInfo quest_info = 1;
+}
+
+message RewardTutorialQuestRes {
+    Shared.EErrorType result = 1;
+    WS2CProtocolHelper.QuestInfo completed_quest_info = 2;
+    WS2CProtocolHelper.QuestInfo next_quest_info = 3;
+    WS2CProtocolHelper.ExpDiff exp_diff = 4;
+}
+
+message GiveUpTutorialQuestRes {
+    Shared.EErrorType result = 1;
+    int32 quest_id = 2;
+}
+
+message AcceptDailyQuestRes {
+    Shared.EErrorType result = 1;
+    WS2CProtocolHelper.QuestInfo quest_info = 2;
+    int32 current_progress_quest_count = 3;
+}
+
+message UpdatedDailyQuestNoti {
+    WS2CProtocolHelper.QuestInfo quest_info = 1;
+}
+
+message RewardDailyQuestRes {
+    Shared.EErrorType result = 1;
+    WS2CProtocolHelper.QuestInfo completed_quest_info = 2;
+    WS2CProtocolHelper.QuestInfo next_quest_info = 3;
+    WS2CProtocolHelper.ExpDiff exp_diff = 4;
+    WS2CProtocolHelper.RewardItemInfo reward_item_info = 5;
+}
+
+message GiveUpDailyQuestRes {
+    Shared.EErrorType result = 1;
+    int32 quest_id = 2;
+    int64 instance_id = 3;
+}
+
+message PublishDailyQuestListRes {
+    Shared.EErrorType result = 1;
+    repeated WS2CProtocolHelper.QuestInfo infos = 2;
+    int32 exchange_remain_count = 3;
+    int32 completed_quest_count = 4;
+    int32 current_progress_quest_count = 5;
+}
+
+message AcceptScrollQuestRes {
+    Shared.EErrorType result = 1;
+    WS2CProtocolHelper.ScrollQuestInfo quest_info = 2;
+}
+
+message UpdatedScrollQuestNoti {
+    WS2CProtocolHelper.QuestInfo quest_info = 1;
+}
+
+message RewardScrollQuestRes {
+    Shared.EErrorType result = 1;
+    WS2CProtocolHelper.QuestInfo completed_quest_info = 2;
+    WS2CProtocolHelper.QuestInfo next_quest_info = 3;
+    WS2CProtocolHelper.ExpDiff exp_diff = 4;
+    WS2CProtocolHelper.RewardItemInfo reward_item_info = 5;
+}
+
+message GiveUpScrollQuestRes {
+    Shared.EErrorType result = 1;
+    int32 quest_id = 2;
+    int64 instance_id = 3;
+}
+
+message ExChangeScrollQuestRes {
+    Shared.EErrorType result = 1;
+    WS2CProtocolHelper.ScrollQuestInfo info = 2;
+}
+
+message PvpInfoNoti {
+    WS2CProtocolHelper.PvpInfo info = 1;
+}
+
+message ChangePropensityValueNoti {
+    int32 propensity_value = 1;
+}
+
+message ChangePropensityTypeNoti {
+    int64 object_id = 1;
+    Shared.EPropensityType type_ = 2;
+}
+
+message PvpOccurrenceNoti {
+    int64 murderer_id = 1;
+    int64 victim_id = 2;
+}
+
+message PvpHistoryRes {
+    repeated WS2CProtocolHelper.PvpHistoryInfo histories = 1;
+}
+
+message NewPvpHistoryNoti {
+    WS2CProtocolHelper.PvpHistoryInfo new_history = 1;
+}
+
+message PvpRevengeSuccessNoti {
+    int32 history_id = 1;
+}
+
+message TrackMurdererRes {
+    Shared.EErrorType result = 1;
+    int32 history_id = 5;
+    int32 remain_tracking_count = 6;
+}
+
+message DerideVictimRes {
+    Shared.EErrorType result = 1;
+    int32 history_id = 2;
+    int32 remain_derision_count = 3;
+}
+
+message BrutalStartNoti {
+    Shared.BrutalData data = 1;
+}
+
+message TrackBrutalRes {
+    Shared.EErrorType result = 1;
+}
+
+message BrutalListRes {
+    Shared.EErrorType result = 1;
+    int64 next_update_time = 2;
+    repeated Shared.BrutalData data = 3;
+}
+
+message MyPcDeridedNoti {
+    string murderer_name = 1;
+}
+
+message GuildMemberDerisionNoti {
+    string murderer_name = 1;
+    string victim_name = 2;
+}
+
+message PartyCreateRes {
+    Shared.EErrorType result = 1;
+}
+
+message PartyCreateAndInviteRes {
+    Shared.EErrorType result = 1;
+}
+
+message PartyDismissRes {
+    Shared.EErrorType result = 1;
+}
+
+message PartyInviteRes {
+    Shared.EErrorType result = 1;
+    string invitee_name = 2;
+}
+
+message PartyInviteNoti {
+    int64 party_id = 1;
+    string invite_character_name = 2;
+    int32 class_template_id = 3;
+}
+
+message PartyCancelInvitationNoti {
+    int64 party_id = 1;
+}
+
+message PartyAcceptInvitationRes {
+    Shared.EErrorType result = 1;
+    int64 party_id = 2;
+}
+
+message PartyCancelInvitationRes {
+    Shared.EErrorType result = 1;
+}
+
+message PartyAddInvitationNoti {
+    WS2CProtocolHelper.PartyInvitationData new_invitation = 1;
+}
+
+message PartyRemoveInvitationNoti {
+    string character_name = 1;
+    Shared.EPartyInvitationRemoveReason reason = 2;
+}
+
+message PartyInfoNoti {
+    repeated WS2CProtocolHelper.PartyMember members = 1;
+    repeated WS2CProtocolHelper.PartyInvitationData invitations = 2;
+    Shared.EPartyInfoSyncReason reason = 4;
+    Shared.EPartyDistributionType party_distribution_type = 5;
+    int32 max_member_count = 6;
+}
+
+message PartyLeaveRes {
+    Shared.EErrorType result = 1;
+}
+
+message PartyOutNoti {
+    Shared.EPartyLeaveReason reason = 1;
+}
+
+message PartyJoinMemberNoti {
+    WS2CProtocolHelper.PartyMember member = 1;
+}
+
+message PartyLeaveMemberNoti {
+    string character_name = 1;
+    Shared.EPartyLeaveReason reason = 2;
+}
+
+message PartyDelegateRes {
+    Shared.EErrorType result = 1;
+}
+
+message PartyChiefChangedNoti {
+    string new_chief_name = 1;
+}
+
+message PartyBanishRes {
+    Shared.EErrorType result = 1;
+}
+
+message PartyMemberUpdateNoti {
+    repeated WS2CProtocolHelper.PartyMember members = 1;
+}
+
+message ShareTargetWithPartyRes {
+    Shared.EErrorType result = 1;
+}
+
+message PartyChiefShareTargetNoti {
+    int64 target_id = 1;
+    bool is_share_target = 2;
+}
+
+message PartyOptionChangedNoti {
+    int64 party_id = 1;
+    Shared.EPartyDistributionType party_distribution_type = 2;
+    int32 max_member_count = 3;
+}
+
+message ChangePartyOptionRes {
+    Shared.EErrorType result = 1;
+}
+
+message ShareScanListWithPartyRes {
+    Shared.EErrorType result = 1;
+}
+
+message ShareScanListWithPartyNoti {
+    repeated Shared.ScanResult scan_result_list = 1;
+}
+
+message AddTeleportBookmarkWithLocationRes {
+    Shared.EErrorType result = 1;
+    WS2CProtocolHelper.TeleportBookmark data = 2;
+}
+
+message ShareLocationWithOthersRes {
+    Shared.EErrorType result = 1;
+}
+
+message CraftRecipeRes {
+    Shared.EErrorType result = 1;
+    repeated Shared.ECraftResult craft_results = 2;
+}
+
+message CraftRestrictionNoti {
+    repeated Shared.CraftRestrictionInfo craft_restriction_infos = 1;
+}
+
+message PetActivateRes {
+    Shared.EErrorType result = 1;
+}
+
+message PetActivateNoti {
+    int64 object_id = 1;
+    int32 template_id = 2;
+}
+
+message PetDeactivateRes {
+    Shared.EErrorType result = 1;
+}
+
+message PetDeactivateNoti {
+    int64 object_id = 1;
+}
+
+message PetSkillActiveNoti {
+    
+}
+
+message ChangeCharacterClassRes {
+    Shared.EErrorType result = 1;
+    int32 target_class_template_id = 2;
+}
+
+message ChangeCharacterClassNoti {
+    int64 object_id = 1;
+    int32 target_class_template_id = 2;
+}
+
+message ChangePresetRes {
+    Shared.EErrorType result = 1;
+}
+
+message ChangePresetNoti {
+    int64 object_id = 1;
+}
+
+message PresetUnlockNoti {
+    int32 preset_unlock_template_id = 1;
+    int32 available_preset_count = 2;
+}
+
+message InventoryPenaltyActiveNoti {
+    int64 object_id = 1;
+}
+
+message InventoryPenaltyInactiveNoti {
+    int64 object_id = 1;
+}
+
+message QuestBuilderStateSyncNoti {
+    repeated WS2CProtocolHelper.QuestInfo quests = 1;
+}
+
+message ChannelListRes {
+    Shared.EErrorType result = 1;
+    repeated Shared.ZoneChannelInfo channels = 2;
+}
+
+message KickedOutFromInterServerFieldNoti {
+    Shared.EMapType map_type = 1;
+}
+
+message ChatFailureNoti {
+    Shared.EErrorType result = 1;
+    Shared.EChatType type_ = 2;
+    Shared.ChatReceiverHint receiver_hint = 3;
+    int32 repeat_block_remain_time = 4;
+    Shared.RestrictionInfo restriction_info = 5;
+}
+
+message ChatNoti {
+    Shared.EChatType type_ = 1;
+    Shared.ChatDetailMessage message = 2;
+    bool is_sender = 3;
+}
+
+message ChatUnreadRes {
+    repeated ChatNoti unreads = 1;
+}
+
+message ChatGuildPrevMessageListRes {
+    Shared.EErrorType result = 1;
+    repeated Shared.ChatDetailMessage messages = 2;
+}
+
+message ChatBlockAddRes {
+    Shared.EErrorType result = 1;
+    WS2CProtocolHelper.ChatBlockInfo block_info = 2;
+}
+
+message ChatBlockRemoveRes {
+    Shared.EErrorType result = 1;
+}
+
+message StartSocialMotionNoti {
+    Shared.EErrorType result = 1;
+    int64 object_id = 2;
+    int32 template_id = 3;
+    int64 elapsed = 4;
+}
+
+message EndSocialMotionNoti {
+    int64 object_id = 1;
+}
+
+message ItemBroadcastNoti {
+    int64 character_id = 1;
+    string character_name = 2;
+    Shared.ItemLink item = 3;
+    Shared.OneOfItemSource source = 4;
+    int32 realm_id = 5;
+}
+
+message ServerDownNoti {
+    
+}
+
+message DecomposeItemRes {
+    Shared.EErrorType result = 1;
+    repeated Shared.ItemBaseInfo created_item_list = 2;
+    int32 removed_item_template_id = 3;
+}
+
+message DecomposeItemManyRes {
+    Shared.EErrorType result = 1;
+    repeated Shared.ItemBaseInfo created_item_list = 2;
+    repeated int32 removed_item_template_ids = 3;
+}
+
+message NormalNoticeNoti {
+    string msg = 1;
+}
+
+message ActiveAccountFeatureActivationNoti {
+    repeated int32 template_ids = 1;
+}
+
+message RankingBoardRes {
+    Shared.EErrorType result = 1;
+    Shared.ERankingType type_ = 2;
+    bool prev = 3;
+    repeated Shared.RankingRecord records = 4;
+    Shared.RankingRecord my_record = 5;
+    int64 next_calculation_remain_time = 6;
+}
+
+message RankingChangedRankNoti {
+    int64 object_id = 1;
+    repeated WS2CProtocolHelper.RankingRankInfo rank_infos = 2;
+}
+
+message RankingGuildBoardRes {
+    Shared.EErrorType result = 1;
+    repeated Shared.RankingGuildRecord records = 2;
+    Shared.RankingGuildRecord my_guild_record = 3;
+}
+
+message MyRankingGuildRes {
+    Shared.EErrorType result = 1;
+    int32 rank = 2;
+}
+
+message AddTeleportBookmarkRes {
+    Shared.EErrorType result = 1;
+    WS2CProtocolHelper.TeleportBookmark data = 2;
+}
+
+message EditTeleportBookmarkRes {
+    Shared.EErrorType result = 1;
+    repeated WS2CProtocolHelper.TeleportBookmark datas = 2;
+}
+
+message RenameTeleportBookmarkRes {
+    Shared.EErrorType result = 1;
+    repeated WS2CProtocolHelper.TeleportBookmark datas = 2;
+}
+
+message ChangeSlotTeleportBookmarkRes {
+    Shared.EErrorType result = 1;
+    repeated WS2CProtocolHelper.TeleportBookmark datas = 2;
+}
+
+message DeleteTeleportBookmarkRes {
+    Shared.EErrorType result = 1;
+    repeated WS2CProtocolHelper.ModifyTeleportBookmark datas = 2;
+}
+
+message UpdateHotTimeNoti {
+    repeated Shared.HotTimeInfo infos = 1;
+}
+
+message HotTimeScheduleListNoti {
+    repeated Shared.HotTimeInfo infos = 1;
+}
+
+message ContentActivationNoti {
+    repeated WS2CProtocolHelper.ContentActivationInfo infos = 1;
+}
+
+message QuestEnvironmentVolumeNoti {
+    int32 id = 1;
+    bool is_on = 2;
+}
+
+message FieldDungeonInfoUpdateNoti {
+    WS2CProtocolHelper.FieldDungeonInfo info = 1;
+    Shared.EFieldDungeonInfoUpdateReason reason = 2;
+}
+
+message FieldDungeonInfoUpdateAllNoti {
+    repeated WS2CProtocolHelper.FieldDungeonInfo infos = 1;
+}
+
+message FieldDungeonRechargingRes {
+    Shared.EErrorType result = 1;
+    WS2CProtocolHelper.FieldDungeonInfo updated_info = 2;
+}
+
+message FieldDungeonStatusListRes {
+    Shared.EErrorType result = 1;
+    repeated Shared.FieldDungeonStatus status_list = 2;
+}
+
+message AchievementUpdateNoti {
+    repeated WS2CProtocolHelper.AchievementInfo infos = 1;
+}
+
+message AchievementRewardRes {
+    Shared.EErrorType result = 1;
+    repeated WS2CProtocolHelper.AchievementInfo achievement_infos = 2;
+}
+
+message TradingStateRes {
+    Shared.EErrorType result = 1;
+    Shared.TradingRestrictionInfo restriction_info = 2;
+}
+
+message OneOfTradingListRes {
+    Shared.EErrorType result = 1;
+    
+    oneof SubType {
+        WS2CProtocolHelper.TradingItemSummaryResponse summary = 2;
+        WS2CProtocolHelper.TradingEquipmentSummaryResponse equipSummary = 3;
+        WS2CProtocolHelper.TradingItemDetailResponse detail = 4;
+    }
+}
+
+message TradingItemRegistRes {
+    Shared.EErrorType result = 1;
+    WS2CProtocolHelper.MyTradingItemInfo my_trading_item = 2;
+}
+
+message TradingItemBuyRes {
+    Shared.EErrorType result = 1;
+    int64 trading_id = 2;
+}
+
+message MyTradingInfoRes {
+    repeated WS2CProtocolHelper.MyTradingItemInfo trading_item_list = 1;
+    repeated WS2CProtocolHelper.MyTradingHistoryInfo history_list = 3;
+    int32 private_trading_selling_count = 5;
+}
+
+message TradingSoldItemNoti {
+    Shared.ETradingType type_ = 1;
+    int64 trading_id = 2;
+    Shared.ItemBaseInfo item = 3;
+    int64 sold_time = 4;
+}
+
+message TradingSoldItemRewardRes {
+    Shared.EErrorType result = 1;
+    repeated int64 trading_id_list = 2;
+    repeated int64 private_trading_id_list = 3;
+    int64 rewarded_currency_count = 4;
+}
+
+message TradingCancelRes {
+    Shared.EErrorType result = 1;
+    int64 trading_id = 2;
+}
+
+message TradingItemPriceInfoRes {
+    WS2CProtocolHelper.TradingItemPriceInfo info = 1;
+}
+
+message PrivateTradingListRes {
+    Shared.EErrorType result = 1;
+    repeated WS2CProtocolHelper.TradingItemDetail item_list = 2;
+    int64 next_display_time = 3;
+}
+
+message PrivateTradingBuyerCheckRes {
+    Shared.EErrorType result = 1;
+    string buyer_name = 2;
+}
+
+message PrivateTradingRefuseRes {
+    Shared.EErrorType result = 1;
+    int64 trading_id = 2;
+}
+
+message PrivateTradingItemDisplayNoti {
+    bool is_private_trading_item = 1;
+    int64 next_display_time = 2;
+}
+
+message PrevMapLocationNoti {
+    Shared.NetVector prev_position = 1;
+    int32 prev_map_id = 2;
+    int32 prev_subzone_id = 3;
+}
+
+message DailyBossPhaseStartNoti {
+    int32 phase_index = 1;
+}
+
+message DailyBossResultNoti {
+    Shared.EDailyBossResult result = 1;
+    int64 auto_exit_time = 2;
+}
+
+message FieldBossActiveListNoti {
+    repeated Shared.ActiveFieldBossInfo info_list = 1;
+}
+
+message FieldBossStartNoti {
+    Shared.ActiveFieldBossInfo info = 1;
+}
+
+message FieldBossEndNoti {
+    int32 field_boss_template_id = 1;
+    int64 start_time = 2;
+}
+
+message RandomBossActiveListRes {
+    repeated Shared.ActiveRandomBossInfo info_list = 1;
+}
+
+message RandomBossActiveListNoti {
+    repeated Shared.ActiveRandomBossInfo info_list = 1;
+}
+
+message RandomBossStartNoti {
+    Shared.ActiveRandomBossInfo info = 1;
+}
+
+message RandomBossResultNoti {
+    int32 random_boss_template_id = 1;
+    int64 start_time = 2;
+    Shared.EZoneChannelType channel_type = 3;
+}
+
+message AttendResetTimeUpdateForDevNoti {
+    int64 next_reset_time = 1;
+}
+
+message LobbyPcSlotCountChagnedNoti {
+    int32 pc_slot_count = 1;
+}
+
+message AttendRes {
+    Shared.EErrorType result = 1;
+    WS2CProtocolHelper.AttendanceInfo info = 2;
+}
+
+message LevelRewardRes {
+    Shared.EErrorType result = 1;
+    WS2CProtocolHelper.LevelRewardInfo info = 2;
+}
+
+message LoginBonusRewardRes {
+    Shared.EErrorType result = 1;
+    WS2CProtocolHelper.LoginBonusInfo info = 2;
+}
+
+message BillingRestoreRes {
+    Shared.EErrorType result = 1;
+}
+
+message RegisterMobileCouponRes {
+    Shared.EErrorType result = 1;
+}
+
+message RegisterPcCouponRes {
+    Shared.EErrorType result = 1;
+}
+
+message SetFieldDropEquipmentGradeRestrictRes {
+    Shared.EErrorType result = 1;
+}
+
+message SetAnonymousItemBroadcastRes {
+    Shared.EErrorType result = 1;
+}
+
+message FriendListNoti {
+    repeated Shared.FriendData friend_datas = 1;
+}
+
+message AddFriendNoti {
+    Shared.FriendData friend_data = 1;
+}
+
+message DeleteFriendNoti {
+    Shared.EFriendType type_ = 1;
+    int64 delete_id = 2;
+}
+
+message FriendInvitationRes {
+    Shared.EErrorType result = 1;
+    Shared.FriendData data = 2;
+}
+
+message CancelFriendInvitationRes {
+    Shared.EErrorType result = 1;
+    int64 invitee_id = 2;
+}
+
+message RefuseFriendInvitationRes {
+    Shared.EErrorType result = 1;
+    int64 inviter_id = 2;
+}
+
+message AcceptInvitationRes {
+    Shared.EErrorType result = 1;
+    Shared.FriendData friend_data = 2;
+}
+
+message DeleteFriendRes {
+    Shared.EErrorType result = 1;
+    int64 friend_id = 2;
+}
+
+message FriendOnlineUpdateNoti {
+    int64 friend_id = 1;
+    int64 logout_time = 2;
+    bool online = 4;
+}
+
+message FriendPcNameUpdateNoti {
+    int64 friend_id = 1;
+    string friend_name = 2;
+}
+
+message AddVigilanceRes {
+    Shared.EErrorType result = 1;
+    Shared.VigilanceData vigilance_data = 2;
+}
+
+message AddAmityRes {
+    Shared.EErrorType result = 1;
+    Shared.AmityData amity_data = 2;
+}
+
+message RemoveVigilanceRes {
+    Shared.EErrorType result = 1;
+}
+
+message RemoveAmityRes {
+    Shared.EErrorType result = 1;
+}
+
+message VigilanceAmityListNoti {
+    repeated Shared.VigilanceData vigilance_list = 1;
+    repeated Shared.AmityData amity_list = 2;
+}
+
+message LoginVigilanceNoti {
+    string vigilance_pc_name = 1;
+}
+
+message LogoutVigilanceNoti {
+    string vigilance_pc_name = 1;
+}
+
+message LoginAmityNoti {
+    string amity_pc_name = 1;
+}
+
+message LogoutAmityNoti {
+    string amity_pc_name = 1;
+}
+
+message ChatReportPcRes {
+    Shared.EErrorType result = 1;
+}
+
+message RemoveAllExpiredItemRes {
+    Shared.EErrorType result = 1;
+}
+
+message PcDeathNoti {
+    WS2CProtocolHelper.CharacterDisplayInfo murderer_info = 1;
+    int32 penalty_debuff_template_id = 2;
+    repeated Shared.LostItemLinks lost_item_list = 3;
+    int32 chaotic_debuff_template_id = 4;
+    int64 exp_loss = 5;
+    Shared.LostExpInfo lost_exp_info = 6;
+    int64 last_death_penalty_expire_time = 7;
+}
+
+message RecoverLostItemRes {
+    Shared.EErrorType result = 1;
+    repeated int64 recovered_item_db_ids = 2;
+}
+
+message RecoverLostExpRes {
+    Shared.EErrorType result = 1;
+    int32 used_free_count = 2;
+    int64 next_free_count_reset_time = 3;
+    repeated int64 recovered_exp_db_ids = 4;
+}
+
+message LostInfoListRes {
+    Shared.EErrorType result = 1;
+    repeated Shared.LostItemLinks lost_item_list = 2;
+    repeated Shared.LostExpInfo lost_exp_list = 3;
+    int32 max_lost_item_count = 4;
+    int32 max_lost_exp_count = 5;
+}
+
+message HeartbeatNoti {
+    WS2CProtocolHelper.ServerTime server_time = 1;
+}
+
+message KickNoti {
+    Shared.EKickType kick_type = 1;
+}
+
+message RegisterItemCollectionRes {
+    Shared.EErrorType result = 1;
+    int32 collection_template_id = 2;
+    int32 collection_item_template_id = 3;
+}
+
+message EmergencyErrorNoti {
+    Shared.EErrorType result = 1;
+}
+
+message RewardChangeRes {
+    Shared.EErrorType result = 1;
+    Shared.ChangeableRewardInfo changeable_reward_info = 2;
+}
+
+message ConfirmChangeableRewardRes {
+    Shared.EErrorType result = 1;
+    int64 slot_id = 2;
+}
+
+message ReceiveAllAutoConfirmedChangeableRewardRes {
+    Shared.EErrorType result = 1;
+    repeated int64 confirmed_slot_id_list = 2;
+}
+
+message AddChangeableRewardNoti {
+    repeated Shared.ChangeableRewardInfo changeable_reward_list = 1;
+}
+
+message GuildCooperationCoinUpdateNoti {
+    int64 cooperation_coin = 1;
+}
+
+message DumpStatBuilderCmdRes {
+    int64 object_id = 1;
+    repeated WS2CProtocolHelper.StatInfo stat_list = 2;
+}
+
+message GuildBuffLevelUpRes {
+    Shared.EErrorType result = 1;
+    int32 old_template_id = 2;
+    int32 new_template_id = 3;
+}
+
+message GuildBuffLevelUpdateNoti {
+    int32 old_template_id = 1;
+    int32 new_template_id = 2;
+}
+
+message GuildBuffBuyRes {
+    Shared.EErrorType result = 1;
+    int32 template_id = 2;
+}
+
+message ActivateSiegeObstacleRes {
+    Shared.EErrorType result = 1;
+    int64 object_id = 2;
+    Shared.NetVector position = 3;
+}
+
+message ActivateSiegeObstacleNoti {
+    int64 object_id = 1;
+    int64 activator_id = 2;
+    Shared.NetVector activator_position = 3;
+    bool activate = 4;
+    int32 remain_milliseconds = 5;
+}
+
+message SpawnSiegeObstacleObjectNoti {
+    int64 object_id = 1;
+    int32 template_id = 2;
+    Shared.NetVector spawn_pos = 3;
+    float yaw = 4;
+    bool is_activated = 5;
+    int64 activator_id = 6;
+}
+
+message DespawnSiegeObstacleObjectNoti {
+    int64 object_id = 1;
+}
+
+message OperateSiegeSlotRes {
+    Shared.EErrorType result = 1;
+    int64 object_id = 2;
+    Shared.NetVector position = 3;
+}
+
+message ActivateSiegeSlotNoti {
+    int64 object_id = 1;
+    int64 activator_id = 2;
+    Shared.NetVector activator_position = 3;
+    bool activate = 4;
+}
+
+message SpawnSiegeSlotObjectNoti {
+    int64 object_id = 1;
+    int32 template_id = 2;
+    Shared.NetVector spawn_pos = 3;
+    float yaw = 4;
+    bool is_activated = 5;
+    int64 activator_id = 6;
+    string map_spot = 7;
+}
+
+message DespawnSiegeSlotObjectNoti {
+    int64 object_id = 1;
+}
+
+message EnterSiegeWallObjectNoti {
+    int64 object_id = 1;
+    int64 activator_id = 2;
+}
+
+message ExitSiegeWallObjectNoti {
+    int64 object_id = 1;
+    int64 activator_id = 2;
+}
+
+message SpawnSiegeWallObjectNoti {
+    int64 object_id = 1;
+    int32 template_id = 2;
+    Shared.NetVector spawn_pos = 3;
+    float yaw = 4;
+    bool is_activated = 5;
+    repeated int64 activator_ids = 6;
+    int64 next_activate_time = 7;
+    string map_spot = 8;
+}
+
+message DespawnSiegeWallObjectNoti {
+    int64 object_id = 1;
+}
+
+message DestroySiegeWallObjectNoti {
+    int64 object_id = 1;
+    int64 next_activate_time = 2;
+}
+
+message SiegeObjectKnockBackNoti {
+    int64 siege_object_id = 1;
+    repeated Shared.SiegeObjectKnockBackInfo knockback_infos = 2;
+}
+
+message ChangePcNameRes {
+    Shared.EErrorType result = 1;
+}
+
+message StiffenStartNoti {
+    int64 object_id = 1;
+    Shared.NetVector position = 2;
+    Shared.NetVector velocity = 3;
+}
+
+message StiffenEndNoti {
+    int64 object_id = 1;
+    Shared.NetVector position = 2;
+    Shared.NetVector velocity = 3;
+}
+
+message ChargeVacuityPointNoti {
+    int64 object_id = 1;
+    int32 vacuity_point = 2;
+}
+
+message ShareLocationNoti {
+    Shared.LocationLink location_link = 1;
+    string sharer_name = 2;
+}
+
+message SkillEnhancementRes {
+    Shared.EErrorType result = 1;
+    Shared.ESkillEnhancementResult enhancement_result = 2;
+    int32 skill_pack_template_id = 3;
+    int32 new_skill_template_id = 4;
+}
+
+message SkillEnhancementCheatNoti {
+    Shared.EErrorType result = 1;
+    int32 skill_pack_template_id = 2;
+    int32 new_skill_template_id = 3;
+}
+
+message PetGatheringStartNoti {
+    bool is_reconnected = 1;
+}
+
+message PetGatheringEndNoti {
+    Shared.EErrorType result = 1;
+    repeated Shared.ItemBaseInfo rewards = 2;
+}
+
+message ApplyStatPointRes {
+    Shared.EErrorType result = 1;
+    repeated WS2CProtocolHelper.StatInfo appliedstats = 2;
+}
+
+message ApplyStatPointNoti {
+    repeated WS2CProtocolHelper.StatInfo appliedstats = 1;
+}
+
+message ResetStatPointRes {
+    Shared.EErrorType result = 1;
+    int32 remain_point = 2;
+}
+
+message ProvideStatPointNoti {
+    int32 max_point = 1;
+    int32 remain_point = 2;
+    int32 applied_point = 3;
+}
+
+message ChangeVacuityModeRes {
+    Shared.EErrorType result = 1;
+    Shared.EVacuityMode changed_mode = 2;
+}
+
+message VacuityLevelUpRes {
+    Shared.EErrorType result = 1;
+    bool levelup_result = 2;
+}
+
+message ChangeVacuityInfoNoti {
+    int64 object_id = 1;
+    Shared.EVacuityMode vacuity_mode = 2;
+    int32 vacuity_level = 3;
+}
+
+message MergingPetRes {
+    Shared.EErrorType result = 1;
+    repeated int32 new_pet_template_id_list = 2;
+    Shared.EItemGradeType material_grade = 3;
+    int32 equal_grade_count = 4;
+}
+
+message MergingCharacterClassRes {
+    Shared.EErrorType result = 1;
+    repeated int32 new_character_class_template_id_list = 2;
+    Shared.EItemGradeType material_grade = 3;
+    int32 equal_grade_count = 4;
+}
+
+message ReceiveMergingGuaranteedRewardRes {
+    Shared.EErrorType result = 1;
+    Shared.EItemType item_type = 2;
+    Shared.EItemGradeType item_grade = 3;
+    int32 new_item_template_id = 4;
+    int32 equal_grade_count = 5;
+}
+
+message RuneLevelUpRes {
+    Shared.EErrorType result = 1;
+    Shared.ERuneLevelupResult levelup_result = 2;
+    int32 rune_group_id = 3;
+    int32 result_level = 4;
+}
+
+message RuneBonusActivateRes {
+    Shared.EErrorType result = 1;
+    int32 rune_bonus_id = 2;
+}
+
+message RuneBonusResetRes {
+    Shared.EErrorType result = 1;
+}
+
+message CoreAltarInfoRes {
+    Shared.EErrorType result = 1;
+    WS2CProtocolHelper.CoreAltarInfo core_altar_info = 2;
+    int32 retry_cool_time_sec = 3;
+}
+
+message CoreAltarActivateRes {
+    Shared.EErrorType result = 1;
+    WS2CProtocolHelper.CoreAltarInfo core_altar_info = 2;
+    int32 retry_cool_time_sec = 3;
+}
+
+message CoreAltarInfoNoti {
+    WS2CProtocolHelper.CoreAltarInfo core_altar_info = 1;
+}
+
+message WorldMapCoreAltarInfoRes {
+    Shared.EErrorType result = 1;
+    repeated WS2CProtocolHelper.CoreAltarInfo core_alter_info_list = 2;
+}
+
+message SiegeTowerInfoRes {
+    Shared.EErrorType result = 1;
+    repeated WS2CProtocolHelper.SiegeTowerDetailInfo siege_tower_info_list = 2;
+    int32 siege_tower_build_count = 3;
+}
+
+message SiegeTowerBuildRes {
+    Shared.EErrorType result = 1;
+    int32 siege_tower_id = 2;
+    int32 siege_tower_build_count = 3;
+    bool is_build_completed = 4;
+}
+
+message SiegeTowerCompletedRewardRes {
+    Shared.EErrorType result = 1;
+    int32 siege_tower_id = 2;
+}
+
+message ChangeSiegeTowerStateNoti {
+    int32 siege_tower_id = 1;
+    Shared.ESiegeTowerState state = 2;
+}
+
+message RuleSelectorVoteInfoRes {
+    Shared.EErrorType result = 1;
+    repeated Shared.RuleSelectorVoteInfo vote_info_list = 2;
+    int32 vote_count = 3;
+    int32 vote_template_id = 4;
+    int32 active_rule_template_id = 5;
+}
+
+message RuleSelectorVoteRes {
+    Shared.EErrorType result = 1;
+}
+
+message RuleSelectorActiveRuleInfoNoti {
+    repeated Shared.RuleSelectorActiveRuleInfo active_rule_info_list = 1;
+}
+
+message RevivalRes {
+    Shared.EErrorType result = 1;
+}
+
+message RewardTreasureNoti {
+    repeated Shared.ItemBaseInfo rewards = 1;
+}
+
+message CharacterGiftCheckRes {
+    Shared.EErrorType result = 1;
+    repeated Shared.CharacterGiftCheckResult detail_results = 2;
+    int64 prev_gift_time = 3;
+}
+
+message CharacterGiftPackRes {
+    Shared.EErrorType result = 1;
+    string code = 2;
+    string password = 3;
+}
+
+message CharacterGiftCancelRes {
+    Shared.EErrorType result = 1;
+    WS2CProtocolHelper.LobbyCharacterInfo canceled_character_info = 2;
+}
+
+message CharacterGiftReceiveRes {
+    Shared.EErrorType result = 1;
+    WS2CProtocolHelper.LobbyCharacterInfo received_character_info = 2;
+}
+
+message CharacterGiftRetrieveMyCodeRes {
+    Shared.EErrorType result = 1;
+    string code = 2;
+    string password = 3;
+}
+
+message CharacterGiftVerifyCodeRes {
+    Shared.EErrorType result = 1;
+    string character_name = 2;
+    int32 character_level = 3;
+    int64 character_exp = 4;
+    int64 max_character_exp = 5;
+    int32 character_class_template_id = 6;
+    int32 character_pet_template_id = 7;
+}
+
+message CharacterGiftRegisterNewPcNameRes {
+    Shared.EErrorType result = 1;
+    WS2CProtocolHelper.LobbyCharacterInfo result_character_info = 2;
+}
+
+message RealmImmigrationSeasonInfoRes {
+    Shared.EErrorType result = 1;
+    Shared.MyRealmImmigrationTotalInfo info = 2;
+    int32 moved_count_in_season = 3;
+    int64 next_immigrationable_time = 4;
+    repeated Shared.RealmImmigrationCheckResult check_results = 5;
+}
+
+message RealmImmigrationSeasonInfoReloadRes {
+    Shared.EErrorType result = 1;
+    Shared.MyRealmImmigrationTotalInfo info = 2;
+    int32 moved_count_in_season = 3;
+    int64 next_immigrationable_time = 4;
+    repeated Shared.RealmImmigrationCheckResult check_results = 5;
+}
+
+message RealmImmigrationOtherRealmInfoRes {
+    Shared.EErrorType result = 1;
+    int32 season = 2;
+    int32 realm_id = 3;
+    int32 remain_character_slot_count = 4;
+    repeated Shared.RealmImmigrationCheckResult check_results = 5;
+}
+
+message RealmImmigrationReserveRes {
+    Shared.EErrorType result = 1;
+}
+
+message RealmImmigrationReserveGuildRes {
+    Shared.EErrorType result = 1;
+}
+
+message SpecialSeasonLookupRes {
+    bool is_realm_immigration_season = 1;
+}
+
+message SiegeInfoRes {
+    Shared.EErrorType result = 1;
+    Shared.SiegeInfo siege_info = 2;
+    repeated Shared.SiegeStateInfo siege_state_info_list = 3;
+}
+
+message SiegeInfoAllRes {
+    Shared.EErrorType result = 1;
+    repeated Shared.SiegeInfo siege_info_list = 2;
+}
+
+message ChangeSiegeTaxRateRes {
+    Shared.EErrorType result = 1;
+    int32 siege_id = 2;
+    int32 reserved_tax_rate = 3;
+}
+
+message SiegeDistributeSceneInfoRes {
+    Shared.EErrorType result = 1;
+    repeated Shared.SiegeRewardDistribution reward_distribution_list = 2;
+    int64 distributable_gold = 3;
+    int64 distributable_gem = 4;
+}
+
+message DistributeSiegeRewardRes {
+    Shared.EErrorType result = 1;
+    repeated Shared.SiegeRewardDistribution reward_distribution_list = 2;
+    int64 distributable_gold = 3;
+    int64 distributable_gem = 4;
+}
+
+message TotalSiegeTaxRateRes {
+    int32 total_siege_tax_rate = 1;
+}
+
+message SiegeSceneInfoAllRes {
+    Shared.EErrorType result = 1;
+    repeated Shared.SiegeSceneInfo info_list = 2;
+}
+
+message SiegeBidInfoRes {
+    Shared.EErrorType result = 1;
+    repeated Shared.BidInfo bid_list = 2;
+}
+
+message SiegeBidRes {
+    Shared.EErrorType result = 1;
+    repeated Shared.BidInfo bid_list = 2;
+}
+
+message SiegeBidEventNoti {
+    Shared.EBidEvent bid_event = 1;
+}
+
+message ChangedBattlePhaseNoti {
+    Shared.ESiegeBattlePhase changed_phase = 1;
+}
+
+message SiegeOccupyThroneNoti {
+    int32 siege_id = 1;
+    int64 guild_id = 2;
+    string guild_name = 3;
+    int64 time = 4;
+    int32 guild_emblem = 5;
+}
+
+message SiegeBattleFinishNoti {
+    int32 siege_id = 1;
+    int64 guild_id = 2;
+    string guild_name = 3;
+    int32 guild_emblem = 4;
+}
+
+message SiegeOpenNoti {
+    int64 siege_opened_time = 1;
+}
+
+message SiegeStateNoti {
+    bool active_siege_exist = 1;
+}
+
+message SiegeInGameStateNoti {
+    Shared.ESiegeStep step = 1;
+    Shared.ESiegeBattlePhase battle_phase = 2;
+    int64 round_throne_owner_guild_id = 3;
+    string round_throne_owner_guild_name = 4;
+    int64 round_start_time = 5;
+    int32 guild_emblem = 6;
+}
+
+message PurchaseSiegeShopGoodsRes {
+    Shared.EErrorType result = 1;
+    int32 goods_id = 2;
+    int32 slot = 3;
+    int32 mileage = 4;
+    repeated Shared.ItemBaseInfo item_list = 5;
+}
+
+message OfflineHuntInfoRes {
+    int32 elapsed_sec = 1;
+}
+
+message OfflineHuntStartRes {
+    Shared.EErrorType result = 1;
+}
+
+message OfflineHuntRewardNoti {
+    int32 offline_hunt_id = 1;
+    int32 reward_count = 2;
+    int32 before_level = 3;
+}
+
+message GiveUpPreOccupationCharacterRes {
+    Shared.EErrorType result = 1;
+}
+
+message SeasonPassRewardRes {
+    Shared.EErrorType result = 1;
+    bool premium = 2;
+    int32 reward_step = 3;
+}
+
+message SeasonPassRewardUnlockRes {
+    int32 level = 1;
+}
+
+message SeasonPassPremiumOpenNoti {
+    
+}
+
+message SeasonPassMissionUpdateNoti {
+    repeated WS2CProtocolHelper.SeasonPassMissionInfo infos = 1;
+}
+
+message NgsVerifyNoti {
+    bytes data = 1;
+    int32 size = 2;
+}
+
+message RemovedPeriodItemNoti {
+    repeated WS2CProtocolHelper.PeriodItemInfo removed_inventory_item_list = 1;
+    repeated WS2CProtocolHelper.PeriodItemInfo removed_account_storage_item_list = 2;
+}
+
+message KakaoLinkRes {
+    Shared.EErrorType result = 1;
+}
+
+message KakaoUnlinkRes {
+    Shared.EErrorType result = 1;
+}
+
+message InfluencerInfoRes {
+    Shared.EErrorType result = 1;
+    string creator_code = 2;
+    string support_expire_time = 3;
+    repeated WS2CProtocolHelper.InfluencerChannelInfo channel_infos = 4;
+    string description = 5;
+    Shared.ECreatorStatusType creator_status = 6;
+    int32 supporter_status = 7;
+}
+
+message RewardMissionRes {
+    Shared.EErrorType result = 1;
+    Shared.EMissionType type_ = 2;
+    int32 rewarded_count = 3;
+    repeated WS2CProtocolHelper.MissionInfo mission_infos = 4;
+    int32 last_bonus_reward_index = 5;
+}
+
+message UpdateMissionNoti {
+    repeated WS2CProtocolHelper.MissionInfo mission_infos = 1;
+}
+
+message MissionTotalInfoNoti {
+    repeated WS2CProtocolHelper.MissionTotalInfo mission_total_infos = 1;
+}
+
+message EventMissionUpdateNoti {
+    repeated WS2CProtocolHelper.EventMissionInfo infos = 1;
+}
+
+message EventMissionRewardRes {
+    Shared.EErrorType result = 1;
+    WS2CProtocolHelper.EventMissionInfo info = 2;
+}
+
+message GuildQuestInfoRes {
+    Shared.EErrorType result = 1;
+    Shared.GuildQuestTotalInfo guild_total_info = 2;
+    Shared.PcGuildQuestInfo my_quest_info = 3;
+}
+
+message GuildQuestAcceptRes {
+    Shared.EErrorType result = 1;
+    Shared.PcGuildQuestInfo info = 2;
+    Shared.GuildQuestTotalInfo guild_total_info = 3;
+}
+
+message GuildQuestCancleRes {
+    Shared.EErrorType result = 1;
+    int32 template_id = 2;
+    Shared.GuildQuestTotalInfo guild_total_info = 3;
+}
+
+message GuildQuestUpdateNoti {
+    Shared.PcGuildQuestInfo info = 1;
+}
+
+message GuildQuestCompleteRes {
+    Shared.EErrorType result = 1;
+    Shared.PcGuildQuestInfo info = 2;
+}
+
+message GuildQuestRewardRes {
+    Shared.EErrorType result = 1;
+    int32 template_id = 2;
+    Shared.GuildQuestTotalInfo guild_total_info = 3;
+}
+
+message RemoveDeathPenaltyDebuffRes {
+    Shared.EErrorType result = 1;
+    int32 used_free_count = 2;
+    int64 next_free_count_reset_time = 3;
+}
+
+message LostItemLinksListRes {
+    repeated Shared.LostItemLinks list = 1;
+}
+
+message RetrieveLostItemRes_ {
+    Shared.EErrorType result = 1;
+    repeated int64 retrieved_item_db_id_list = 2;
+}
+
+enum EItemUpdateType {
+    EItemUpdateType_ADD = 0;
+    EItemUpdateType_REMOVE = 1;
+    EItemUpdateType_UPDATE = 2;
+    EItemUpdateType_INVALID = -1;
+}

@@ -1,0 +1,348 @@
+#!/usr/bin/env elixir
+
+Mix.install [{:protobuf, "~> 0.10.0"},{:google_protos, "~> 0.1"}, {:rambo, "~> 0.3"} ]
+
+#defmodule Google.Protobuf.Compiler.CodeGeneratorResponse.File do
+#  @moduledoc false
+#
+#  use Protobuf, protoc_gen_elixir_version: "0.11.0", syntax: :proto2
+#
+#  field :name, 1, optional: true, type: :string
+#  field :insertion_point, 2, optional: true, type: :string
+#  field :content, 15, optional: true, type: :string
+#  field :generated_code_info, 16, optional: true, type: Google.Protobuf.GeneratedCodeInfo
+#end
+
+:io.setopts(:standard_io, encoding: :latin1)
+fin = IO.binread(:stdio, :all)
+dec = Google.Protobuf.Compiler.CodeGeneratorRequest.decode(fin)
+
+defmodule GlPb do
+  def constructor_fields(msg) do
+    fields = Enum.map msg.field, fn(field)->
+       ftype = field_type_to_gleam_type(field) 
+       [ field.name, ":", "#{ftype}" ]
+    end
+
+    Enum.join(fields, ",\n")
+  end
+
+  def field_type_to_gleam_type(field) do
+      ftype = case field.type do
+        :TYPE_INT32 -> "Int"
+        :TYPE_INT64 -> "Int"
+        :TYPE_STRING -> "String"
+        :TYPE_ENUM -> gleam_msg_type_name(field.type_name)
+        :TYPE_MESSAGE -> gleam_msg_type_name(field.type_name)
+        end
+  end
+ 
+  def fields_get_from_value(msg) do
+    Enum.map msg.field, fn(field)->
+        ftype = case field.type do
+          :TYPE_INT32 -> "get_int"
+          :TYPE_INT64 -> "get_int"
+          :TYPE_STRING -> "get_string"
+          :TYPE_ENUM -> 
+    "extract2_#{Macro.underscore(gleam_msg_type_name(field.type_name))}"
+          :TYPE_MESSAGE -> 
+    "extract2_#{Macro.underscore(gleam_msg_type_name(field.type_name))}"
+              
+         end
+        "try f#{field.number} = #{ftype}(data, #{field.number})\n" 
+      
+    end
+  end
+
+  def fields_indexes(msg) do
+    j = Enum.map msg.field, fn(field)->
+        "f#{field.number}" 
+    end
+
+    Enum.join(j, ",")
+ 
+  end
+
+
+  def gleam_func_name(prefix, msg) do
+    "#{prefix}_#{Macro.underscore(msg.name)}"
+  end
+
+  def gleam_msg_type_name(name) do
+    case name do
+      "." <> name ->
+    Macro.camelize(name)
+      name ->
+    Macro.camelize(name)
+     end
+  end
+
+  def enum(enum) do
+    msg_name = gleam_msg_type_name(enum.name)
+    values = Enum.map enum.value, fn(value)->
+      %{
+        name: String.replace(Macro.camelize(value.name), "_", ""),
+        number: value.number
+      }
+    end
+    enum_fields = Enum.map values, fn(value)->
+      [value.name, "\n"]
+    end
+    [
+      "pub type #{msg_name} {
+         ", enum_fields, "
+       }\n",
+      "
+      pub fn #{gleam_func_name("show", enum)}(a: #{msg_name}) -> List(String)  {
+      [
+       case a {
+      ",
+      Enum.map(values, fn(value)->
+        "#{value.name} -> \"#{value.name}\"\n"
+      end),
+        "
+      }
+        ]
+        }
+      \n",
+      "
+      pub fn #{gleam_func_name("encode", enum)}(a: #{msg_name}) -> BitString  {
+       <<>>
+      }
+
+     pub fn #{gleam_func_name("extract2", enum)}(data, tag) -> Result(#{msg_name}, Nil)  {
+      try asint = get_int(data, tag) 
+      case asint {
+     ", 
+      Enum.map(values, fn(value)->
+        "#{value.number} -> Ok(#{value.name})\n"
+      end),
+       
+      "
+        _ -> Error(Nil)
+      } 
+
+    }
+    "]
+
+
+  end
+ 
+  def message(msg) do
+    msg_name = gleam_msg_type_name(msg.name)
+[
+      "pub type #{msg_name} {
+      #{msg_name}(",
+       GlPb.constructor_fields(msg),
+      ")
+      }\n",
+      "
+      pub fn #{gleam_func_name("show", msg)}(a: #{msg_name}) -> List(String)  {
+       []
+        }
+      \n",
+      "
+      pub fn #{gleam_func_name("encode", msg)}(a: #{msg_name}) -> BitString  {
+       iolist_to_binary(
+         [
+         ]
+  )
+      }
+
+      pub fn #{gleam_func_name("decode", msg)}(data: BitString) -> Result(#{msg_name}, Nil)  {
+       try #(dec, _rest) = pb_lite.decode(data)
+       let dec1 = map.from_list(dec)
+
+       try res = #{gleam_func_name("extract", msg)}(dec1)
+
+      Ok(res)
+  }
+
+     pub fn #{gleam_func_name("extract", msg)}(data) -> Result(#{msg_name}, Nil)  {
+       #{fields_get_from_value(msg)}
+  
+  Ok(#{msg_name}(
+  #{fields_indexes(msg)} 
+ ))
+     }
+
+     pub fn #{gleam_func_name("extract2", msg)}(data, tag) -> Result(#{msg_name}, Nil)  {
+       try g = get_group(data, tag) 
+
+       #{gleam_func_name("extract", msg)}(g)
+      }
+
+
+
+  \n
+
+
+      "
+    ]
+  end
+
+  def preamble() do
+    """
+import pb_lite
+    import gleam/map
+  import gleam/dynamic
+    import gleam/list
+
+
+    pub fn get_string(data, tag) -> Result(String, Nil) {
+      case map.get(data, tag) {
+        Ok(pb_lite.Binary(x)) -> Ok(dynamic.unsafe_coerce(dynamic.from(x)))
+        _ -> Error(Nil)
+      }
+    }
+    pub fn get_int(data, tag) -> Result(Int, Nil) {
+      case map.get(data, tag) {
+        Ok(pb_lite.VarInt(x)) -> Ok(x)
+        Ok(pb_lite.Int32(x)) -> Ok(x)
+        Ok(pb_lite.Int64(x)) -> Ok(x)
+        _ -> Error(Nil)
+      }
+    }
+
+    pub fn get_group(data, tag) -> Result(map.Map(Int, pb_lite.ValueType), Nil) {
+      case map.get(data, tag) {
+        Ok(pb_lite.Group(x)) -> Ok(map.from_list(x))
+        _ -> Error(Nil)
+      }
+    }
+
+
+    pub fn serialize_varint(v) -> BitString {
+      iolist_to_binary(serialize_varint1(v, [])) 
+    }
+    pub fn serialize_varint1(v, acc) -> List(BitString) {
+     let rv = shr(v, 7)
+     case rv {
+      0 ->
+      
+           list.reverse([<<0:size(1), v:size(7) >> , ..acc ])
+         
+      _  ->
+      {
+          let va = band(v, 127)
+          serialize_varint1(rv, [<<1:size(1), va:size(7)>>, ..acc])
+          }
+     }
+    }
+    
+    pub fn encode_tag(tag) -> List(BitString) {
+
+    }
+
+    pub fn encode_varint(tag, v) -> List(BitString) {
+      [encode_tag(tag, 1), serialize_varint(v)] 
+    }
+
+    pub fn encode_int32(tag, v) -> List(BitString) {
+      todo // [tag, v] 
+    }
+
+    pub fn encode_int64(tag, v) -> List(BitString) {
+      todo // [tag, v] 
+    }
+
+    pub fn encode_binary(tag, v : BitString) -> List(BitString) {
+      [tag, v] 
+    }
+
+    pub fn encode_group(tag, v) -> List(BitString) {
+      [
+      encode_tag(tag, 1),
+      encode_msg(v),
+      encode_tag(tag, 1)
+      ]
+    }
+
+    pub fn encode_string(tag, v : String) -> List(BitString) {
+      [tag, dynamic.unsafe_coerce(dynamic.from(v))] 
+    }
+
+    external fn iolist_to_binary(List(BitString)) -> BitString = "erlang" "iolist_to_binary" 
+external fn shl(Int, Int) -> Int =
+  "helper1" "f_bsl"
+
+external fn shr(Int, Int) -> Int =
+  "helper1" "f_bsr"
+
+external fn band(Int, Int) -> Int =
+  "helper1" "f_band"
+
+//pub fn dtag_type(bin) {
+//  case bin {
+//    <<tag:size(5), ftype:size(3), r:binary>> ->
+//      case band(tag, 16) {
+//        16 -> {
+//          try #(value, r) = dvarint(r)
+//          let v = shl(value, 4) + band(tag, 0xF)
+//          Ok(#(v, ftype, r))
+//        }
+//        _ -> Ok(#(tag, ftype, r))
+//      }
+//  }
+//}
+
+    """
+
+  end
+end
+
+files = Enum.map dec.proto_file, fn(pf)-> 
+
+  messages = Enum.map pf.message_type, fn(msg)->
+    GlPb.message(msg) 
+  end
+
+  enums = Enum.map pf.enum_type, fn(enum)->
+    GlPb.enum(enum) 
+  end
+
+
+
+  IO.puts :stderr, inspect(pf, pretty: true)
+  IO.puts :stderr, "-----" 
+
+
+  text = [
+    GlPb.preamble(),
+    enums,
+  messages,
+  ]
+
+  case Rambo.run("gleam", ["format", "--stdin"],  in: IO.iodata_to_binary(text)) do
+
+    {:ok, %{status: 0, out: data}} -> 
+ 
+  IO.write :stderr, data 
+
+  %{
+    name: "out.gleam",
+insertion_point: "",
+content: data, 
+    generated_code_info: nil
+  }
+
+    {:error, %{status: 1, err: err}} ->
+  #IO.puts :stderr, err 
+throw "failed to format"
+
+  end
+
+end
+
+res = Google.Protobuf.Compiler.CodeGeneratorResponse.encode(
+    %{
+      __struct__: Google.Protobuf.Compiler.CodeGeneratorResponse,
+  error: nil,
+  supported_features: nil,
+  file: files,
+  __unknown_fields__: []
+    }
+)
+
+IO.binwrite :stdio, res 
+

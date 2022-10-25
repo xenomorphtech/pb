@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package C2GWSProtocol;
+
+import "Shared.proto";
+import "Extension.proto";
+
+option csharp_namespace = "NetworkMessage.C2GWSProtocol";
+
+message LoginDevReq {
+    string id = 1;
+    string password = 2;
+    int32 latest_realm_id = 3;
+    Shared.LoginInfo info = 4;
+    Shared.AppInfo app_info = 5;
+}
+
+message LoginNexonReq {
+    int64 np_sn = 1;
+    string np_token = 2;
+    int32 latest_realm_id = 3;
+    Shared.LoginInfo info = 4;
+    Shared.AppInfo app_info = 5;
+    string npa_code = 6;
+    string ad_id = 7;
+    string kakao_access_token = 8;
+    int64 nexon_sn = 9;
+    string idfv = 10;
+    string country_code = 11;
+}
+
+message RealmListReq {
+    Shared.UserAuthKeyInfo auth_key = 1;
+}
+
+message EnterToRealmReq {
+    Shared.UserAuthKeyInfo auth_key = 1;
+    int32 realm_id = 2;
+}
+
+message EnterShopModeReq {
+    Shared.UserAuthKeyInfo auth_key = 1;
+    int32 realm_id = 2;
+}
+
+message CharacterListReq {
+    Shared.UserAuthKeyInfo auth_key = 1;
+}
+
+message CancelWaitEnterReq {
+    Shared.UserAuthKeyInfo auth_key = 1;
+}

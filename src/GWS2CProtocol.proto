@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package GWS2CProtocol;
+
+import "Shared.proto";
+import "GWS2CProtocolHelper.proto";
+import "Extension.proto";
+
+option csharp_namespace = "NetworkMessage.GWS2CProtocol";
+
+message LogInRes {
+    Shared.EErrorType result = 1;
+    Shared.UserAuthKeyInfo auth_key = 2;
+    Shared.PreoccupationCharacterData preoccupation_character_data = 3;
+    Shared.LoginRestrictionInfo restriction_info = 4;
+    GWS2CProtocolHelper.RealmInfo realm = 5;
+    Shared.ShopModeInfo shop_mode_info = 6;
+}
+
+message LogInNpsnNoti {
+    int64 npsn = 1;
+    string npa_code = 2;
+}
+
+message RealmListRes {
+    Shared.EErrorType result = 1;
+    string one_time_password = 2;
+    repeated GWS2CProtocolHelper.RealmGroupInfo realm_groups = 3;
+}
+
+message EnterToRealmRes {
+    Shared.EErrorType result = 1;
+    string one_time_password = 2;
+    string ip_address = 3;
+    int32 port = 4;
+    int32 login_queue_rank = 5;
+    int32 next_enter_time = 6;
+    int64 auth_key = 7;
+    GWS2CProtocolHelper.RealmGroupInfo realm_group = 8;
+}
+
+message EnterShopModeRes {
+    Shared.EErrorType result = 1;
+    string one_time_password = 2;
+    string ip_address = 3;
+    int32 port = 4;
+    int64 auth_key = 5;
+    GWS2CProtocolHelper.RealmGroupInfo realm_group = 6;
+    string character_name = 7;
+}
+
+message CharacterListRes {
+    Shared.EErrorType result = 1;
+    string one_time_password = 2;
+    repeated GWS2CProtocolHelper.RealmCharacterInfo characters = 3;
+}
+
+message CancelWaitEnterRes {
+    Shared.EErrorType result = 1;
+    string one_time_password = 2;
+}
+
+message EmergencyErrorNoti {
+    Shared.EErrorType result = 1;
+}
